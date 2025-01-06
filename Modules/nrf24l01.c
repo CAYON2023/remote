@@ -137,7 +137,7 @@ uint8_t NRF24L01_TxPacket(uint8_t *txbuf)
     NRF24L01_Write_Buf(WR_TX_PLOAD, txbuf, TX_PLOAD_WIDTH); // 将发送数据写入NRF24L01缓存
     Set_NRF24L01_CE;                                        // 退出配置
     while (READ_NRF24L01_IRQ)
-        ;                                              // 等待发送完成
+        osDelay(1);                                    // 等待发送完成
     state = NRF24L01_Read_Reg(STATUS);                 // 读取发送状态
     NRF24L01_Write_Reg(SPI_WRITE_REG + STATUS, state); // 清除中断标志
     if (state & MAX_TX)

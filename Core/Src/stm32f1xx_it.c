@@ -167,13 +167,13 @@ void DebugMon_Handler(void)
  */
 void EXTI3_IRQHandler(void)
 {
-  /* USER CODE BEGIN EXTI3_IRQn 0 */
-  // if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3) == GPIO_PIN_RESET)
-  // {
-  //   osDelay(5);
-  //   if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3) == GPIO_PIN_RESET)
-  key.key_up = 1;
-  // }
+  static uint32_t tick = 0;
+  static uint32_t last_tick = 0;
+  tick = HAL_GetTick();
+  if ((tick - last_tick) > 200)
+    key.key_up = 1;
+  last_tick = tick;
+
   /* USER CODE END EXTI3_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_3);
   /* USER CODE BEGIN EXTI3_IRQn 1 */
@@ -187,12 +187,12 @@ void EXTI3_IRQHandler(void)
 void EXTI4_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI4_IRQn 0 */
-  // if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_RESET)
-  // {
-  //   osDelay(5);
-  //   if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_RESET)
-  key.key_back = 1;
-  // }
+  static uint32_t tick = 0;
+  static uint32_t last_tick = 0;
+  tick = HAL_GetTick();
+  if ((tick - last_tick) > 200)
+    key.key_back = 1;
+  last_tick = tick;
   /* USER CODE END EXTI4_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
   /* USER CODE BEGIN EXTI4_IRQn 1 */
@@ -234,18 +234,24 @@ void TIM4_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-  // if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_RESET)
-  // {
-  // osDelay(5);
   if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_RESET)
-    key.key_down = 1;
-  // }
-  // if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET)
-  // {
-  //   osDelay(5);
+  {
+    static uint32_t tick = 0;
+    static uint32_t last_tick = 0;
+    tick = HAL_GetTick();
+    if ((tick - last_tick) > 200)
+      key.key_down = 1;
+    last_tick = tick;
+  }
   if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET)
-    key.key_enter = 1;
-  // }
+  {
+    static uint32_t tick = 0;
+    static uint32_t last_tick = 0;
+    tick = HAL_GetTick();
+    if ((tick - last_tick) > 200)
+      key.key_enter = 1;
+    last_tick = tick;
+  }
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);

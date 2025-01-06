@@ -104,7 +104,6 @@ __attribute__((noreturn)) void MenuTASK(void const *argument)
             MENU_Event_and_Action(&MENU);          // 检查事件及作相应操作
             osDelay(1);
         }
-        osDelay(10);
     }
 }
 

@@ -1,0 +1,4117 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"MENU.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Key_GetEvent_Back,"ax",%progbits
+  18              		.align	1
+  19              		.global	Key_GetEvent_Back
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	Key_GetEvent_Back:
+  25              	.LFB3:
+  26              		.file 1 "Application/MENU.c"
+   1:Application/MENU.c **** /* *********************************************************
+   2:Application/MENU.c ****  * 多级菜单v2.0
+   3:Application/MENU.c ****  * 作者:Adam
+   4:Application/MENU.c ****  *
+   5:Application/MENU.c ****  * 移植方法
+   6:Application/MENU.c ****  *
+   7:Application/MENU.c ****  * 1. 配置菜单宏定义, 兼容不同显示器及布局, 例如:
+   8:Application/MENU.c ****     #define MENU_WIDTH 128 // 菜单宽度
+   9:Application/MENU.c ****     #define MENU_HEIGHT 64 // 菜单高度
+  10:Application/MENU.c ****     #define MENU_LINE_H 20 // 行高
+  11:Application/MENU.c **** 
+  12:Application/MENU.c ****  * 2. 实现 menu_command_callback() 对应的指令功能以完成移植, 有些指令是有参数
+  13:Application/MENU.c ****  *    详情可看CSDN博客:https://blog.csdn.net/AdminAdam/article/details/138232161
+  14:Application/MENU.c **** 
+  15:Application/MENU.c ****  * 使用方法
+  16:Application/MENU.c ****  *
+  17:Application/MENU.c ****  * 1. 创建选项列表,并直接初始化, 每个选项对应其名字和功能(功能为函数�
+  18:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {
+  19:Application/MENU.c ****         {"<<<", NULL},                     // 固定格式, 用于退出
+  20:Application/MENU.c ****         {"Tools", MENU_RunToolsMenu},      // 工具
+  21:Application/MENU.c ****         {"Games", MENU_RunGamesMenu},      // 游戏
+  22:Application/MENU.c ****         {"Setting", MENU_RunSettingMenu},  // 设置
+  23:Application/MENU.c ****         {"Information", MENU_Information}, // 信息
+  24:Application/MENU.c ****         {"..", NULL},                      // 固定格式, 用于计算选项列表长度和退出
+  25:Application/MENU.c ****     };
+  26:Application/MENU.c **** 
+  27:Application/MENU.c ****  * 2. 创建菜单句柄 并把菜单句柄内的选项列表指针指向 第1 步创建的选项�
+  28:Application/MENU.c ****     static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
+  29:Application/MENU.c **** 
+  30:Application/MENU.c ****  * 3. 调用 MENU_RunMenu() 运行菜单, 参数为菜单句柄
+  31:Application/MENU.c ****     MENU_RunMenu(&MENU);
+  32:Application/MENU.c ****  *
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 2
+
+
+  33:Application/MENU.c ****  * 4. 为了实现多级菜单, 可使用一个函数来封装 第 1 2 3 步, 封装好的函数可
+  34:Application/MENU.c ****  *    例如 void MENU_RunToolsMenu(void) 被选项 {"Tools", MENU_RunToolsMenu} 调用;
+  35:Application/MENU.c ****  *
+  36:Application/MENU.c ****  *
+  37:Application/MENU.c ****  * 视频教程:https://www.bilibili.com/video/BV1Y94y1g7mu?p=2
+  38:Application/MENU.c ****  * CSDN博客:https://blog.csdn.net/AdminAdam/article/details/138232161
+  39:Application/MENU.c ****  *
+  40:Application/MENU.c ****  * 下载链接
+  41:Application/MENU.c ****  * 百度网盘:https://pan.baidu.com/s/1bZPWCKaiNbb-l1gpAv6QNg?pwd=KYWS
+  42:Application/MENU.c ****  * Gitee: https://gitee.com/AdamLoong/Embedded_Menu_Simple
+  43:Application/MENU.c ****  * GitHub:https://github.com/AdamLoong/Embedded_Menu_Simple
+  44:Application/MENU.c ****  *
+  45:Application/MENU.c ****  * B站UP:加油哦大灰狼
+  46:Application/MENU.c ****  * 如果此程序对你有帮助记得给个一键三连哦! ( •̀ ω •́ )✧
+  47:Application/MENU.c ****  ********************************************************* */
+  48:Application/MENU.c **** 
+  49:Application/MENU.c **** #include "MENU.h"
+  50:Application/MENU.c **** #include "stdio.h"
+  51:Application/MENU.c **** 
+  52:Application/MENU.c **** /* 配置菜单 */
+  53:Application/MENU.c **** #define MENU_X 0       // 菜单位置X
+  54:Application/MENU.c **** #define MENU_Y 0       // 菜单位置Y
+  55:Application/MENU.c **** #define MENU_WIDTH 128 // 菜单宽度
+  56:Application/MENU.c **** #define MENU_HEIGHT 64 // 菜单高度
+  57:Application/MENU.c **** 
+  58:Application/MENU.c **** #define MENU_LINE_H 20 // 行高
+  59:Application/MENU.c **** #define MENU_PADDING 3 // 内边距
+  60:Application/MENU.c **** #define MENU_MARGIN 3  // 外边距
+  61:Application/MENU.c **** 
+  62:Application/MENU.c **** #define MENU_FONT_W 8  // 字体宽度
+  63:Application/MENU.c **** #define MENU_FONT_H 16 // 字体高度
+  64:Application/MENU.c **** 
+  65:Application/MENU.c **** #define MENU_BORDER 0        // 边框线条尺寸
+  66:Application/MENU.c **** #define IS_CENTERED 1        // 是否居中
+  67:Application/MENU.c **** #define IS_OVERSHOOT 1       // 是否过冲 (果冻效果)
+  68:Application/MENU.c **** #define OVERSHOOT 0.15       // 过冲量 0 < 范围 < 1;
+  69:Application/MENU.c **** #define ANIMATION_SPEED 0.35 // 动画速度 0 < 范围 <= 1;
+  70:Application/MENU.c **** 
+  71:Application/MENU.c **** #define CURSOR_CEILING (((MENU_HEIGHT - MENU_MARGIN - MENU_MARGIN) / MENU_LINE_H) - 1) // 光标限
+  72:Application/MENU.c **** 
+  73:Application/MENU.c **** /** Port 移植接口 * **************************************************************/
+  74:Application/MENU.c **** /* 依赖头文件 */
+  75:Application/MENU.c **** key_event_t key;
+  76:Application/MENU.c **** uint8_t Key_GetEvent_Back(void)
+  77:Application/MENU.c **** {
+  27              		.loc 1 77 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  78:Application/MENU.c ****     uint8_t temp_bool = 0;
+  32              		.loc 1 78 5 view .LVU1
+  33              	.LVL0:
+  79:Application/MENU.c ****     if (key.key_back == 1)
+  34              		.loc 1 79 5 view .LVU2
+  35              		.loc 1 79 22 is_stmt 0 view .LVU3
+  36 0000 054B     		ldr	r3, .L3
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 3
+
+
+  37 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  38              		.loc 1 79 8 view .LVU4
+  39 0004 10F00100 		ands	r0, r0, #1
+  40 0008 04D0     		beq	.L2
+  80:Application/MENU.c ****     {
+  81:Application/MENU.c ****         temp_bool = 1;
+  41              		.loc 1 81 9 is_stmt 1 view .LVU5
+  42              	.LVL1:
+  82:Application/MENU.c ****         key.key_back = 0;
+  43              		.loc 1 82 9 view .LVU6
+  44              		.loc 1 82 22 is_stmt 0 view .LVU7
+  45 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  46 000c 6FF30002 		bfc	r2, #0, #1
+  47 0010 1A70     		strb	r2, [r3]
+  81:Application/MENU.c ****         key.key_back = 0;
+  48              		.loc 1 81 19 view .LVU8
+  49 0012 0120     		movs	r0, #1
+  50              	.LVL2:
+  51              	.L2:
+  83:Application/MENU.c ****     }
+  84:Application/MENU.c **** 
+  85:Application/MENU.c ****     return temp_bool;
+  52              		.loc 1 85 5 is_stmt 1 view .LVU9
+  86:Application/MENU.c **** }
+  53              		.loc 1 86 1 is_stmt 0 view .LVU10
+  54 0014 7047     		bx	lr
+  55              	.L4:
+  56 0016 00BF     		.align	2
+  57              	.L3:
+  58 0018 00000000 		.word	.LANCHOR0
+  59              		.cfi_endproc
+  60              	.LFE3:
+  62              		.section	.text.Key_GetEvent_Up,"ax",%progbits
+  63              		.align	1
+  64              		.global	Key_GetEvent_Up
+  65              		.syntax unified
+  66              		.thumb
+  67              		.thumb_func
+  69              	Key_GetEvent_Up:
+  70              	.LFB4:
+  87:Application/MENU.c **** 
+  88:Application/MENU.c **** uint8_t Key_GetEvent_Up(void)
+  89:Application/MENU.c **** {
+  71              		.loc 1 89 1 is_stmt 1 view -0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 0, uses_anonymous_args = 0
+  75              		@ link register save eliminated.
+  90:Application/MENU.c ****     uint8_t temp_bool = 0;
+  76              		.loc 1 90 5 view .LVU12
+  77              	.LVL3:
+  91:Application/MENU.c ****     if (key.key_up == 1)
+  78              		.loc 1 91 5 view .LVU13
+  79              		.loc 1 91 20 is_stmt 0 view .LVU14
+  80 0000 054B     		ldr	r3, .L7
+  81 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  82              		.loc 1 91 8 view .LVU15
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 4
+
+
+  83 0004 10F00200 		ands	r0, r0, #2
+  84 0008 04D0     		beq	.L6
+  92:Application/MENU.c ****     {
+  93:Application/MENU.c ****         temp_bool = 1;
+  85              		.loc 1 93 9 is_stmt 1 view .LVU16
+  86              	.LVL4:
+  94:Application/MENU.c ****         key.key_up = 0;
+  87              		.loc 1 94 9 view .LVU17
+  88              		.loc 1 94 20 is_stmt 0 view .LVU18
+  89 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  90 000c 6FF34102 		bfc	r2, #1, #1
+  91 0010 1A70     		strb	r2, [r3]
+  93:Application/MENU.c ****         key.key_up = 0;
+  92              		.loc 1 93 19 view .LVU19
+  93 0012 0120     		movs	r0, #1
+  94              	.LVL5:
+  95              	.L6:
+  95:Application/MENU.c ****     }
+  96:Application/MENU.c ****     return temp_bool;
+  96              		.loc 1 96 5 is_stmt 1 view .LVU20
+  97:Application/MENU.c **** }
+  97              		.loc 1 97 1 is_stmt 0 view .LVU21
+  98 0014 7047     		bx	lr
+  99              	.L8:
+ 100 0016 00BF     		.align	2
+ 101              	.L7:
+ 102 0018 00000000 		.word	.LANCHOR0
+ 103              		.cfi_endproc
+ 104              	.LFE4:
+ 106              		.section	.text.Key_GetEvent_Down,"ax",%progbits
+ 107              		.align	1
+ 108              		.global	Key_GetEvent_Down
+ 109              		.syntax unified
+ 110              		.thumb
+ 111              		.thumb_func
+ 113              	Key_GetEvent_Down:
+ 114              	.LFB5:
+  98:Application/MENU.c **** 
+  99:Application/MENU.c **** uint8_t Key_GetEvent_Down(void)
+ 100:Application/MENU.c **** {
+ 115              		.loc 1 100 1 is_stmt 1 view -0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+ 101:Application/MENU.c ****     uint8_t temp_bool = 0;
+ 120              		.loc 1 101 5 view .LVU23
+ 121              	.LVL6:
+ 102:Application/MENU.c ****     if (key.key_down == 1)
+ 122              		.loc 1 102 5 view .LVU24
+ 123              		.loc 1 102 22 is_stmt 0 view .LVU25
+ 124 0000 054B     		ldr	r3, .L11
+ 125 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 126              		.loc 1 102 8 view .LVU26
+ 127 0004 10F00400 		ands	r0, r0, #4
+ 128 0008 04D0     		beq	.L10
+ 103:Application/MENU.c ****     {
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 5
+
+
+ 104:Application/MENU.c ****         temp_bool = 1;
+ 129              		.loc 1 104 9 is_stmt 1 view .LVU27
+ 130              	.LVL7:
+ 105:Application/MENU.c ****         key.key_down = 0;
+ 131              		.loc 1 105 9 view .LVU28
+ 132              		.loc 1 105 22 is_stmt 0 view .LVU29
+ 133 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 134 000c 6FF38202 		bfc	r2, #2, #1
+ 135 0010 1A70     		strb	r2, [r3]
+ 104:Application/MENU.c ****         key.key_down = 0;
+ 136              		.loc 1 104 19 view .LVU30
+ 137 0012 0120     		movs	r0, #1
+ 138              	.LVL8:
+ 139              	.L10:
+ 106:Application/MENU.c ****     }
+ 107:Application/MENU.c ****     return temp_bool;
+ 140              		.loc 1 107 5 is_stmt 1 view .LVU31
+ 108:Application/MENU.c **** }
+ 141              		.loc 1 108 1 is_stmt 0 view .LVU32
+ 142 0014 7047     		bx	lr
+ 143              	.L12:
+ 144 0016 00BF     		.align	2
+ 145              	.L11:
+ 146 0018 00000000 		.word	.LANCHOR0
+ 147              		.cfi_endproc
+ 148              	.LFE5:
+ 150              		.section	.text.Key_GetEvent_Enter,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	Key_GetEvent_Enter
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 157              	Key_GetEvent_Enter:
+ 158              	.LFB6:
+ 109:Application/MENU.c **** 
+ 110:Application/MENU.c **** uint8_t Key_GetEvent_Enter(void)
+ 111:Application/MENU.c **** {
+ 159              		.loc 1 111 1 is_stmt 1 view -0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163              		@ link register save eliminated.
+ 112:Application/MENU.c ****     uint8_t temp_bool = 0;
+ 164              		.loc 1 112 5 view .LVU34
+ 165              	.LVL9:
+ 113:Application/MENU.c ****     if (key.key_enter == 1)
+ 166              		.loc 1 113 5 view .LVU35
+ 167              		.loc 1 113 23 is_stmt 0 view .LVU36
+ 168 0000 054B     		ldr	r3, .L15
+ 169 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 170              		.loc 1 113 8 view .LVU37
+ 171 0004 10F00800 		ands	r0, r0, #8
+ 172 0008 04D0     		beq	.L14
+ 114:Application/MENU.c ****     {
+ 115:Application/MENU.c ****         temp_bool = 1;
+ 173              		.loc 1 115 9 is_stmt 1 view .LVU38
+ 174              	.LVL10:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 6
+
+
+ 116:Application/MENU.c ****         key.key_enter = 0;
+ 175              		.loc 1 116 9 view .LVU39
+ 176              		.loc 1 116 23 is_stmt 0 view .LVU40
+ 177 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 178 000c 6FF3C302 		bfc	r2, #3, #1
+ 179 0010 1A70     		strb	r2, [r3]
+ 115:Application/MENU.c ****         key.key_enter = 0;
+ 180              		.loc 1 115 19 view .LVU41
+ 181 0012 0120     		movs	r0, #1
+ 182              	.LVL11:
+ 183              	.L14:
+ 117:Application/MENU.c ****     }
+ 118:Application/MENU.c ****     return temp_bool;
+ 184              		.loc 1 118 5 is_stmt 1 view .LVU42
+ 119:Application/MENU.c **** }
+ 185              		.loc 1 119 1 is_stmt 0 view .LVU43
+ 186 0014 7047     		bx	lr
+ 187              	.L16:
+ 188 0016 00BF     		.align	2
+ 189              	.L15:
+ 190 0018 00000000 		.word	.LANCHOR0
+ 191              		.cfi_endproc
+ 192              	.LFE6:
+ 194              		.section	.text.Key_GetEvent_Right,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	Key_GetEvent_Right
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	Key_GetEvent_Right:
+ 202              	.LFB7:
+ 120:Application/MENU.c **** 
+ 121:Application/MENU.c **** uint8_t Key_GetEvent_Right(void)
+ 122:Application/MENU.c **** {
+ 203              		.loc 1 122 1 is_stmt 1 view -0
+ 204              		.cfi_startproc
+ 205              		@ args = 0, pretend = 0, frame = 0
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207              		@ link register save eliminated.
+ 123:Application/MENU.c ****     return 0;
+ 208              		.loc 1 123 5 view .LVU45
+ 124:Application/MENU.c **** }
+ 209              		.loc 1 124 1 is_stmt 0 view .LVU46
+ 210 0000 0020     		movs	r0, #0
+ 211 0002 7047     		bx	lr
+ 212              		.cfi_endproc
+ 213              	.LFE7:
+ 215              		.section	.text.menu_command_callback,"ax",%progbits
+ 216              		.align	1
+ 217              		.global	menu_command_callback
+ 218              		.syntax unified
+ 219              		.thumb
+ 220              		.thumb_func
+ 222              	menu_command_callback:
+ 223              	.LVL12:
+ 224              	.LFB73:
+ 125:Application/MENU.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 7
+
+
+ 126:Application/MENU.c **** #include "oled.h"
+ 127:Application/MENU.c **** 
+ 128:Application/MENU.c **** /// @brief 菜单指令回调函数
+ 129:Application/MENU.c **** /// @param  command 指令
+ 130:Application/MENU.c **** /// @param  ... 可变参数列表根据指令定义
+ 131:Application/MENU.c **** /// @return  返回值根据指令定义
+ 132:Application/MENU.c **** int menu_command_callback(enum _menu_command command, ...)
+ 133:Application/MENU.c **** {
+ 225              		.loc 1 133 1 is_stmt 1 view -0
+ 226              		.cfi_startproc
+ 227              		@ args = 4, pretend = 16, frame = 0
+ 228              		@ frame_needed = 0, uses_anonymous_args = 1
+ 229              		.loc 1 133 1 is_stmt 0 view .LVU48
+ 230 0000 0FB4     		push	{r0, r1, r2, r3}
+ 231              	.LCFI0:
+ 232              		.cfi_def_cfa_offset 16
+ 233              		.cfi_offset 0, -16
+ 234              		.cfi_offset 1, -12
+ 235              		.cfi_offset 2, -8
+ 236              		.cfi_offset 3, -4
+ 237 0002 10B5     		push	{r4, lr}
+ 238              	.LCFI1:
+ 239              		.cfi_def_cfa_offset 24
+ 240              		.cfi_offset 4, -24
+ 241              		.cfi_offset 14, -20
+ 242 0004 82B0     		sub	sp, sp, #8
+ 243              	.LCFI2:
+ 244              		.cfi_def_cfa_offset 32
+ 134:Application/MENU.c ****     int retval = 0;
+ 245              		.loc 1 134 5 is_stmt 1 view .LVU49
+ 246              	.LVL13:
+ 135:Application/MENU.c **** 
+ 136:Application/MENU.c ****     switch (command)
+ 247              		.loc 1 136 5 view .LVU50
+ 248 0006 9DF81030 		ldrb	r3, [sp, #16]	@ zero_extendqisi2
+ 249 000a 072B     		cmp	r3, #7
+ 250 000c 5AD8     		bhi	.L29
+ 251 000e DFE803F0 		tbb	[pc, r3]
+ 252              	.L21:
+ 253 0012 04       		.byte	(.L28-.L21)/2
+ 254 0013 0C       		.byte	(.L27-.L21)/2
+ 255 0014 10       		.byte	(.L26-.L21)/2
+ 256 0015 1F       		.byte	(.L25-.L21)/2
+ 257 0016 33       		.byte	(.L24-.L21)/2
+ 258 0017 41       		.byte	(.L23-.L21)/2
+ 259 0018 4A       		.byte	(.L22-.L21)/2
+ 260 0019 4D       		.byte	(.L20-.L21)/2
+ 261              		.p2align 1
+ 262              	.L28:
+ 137:Application/MENU.c ****     {
+ 138:Application/MENU.c ****         /* Output */
+ 139:Application/MENU.c ****     case BUFFER_DISPLAY: // 无参无返
+ 140:Application/MENU.c ****     {
+ 141:Application/MENU.c ****         OLED_ShowFrame();
+ 263              		.loc 1 141 9 view .LVU51
+ 264 001a FFF7FEFF 		bl	OLED_ShowFrame
+ 265              	.LVL14:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 8
+
+
+ 142:Application/MENU.c ****     }
+ 143:Application/MENU.c ****     break;
+ 266              		.loc 1 143 5 view .LVU52
+ 134:Application/MENU.c **** 
+ 267              		.loc 1 134 9 is_stmt 0 view .LVU53
+ 268 001e 0020     		movs	r0, #0
+ 269              	.LVL15:
+ 270              	.L18:
+ 144:Application/MENU.c **** 
+ 145:Application/MENU.c ****     case BUFFER_CLEAR: // 无参无返
+ 146:Application/MENU.c ****     {
+ 147:Application/MENU.c ****         OLED_NewFrame();
+ 148:Application/MENU.c ****     }
+ 149:Application/MENU.c ****     break;
+ 150:Application/MENU.c **** 
+ 151:Application/MENU.c ****     case SHOW_STRING: // 参数:( int16_t x, int16_t y, char *str ); 返回: uint8_t 字符串长�
+ 152:Application/MENU.c ****     {
+ 153:Application/MENU.c ****         /* 提取参数列表 */
+ 154:Application/MENU.c ****         int *arg_list = ((int *)&command) + 1; // 指针偏移4字节, 指向第一个参数
+ 155:Application/MENU.c ****         int show_x = arg_list[0];
+ 156:Application/MENU.c ****         int show_y = arg_list[1];
+ 157:Application/MENU.c ****         char *show_string = (char *)arg_list[2];
+ 158:Application/MENU.c **** 
+ 159:Application/MENU.c ****         /* 按需使用参数 */
+ 160:Application/MENU.c ****         OLED_PrintASCIIString(show_x, show_y, show_string, &afont16x8, 0); // 显示字符串
+ 161:Application/MENU.c ****         retval = strlen(show_string);                                      // 如果你的显示字
+ 162:Application/MENU.c ****     }
+ 163:Application/MENU.c ****     break;
+ 164:Application/MENU.c **** 
+ 165:Application/MENU.c ****     case SHOW_CURSOR: // 参数:( int xsta, int ysta, int xend, int yend ); 返回: 无;
+ 166:Application/MENU.c ****     {
+ 167:Application/MENU.c ****         /* 提取参数列表 */
+ 168:Application/MENU.c ****         int *arg_list = ((int *)&command) + 1;
+ 169:Application/MENU.c ****         int cursor_xsta = arg_list[0];
+ 170:Application/MENU.c ****         int cursor_ysta = arg_list[1];
+ 171:Application/MENU.c ****         int cursor_xend = arg_list[2];
+ 172:Application/MENU.c ****         int cursor_yend = arg_list[3];
+ 173:Application/MENU.c **** 
+ 174:Application/MENU.c ****         /* 按需使用参数 */
+ 175:Application/MENU.c ****         OLED_DrawRectangle(cursor_xsta, cursor_ysta, COORD_CHANGE_SIZE(cursor_xsta, cursor_xend),
+ 176:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 177:Application/MENU.c ****     }
+ 178:Application/MENU.c ****     break;
+ 179:Application/MENU.c **** 
+ 180:Application/MENU.c ****     case DRAW_FRAME: // 参数:( int xsta, int ysta, int wide, int high ); 返回: 无;
+ 181:Application/MENU.c ****     {
+ 182:Application/MENU.c ****         /* 提取参数列表 */
+ 183:Application/MENU.c ****         int *arg_list = ((int *)&command) + 1;
+ 184:Application/MENU.c ****         int frame_x = arg_list[0];
+ 185:Application/MENU.c ****         int frame_y = arg_list[1];
+ 186:Application/MENU.c ****         int frame_width = arg_list[2];
+ 187:Application/MENU.c ****         int frame_height = arg_list[3];
+ 188:Application/MENU.c **** 
+ 189:Application/MENU.c ****         /* 按需使用参数 */
+ 190:Application/MENU.c ****         OLED_DrawRectangle(frame_x, frame_y, frame_width, frame_height, 0);
+ 191:Application/MENU.c ****     }
+ 192:Application/MENU.c ****     break;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 9
+
+
+ 193:Application/MENU.c **** 
+ 194:Application/MENU.c ****     /* Input */
+ 195:Application/MENU.c ****     case GET_EVENT_ENTER: // 参数: 无; 返回: 布尔;
+ 196:Application/MENU.c ****     {
+ 197:Application/MENU.c ****         retval = Key_GetEvent_Enter() || Key_GetEvent_Right(); // 这代表两个按键都可以触
+ 198:Application/MENU.c ****     }
+ 199:Application/MENU.c ****     break;
+ 200:Application/MENU.c **** 
+ 201:Application/MENU.c ****     case GET_EVENT_BACK: // 参数: 无; 返回: 布尔;
+ 202:Application/MENU.c ****     {
+ 203:Application/MENU.c ****         retval = Key_GetEvent_Back();
+ 204:Application/MENU.c ****     }
+ 205:Application/MENU.c ****     break;
+ 206:Application/MENU.c **** 
+ 207:Application/MENU.c ****     case GET_EVENT_WHEEL: // 参数: 无; 返回: int16_t 滚动量;
+ 208:Application/MENU.c ****     {
+ 209:Application/MENU.c ****         if (Key_GetEvent_Up())
+ 210:Application/MENU.c ****             retval = 1;
+ 211:Application/MENU.c ****         else if (Key_GetEvent_Down())
+ 212:Application/MENU.c ****             retval = -1;
+ 213:Application/MENU.c ****         else
+ 214:Application/MENU.c ****             ;
+ 215:Application/MENU.c ****         // retval = Key_Encoder_Take(&Encoder1); // 这代表上下按键及编码器旋钮都可�
+ 216:Application/MENU.c ****     }
+ 217:Application/MENU.c ****     break;
+ 218:Application/MENU.c **** 
+ 219:Application/MENU.c ****     default:
+ 220:Application/MENU.c ****         break;
+ 221:Application/MENU.c ****     }
+ 222:Application/MENU.c **** 
+ 223:Application/MENU.c ****     return retval;
+ 224:Application/MENU.c **** }
+ 271              		.loc 1 224 1 view .LVU54
+ 272 0020 02B0     		add	sp, sp, #8
+ 273              	.LCFI3:
+ 274              		.cfi_remember_state
+ 275              		.cfi_def_cfa_offset 24
+ 276              		@ sp needed
+ 277 0022 BDE81040 		pop	{r4, lr}
+ 278              	.LCFI4:
+ 279              		.cfi_restore 14
+ 280              		.cfi_restore 4
+ 281              		.cfi_def_cfa_offset 16
+ 282 0026 04B0     		add	sp, sp, #16
+ 283              	.LCFI5:
+ 284              		.cfi_restore 3
+ 285              		.cfi_restore 2
+ 286              		.cfi_restore 1
+ 287              		.cfi_restore 0
+ 288              		.cfi_def_cfa_offset 0
+ 289 0028 7047     		bx	lr
+ 290              	.LVL16:
+ 291              	.L27:
+ 292              	.LCFI6:
+ 293              		.cfi_restore_state
+ 147:Application/MENU.c ****     }
+ 294              		.loc 1 147 9 is_stmt 1 view .LVU55
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 10
+
+
+ 295 002a FFF7FEFF 		bl	OLED_NewFrame
+ 296              	.LVL17:
+ 149:Application/MENU.c **** 
+ 297              		.loc 1 149 5 view .LVU56
+ 134:Application/MENU.c **** 
+ 298              		.loc 1 134 9 is_stmt 0 view .LVU57
+ 299 002e 0020     		movs	r0, #0
+ 149:Application/MENU.c **** 
+ 300              		.loc 1 149 5 view .LVU58
+ 301 0030 F6E7     		b	.L18
+ 302              	.LVL18:
+ 303              	.L26:
+ 304              	.LBB2:
+ 154:Application/MENU.c ****         int show_x = arg_list[0];
+ 305              		.loc 1 154 9 is_stmt 1 view .LVU59
+ 155:Application/MENU.c ****         int show_y = arg_list[1];
+ 306              		.loc 1 155 9 view .LVU60
+ 155:Application/MENU.c ****         int show_y = arg_list[1];
+ 307              		.loc 1 155 13 is_stmt 0 view .LVU61
+ 308 0032 0598     		ldr	r0, [sp, #20]	@ unaligned
+ 309              	.LVL19:
+ 156:Application/MENU.c ****         char *show_string = (char *)arg_list[2];
+ 310              		.loc 1 156 9 is_stmt 1 view .LVU62
+ 156:Application/MENU.c ****         char *show_string = (char *)arg_list[2];
+ 311              		.loc 1 156 13 is_stmt 0 view .LVU63
+ 312 0034 0699     		ldr	r1, [sp, #24]	@ unaligned
+ 313              	.LVL20:
+ 157:Application/MENU.c **** 
+ 314              		.loc 1 157 9 is_stmt 1 view .LVU64
+ 157:Application/MENU.c **** 
+ 315              		.loc 1 157 45 is_stmt 0 view .LVU65
+ 316 0036 079C     		ldr	r4, [sp, #28]	@ unaligned
+ 317              	.LVL21:
+ 160:Application/MENU.c ****         retval = strlen(show_string);                                      // 如果你的显示字
+ 318              		.loc 1 160 9 is_stmt 1 view .LVU66
+ 319 0038 0023     		movs	r3, #0
+ 320 003a 0093     		str	r3, [sp]
+ 321 003c 234B     		ldr	r3, .L36
+ 322 003e 2246     		mov	r2, r4
+ 323 0040 C9B2     		uxtb	r1, r1
+ 324              	.LVL22:
+ 160:Application/MENU.c ****         retval = strlen(show_string);                                      // 如果你的显示字
+ 325              		.loc 1 160 9 is_stmt 0 view .LVU67
+ 326 0042 C0B2     		uxtb	r0, r0
+ 327              	.LVL23:
+ 160:Application/MENU.c ****         retval = strlen(show_string);                                      // 如果你的显示字
+ 328              		.loc 1 160 9 view .LVU68
+ 329 0044 FFF7FEFF 		bl	OLED_PrintASCIIString
+ 330              	.LVL24:
+ 161:Application/MENU.c ****     }
+ 331              		.loc 1 161 9 is_stmt 1 view .LVU69
+ 161:Application/MENU.c ****     }
+ 332              		.loc 1 161 18 is_stmt 0 view .LVU70
+ 333 0048 2046     		mov	r0, r4
+ 334 004a FFF7FEFF 		bl	strlen
+ 335              	.LVL25:
+ 161:Application/MENU.c ****     }
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 11
+
+
+ 336              		.loc 1 161 18 view .LVU71
+ 337              	.LBE2:
+ 163:Application/MENU.c **** 
+ 338              		.loc 1 163 5 is_stmt 1 view .LVU72
+ 339 004e E7E7     		b	.L18
+ 340              	.LVL26:
+ 341              	.L25:
+ 342              	.LBB3:
+ 168:Application/MENU.c ****         int cursor_xsta = arg_list[0];
+ 343              		.loc 1 168 9 view .LVU73
+ 169:Application/MENU.c ****         int cursor_ysta = arg_list[1];
+ 344              		.loc 1 169 9 view .LVU74
+ 169:Application/MENU.c ****         int cursor_ysta = arg_list[1];
+ 345              		.loc 1 169 13 is_stmt 0 view .LVU75
+ 346 0050 0598     		ldr	r0, [sp, #20]	@ unaligned
+ 347              	.LVL27:
+ 170:Application/MENU.c ****         int cursor_xend = arg_list[2];
+ 348              		.loc 1 170 9 is_stmt 1 view .LVU76
+ 170:Application/MENU.c ****         int cursor_xend = arg_list[2];
+ 349              		.loc 1 170 13 is_stmt 0 view .LVU77
+ 350 0052 0699     		ldr	r1, [sp, #24]	@ unaligned
+ 351              	.LVL28:
+ 171:Application/MENU.c ****         int cursor_yend = arg_list[3];
+ 352              		.loc 1 171 9 is_stmt 1 view .LVU78
+ 171:Application/MENU.c ****         int cursor_yend = arg_list[3];
+ 353              		.loc 1 171 13 is_stmt 0 view .LVU79
+ 354 0054 079A     		ldr	r2, [sp, #28]	@ unaligned
+ 355              	.LVL29:
+ 172:Application/MENU.c **** 
+ 356              		.loc 1 172 9 is_stmt 1 view .LVU80
+ 172:Application/MENU.c **** 
+ 357              		.loc 1 172 13 is_stmt 0 view .LVU81
+ 358 0056 089B     		ldr	r3, [sp, #32]	@ unaligned
+ 359              	.LVL30:
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 360              		.loc 1 175 9 is_stmt 1 view .LVU82
+ 361 0058 C0B2     		uxtb	r0, r0
+ 362              	.LVL31:
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 363              		.loc 1 175 9 is_stmt 0 view .LVU83
+ 364 005a C9B2     		uxtb	r1, r1
+ 365              	.LVL32:
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 366              		.loc 1 175 54 view .LVU84
+ 367 005c 121A     		subs	r2, r2, r0
+ 368              	.LVL33:
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 369              		.loc 1 175 54 view .LVU85
+ 370 005e D2B2     		uxtb	r2, r2
+ 176:Application/MENU.c ****     }
+ 371              		.loc 1 176 28 view .LVU86
+ 372 0060 5B1A     		subs	r3, r3, r1
+ 373              	.LVL34:
+ 176:Application/MENU.c ****     }
+ 374              		.loc 1 176 28 view .LVU87
+ 375 0062 DBB2     		uxtb	r3, r3
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 12
+
+
+ 376              		.loc 1 175 9 view .LVU88
+ 377 0064 0133     		adds	r3, r3, #1
+ 378 0066 0132     		adds	r2, r2, #1
+ 379 0068 0024     		movs	r4, #0
+ 380 006a 0094     		str	r4, [sp]
+ 381 006c DBB2     		uxtb	r3, r3
+ 382 006e D2B2     		uxtb	r2, r2
+ 383 0070 FFF7FEFF 		bl	OLED_DrawRectangle
+ 384              	.LVL35:
+ 175:Application/MENU.c ****                            COORD_CHANGE_SIZE(cursor_ysta, cursor_yend), 0);
+ 385              		.loc 1 175 9 view .LVU89
+ 386              	.LBE3:
+ 178:Application/MENU.c **** 
+ 387              		.loc 1 178 5 is_stmt 1 view .LVU90
+ 134:Application/MENU.c **** 
+ 388              		.loc 1 134 9 is_stmt 0 view .LVU91
+ 389 0074 2046     		mov	r0, r4
+ 178:Application/MENU.c **** 
+ 390              		.loc 1 178 5 view .LVU92
+ 391 0076 D3E7     		b	.L18
+ 392              	.LVL36:
+ 393              	.L24:
+ 394              	.LBB4:
+ 183:Application/MENU.c ****         int frame_x = arg_list[0];
+ 395              		.loc 1 183 9 is_stmt 1 view .LVU93
+ 184:Application/MENU.c ****         int frame_y = arg_list[1];
+ 396              		.loc 1 184 9 view .LVU94
+ 184:Application/MENU.c ****         int frame_y = arg_list[1];
+ 397              		.loc 1 184 13 is_stmt 0 view .LVU95
+ 398 0078 0598     		ldr	r0, [sp, #20]	@ unaligned
+ 399              	.LVL37:
+ 185:Application/MENU.c ****         int frame_width = arg_list[2];
+ 400              		.loc 1 185 9 is_stmt 1 view .LVU96
+ 185:Application/MENU.c ****         int frame_width = arg_list[2];
+ 401              		.loc 1 185 13 is_stmt 0 view .LVU97
+ 402 007a 0699     		ldr	r1, [sp, #24]	@ unaligned
+ 403              	.LVL38:
+ 186:Application/MENU.c ****         int frame_height = arg_list[3];
+ 404              		.loc 1 186 9 is_stmt 1 view .LVU98
+ 186:Application/MENU.c ****         int frame_height = arg_list[3];
+ 405              		.loc 1 186 13 is_stmt 0 view .LVU99
+ 406 007c 079A     		ldr	r2, [sp, #28]	@ unaligned
+ 407              	.LVL39:
+ 187:Application/MENU.c **** 
+ 408              		.loc 1 187 9 is_stmt 1 view .LVU100
+ 187:Application/MENU.c **** 
+ 409              		.loc 1 187 13 is_stmt 0 view .LVU101
+ 410 007e 089B     		ldr	r3, [sp, #32]	@ unaligned
+ 411              	.LVL40:
+ 190:Application/MENU.c ****     }
+ 412              		.loc 1 190 9 is_stmt 1 view .LVU102
+ 413 0080 0024     		movs	r4, #0
+ 414 0082 0094     		str	r4, [sp]
+ 415 0084 DBB2     		uxtb	r3, r3
+ 416              	.LVL41:
+ 190:Application/MENU.c ****     }
+ 417              		.loc 1 190 9 is_stmt 0 view .LVU103
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 13
+
+
+ 418 0086 D2B2     		uxtb	r2, r2
+ 419              	.LVL42:
+ 190:Application/MENU.c ****     }
+ 420              		.loc 1 190 9 view .LVU104
+ 421 0088 C9B2     		uxtb	r1, r1
+ 422              	.LVL43:
+ 190:Application/MENU.c ****     }
+ 423              		.loc 1 190 9 view .LVU105
+ 424 008a C0B2     		uxtb	r0, r0
+ 425              	.LVL44:
+ 190:Application/MENU.c ****     }
+ 426              		.loc 1 190 9 view .LVU106
+ 427 008c FFF7FEFF 		bl	OLED_DrawRectangle
+ 428              	.LVL45:
+ 190:Application/MENU.c ****     }
+ 429              		.loc 1 190 9 view .LVU107
+ 430              	.LBE4:
+ 192:Application/MENU.c **** 
+ 431              		.loc 1 192 5 is_stmt 1 view .LVU108
+ 134:Application/MENU.c **** 
+ 432              		.loc 1 134 9 is_stmt 0 view .LVU109
+ 433 0090 2046     		mov	r0, r4
+ 192:Application/MENU.c **** 
+ 434              		.loc 1 192 5 view .LVU110
+ 435 0092 C5E7     		b	.L18
+ 436              	.LVL46:
+ 437              	.L23:
+ 197:Application/MENU.c ****     }
+ 438              		.loc 1 197 9 is_stmt 1 view .LVU111
+ 197:Application/MENU.c ****     }
+ 439              		.loc 1 197 18 is_stmt 0 view .LVU112
+ 440 0094 FFF7FEFF 		bl	Key_GetEvent_Enter
+ 441              	.LVL47:
+ 197:Application/MENU.c ****     }
+ 442              		.loc 1 197 39 view .LVU113
+ 443 0098 B0B9     		cbnz	r0, .L30
+ 197:Application/MENU.c ****     }
+ 444              		.loc 1 197 42 discriminator 2 view .LVU114
+ 445 009a FFF7FEFF 		bl	Key_GetEvent_Right
+ 446              	.LVL48:
+ 197:Application/MENU.c ****     }
+ 447              		.loc 1 197 39 discriminator 2 view .LVU115
+ 448 009e 0028     		cmp	r0, #0
+ 449 00a0 BED0     		beq	.L18
+ 197:Application/MENU.c ****     }
+ 450              		.loc 1 197 39 view .LVU116
+ 451 00a2 0120     		movs	r0, #1
+ 452 00a4 BCE7     		b	.L18
+ 453              	.LVL49:
+ 454              	.L22:
+ 203:Application/MENU.c ****     }
+ 455              		.loc 1 203 9 is_stmt 1 view .LVU117
+ 203:Application/MENU.c ****     }
+ 456              		.loc 1 203 18 is_stmt 0 view .LVU118
+ 457 00a6 FFF7FEFF 		bl	Key_GetEvent_Back
+ 458              	.LVL50:
+ 205:Application/MENU.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 14
+
+
+ 459              		.loc 1 205 5 is_stmt 1 view .LVU119
+ 460 00aa B9E7     		b	.L18
+ 461              	.LVL51:
+ 462              	.L20:
+ 209:Application/MENU.c ****             retval = 1;
+ 463              		.loc 1 209 9 view .LVU120
+ 209:Application/MENU.c ****             retval = 1;
+ 464              		.loc 1 209 13 is_stmt 0 view .LVU121
+ 465 00ac FFF7FEFF 		bl	Key_GetEvent_Up
+ 466              	.LVL52:
+ 209:Application/MENU.c ****             retval = 1;
+ 467              		.loc 1 209 12 view .LVU122
+ 468 00b0 08B1     		cbz	r0, .L35
+ 210:Application/MENU.c ****         else if (Key_GetEvent_Down())
+ 469              		.loc 1 210 20 view .LVU123
+ 470 00b2 0120     		movs	r0, #1
+ 471 00b4 B4E7     		b	.L18
+ 472              	.L35:
+ 211:Application/MENU.c ****             retval = -1;
+ 473              		.loc 1 211 14 is_stmt 1 view .LVU124
+ 211:Application/MENU.c ****             retval = -1;
+ 474              		.loc 1 211 18 is_stmt 0 view .LVU125
+ 475 00b6 FFF7FEFF 		bl	Key_GetEvent_Down
+ 476              	.LVL53:
+ 211:Application/MENU.c ****             retval = -1;
+ 477              		.loc 1 211 17 view .LVU126
+ 478 00ba 0028     		cmp	r0, #0
+ 479 00bc B0D0     		beq	.L18
+ 212:Application/MENU.c ****         else
+ 480              		.loc 1 212 20 view .LVU127
+ 481 00be 4FF0FF30 		mov	r0, #-1
+ 482              	.LVL54:
+ 223:Application/MENU.c **** }
+ 483              		.loc 1 223 5 is_stmt 1 view .LVU128
+ 223:Application/MENU.c **** }
+ 484              		.loc 1 223 12 is_stmt 0 view .LVU129
+ 485 00c2 ADE7     		b	.L18
+ 486              	.LVL55:
+ 487              	.L29:
+ 136:Application/MENU.c ****     {
+ 488              		.loc 1 136 5 view .LVU130
+ 489 00c4 0020     		movs	r0, #0
+ 490 00c6 ABE7     		b	.L18
+ 491              	.LVL56:
+ 492              	.L30:
+ 197:Application/MENU.c ****     }
+ 493              		.loc 1 197 39 view .LVU131
+ 494 00c8 0120     		movs	r0, #1
+ 495 00ca A9E7     		b	.L18
+ 496              	.L37:
+ 497              		.align	2
+ 498              	.L36:
+ 499 00cc 00000000 		.word	afont16x8
+ 500              		.cfi_endproc
+ 501              	.LFE73:
+ 503              		.section	.rodata.MENU_Information.str1.4,"aMS",%progbits,1
+ 504              		.align	2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 15
+
+
+ 505              	.LC0:
+ 506 0000 52362D43 		.ascii	"R6-CAR\000"
+ 506      415200
+ 507 0007 00       		.align	2
+ 508              	.LC1:
+ 509 0008 56302E31 		.ascii	"V0.1 Beta\000"
+ 509      20426574 
+ 509      6100
+ 510 0012 0000     		.align	2
+ 511              	.LC2:
+ 512 0014 42792043 		.ascii	"By CAYON\000"
+ 512      41594F4E 
+ 512      00
+ 513              		.section	.text.MENU_Information,"ax",%progbits
+ 514              		.align	1
+ 515              		.global	MENU_Information
+ 516              		.syntax unified
+ 517              		.thumb
+ 518              		.thumb_func
+ 520              	MENU_Information:
+ 521              	.LFB85:
+ 225:Application/MENU.c **** 
+ 226:Application/MENU.c **** /* ***************************************************** Port 移植接口 ** */
+ 227:Application/MENU.c **** 
+ 228:Application/MENU.c **** /* ******************************************************** */
+ 229:Application/MENU.c **** 
+ 230:Application/MENU.c **** /// @brief 菜单运行函数
+ 231:Application/MENU.c **** /// @param hMENU 菜单句柄
+ 232:Application/MENU.c **** void MENU_RunMenu(MENU_HandleTypeDef *hMENU)
+ 233:Application/MENU.c **** {
+ 234:Application/MENU.c ****     MENU_HandleInit(hMENU); // 初始化
+ 235:Application/MENU.c **** 
+ 236:Application/MENU.c ****     while (hMENU->isRun)
+ 237:Application/MENU.c ****     {
+ 238:Application/MENU.c ****         menu_command_callback(BUFFER_CLEAR); // 擦除缓冲区
+ 239:Application/MENU.c ****         MENU_ShowOptionList(hMENU);          /* 显示选项列表 */
+ 240:Application/MENU.c ****         MENU_ShowCursor(hMENU);              /* 显示光标 */
+ 241:Application/MENU.c ****         MENU_ShowBorder(hMENU);              // 显示边框
+ 242:Application/MENU.c **** 
+ 243:Application/MENU.c ****         menu_command_callback(BUFFER_DISPLAY); // 缓冲区更新至显示器
+ 244:Application/MENU.c ****         MENU_Event_and_Action(hMENU);          // 检查事件及作相应操作
+ 245:Application/MENU.c ****     }
+ 246:Application/MENU.c **** }
+ 247:Application/MENU.c **** 
+ 248:Application/MENU.c **** void MENU_HandleInit(MENU_HandleTypeDef *hMENU)
+ 249:Application/MENU.c **** {
+ 250:Application/MENU.c ****     hMENU->isRun = 1;                // 运行标志
+ 251:Application/MENU.c ****     hMENU->AnimationUpdateEvent = 1; // 动画更新事件
+ 252:Application/MENU.c ****     hMENU->Catch_i = 1;              // 选中下标默认为1,(因为hMENU->OptionList[0]为"<<<")
+ 253:Application/MENU.c ****     hMENU->Cursor_i = 0;             // 光标下标默认为0
+ 254:Application/MENU.c ****     hMENU->Show_i = 0;               // 显示(遍历)起始下标
+ 255:Application/MENU.c ****     hMENU->Show_i_Previous = 1;      // CURSOR_CEILING + 1; // 上一次循环的显示下标
+ 256:Application/MENU.c ****     hMENU->Option_Max_i = 0;         // 选项列表长度
+ 257:Application/MENU.c **** 
+ 258:Application/MENU.c ****     for (hMENU->Option_Max_i = 0; hMENU->OptionList[hMENU->Option_Max_i].String[0] != '.';
+ 259:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 260:Application/MENU.c ****     {
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 16
+
+
+ 261:Application/MENU.c ****         hMENU->OptionList[hMENU->Option_Max_i].StrLen =
+ 262:Application/MENU.c ****             MENU_ShowOption(0, 0, &hMENU->OptionList[hMENU->Option_Max_i]); // 获取字符串长�
+ 263:Application/MENU.c ****     }
+ 264:Application/MENU.c ****     hMENU->Option_Max_i--; // 不显示".."
+ 265:Application/MENU.c **** }
+ 266:Application/MENU.c **** 
+ 267:Application/MENU.c **** void MENU_Event_and_Action(MENU_HandleTypeDef *hMENU)
+ 268:Application/MENU.c **** {
+ 269:Application/MENU.c ****     if (menu_command_callback(GET_EVENT_ENTER)) /* 确定事件 如果选中的选项功能不为�
+ 270:Application/MENU.c ****     {
+ 271:Application/MENU.c ****         if (hMENU->OptionList[hMENU->Catch_i].func != NULL)
+ 272:Application/MENU.c ****         {
+ 273:Application/MENU.c ****             hMENU->OptionList[hMENU->Catch_i].func();
+ 274:Application/MENU.c ****         }
+ 275:Application/MENU.c ****         else
+ 276:Application/MENU.c ****         {
+ 277:Application/MENU.c ****             hMENU->isRun = 0;
+ 278:Application/MENU.c ****         }
+ 279:Application/MENU.c ****         hMENU->AnimationUpdateEvent = 1;
+ 280:Application/MENU.c ****     }
+ 281:Application/MENU.c ****     else if (menu_command_callback(GET_EVENT_BACK)) /* 返回事件 退出运行 */
+ 282:Application/MENU.c ****     {
+ 283:Application/MENU.c ****         hMENU->isRun = 0;
+ 284:Application/MENU.c ****     }
+ 285:Application/MENU.c ****     else
+ 286:Application/MENU.c ****     {
+ 287:Application/MENU.c ****         hMENU->Wheel_Event = -menu_command_callback(GET_EVENT_WHEEL);
+ 288:Application/MENU.c **** 
+ 289:Application/MENU.c ****         if (hMENU->Wheel_Event) /* 滚动事件 更新选中下标和光标下标 */
+ 290:Application/MENU.c ****         {
+ 291:Application/MENU.c ****             MENU_UpdateIndex(hMENU);
+ 292:Application/MENU.c ****             hMENU->AnimationUpdateEvent = 1;
+ 293:Application/MENU.c ****         }
+ 294:Application/MENU.c ****     }
+ 295:Application/MENU.c **** }
+ 296:Application/MENU.c **** 
+ 297:Application/MENU.c **** void MENU_UpdateIndex(MENU_HandleTypeDef *hMENU)
+ 298:Application/MENU.c **** {
+ 299:Application/MENU.c ****     /* 更新下标 */
+ 300:Application/MENU.c ****     hMENU->Cursor_i += hMENU->Wheel_Event;
+ 301:Application/MENU.c ****     hMENU->Catch_i += hMENU->Wheel_Event;
+ 302:Application/MENU.c **** 
+ 303:Application/MENU.c ****     /* 限制选中下标 */
+ 304:Application/MENU.c ****     if (hMENU->Catch_i > hMENU->Option_Max_i)
+ 305:Application/MENU.c ****         hMENU->Catch_i = hMENU->Option_Max_i;
+ 306:Application/MENU.c **** 
+ 307:Application/MENU.c ****     if (hMENU->Catch_i < 0)
+ 308:Application/MENU.c ****         hMENU->Catch_i = 0;
+ 309:Application/MENU.c **** 
+ 310:Application/MENU.c ****     /* 限制光标下标 */
+ 311:Application/MENU.c ****     if (hMENU->Cursor_i > CURSOR_CEILING)
+ 312:Application/MENU.c ****         hMENU->Cursor_i = CURSOR_CEILING;
+ 313:Application/MENU.c **** 
+ 314:Application/MENU.c ****     if (hMENU->Cursor_i > hMENU->Option_Max_i)
+ 315:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Option_Max_i;
+ 316:Application/MENU.c **** 
+ 317:Application/MENU.c ****     if (hMENU->Cursor_i > hMENU->Catch_i)
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 17
+
+
+ 318:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Catch_i;
+ 319:Application/MENU.c **** 
+ 320:Application/MENU.c ****     if (hMENU->Cursor_i < 0)
+ 321:Application/MENU.c ****         hMENU->Cursor_i = 0;
+ 322:Application/MENU.c **** }
+ 323:Application/MENU.c **** 
+ 324:Application/MENU.c **** void MENU_ShowOptionList(MENU_HandleTypeDef *hMENU)
+ 325:Application/MENU.c **** {
+ 326:Application/MENU.c ****     static float VerticalOffsetBuffer; // 垂直偏移缓冲
+ 327:Application/MENU.c **** 
+ 328:Application/MENU.c ****     /* 计算显示起始下标 */
+ 329:Application/MENU.c ****     hMENU->Show_i = hMENU->Catch_i - hMENU->Cursor_i; // 详解 https://www.bilibili.com/read/cv321
+ 330:Application/MENU.c **** 
+ 331:Application/MENU.c ****     if (hMENU->Show_i_Previous != hMENU->Show_i) // 如果显示下标有变化
+ 332:Application/MENU.c ****     {
+ 333:Application/MENU.c ****         VerticalOffsetBuffer = ((hMENU->Show_i - hMENU->Show_i_Previous) * MENU_LINE_H); // 计算�
+ 334:Application/MENU.c ****         hMENU->Show_i_Previous = hMENU->Show_i;
+ 335:Application/MENU.c ****     }
+ 336:Application/MENU.c **** 
+ 337:Application/MENU.c ****     if (VerticalOffsetBuffer)
+ 338:Application/MENU.c ****     {
+ 339:Application/MENU.c ****         VerticalOffsetBuffer = STEPWISE_TO_TARGET(VerticalOffsetBuffer, 0, ANIMATION_SPEED); // 行
+ 340:Application/MENU.c ****     }
+ 341:Application/MENU.c **** 
+ 342:Application/MENU.c ****     for (int16_t i = -1; i <= CURSOR_CEILING + 1; i++) // 遍历显示 选项
+ 343:Application/MENU.c ****     {
+ 344:Application/MENU.c ****         if (hMENU->Show_i + i < 0)
+ 345:Application/MENU.c ****             continue;
+ 346:Application/MENU.c **** 
+ 347:Application/MENU.c ****         if (hMENU->Show_i + i > hMENU->Option_Max_i)
+ 348:Application/MENU.c ****             break;
+ 349:Application/MENU.c **** 
+ 350:Application/MENU.c **** #if (IS_CENTERED != 0)
+ 351:Application/MENU.c ****         int16_t x = MENU_X + ((MENU_WIDTH - (hMENU->OptionList[hMENU->Show_i + i].StrLen * MENU_FON
+ 352:Application/MENU.c **** #else
+ 353:Application/MENU.c ****         int16_t x = MENU_X + MENU_MARGIN + MENU_PADDING; // 左对齐加边距
+ 354:Application/MENU.c **** #endif
+ 355:Application/MENU.c **** 
+ 356:Application/MENU.c ****         int16_t y = MENU_Y + MENU_MARGIN + (i * MENU_LINE_H) + ((MENU_LINE_H - MENU_FONT_H) / 2) + 
+ 357:Application/MENU.c **** 
+ 358:Application/MENU.c ****         /* 显示选项, 并记录长度 */
+ 359:Application/MENU.c ****         hMENU->OptionList[hMENU->Show_i + i].StrLen = MENU_ShowOption(x, y, &hMENU->OptionList[hMEN
+ 360:Application/MENU.c ****     }
+ 361:Application/MENU.c **** }
+ 362:Application/MENU.c **** 
+ 363:Application/MENU.c **** uint8_t MENU_ShowOption(int16_t X, int16_t Y, MENU_OptionTypeDef *Option)
+ 364:Application/MENU.c **** {
+ 365:Application/MENU.c ****     char String[64]; // 定义字符数组
+ 366:Application/MENU.c **** 
+ 367:Application/MENU.c ****     switch (Option->StrVarType)
+ 368:Application/MENU.c ****     {
+ 369:Application/MENU.c ****     case INT8:
+ 370:Application/MENU.c ****         sprintf(String, Option->String, *(int8_t *)Option->StrVarPointer);
+ 371:Application/MENU.c ****         break;
+ 372:Application/MENU.c **** 
+ 373:Application/MENU.c ****     case UINT8:
+ 374:Application/MENU.c ****         sprintf(String, Option->String, *(uint8_t *)Option->StrVarPointer);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 18
+
+
+ 375:Application/MENU.c ****         break;
+ 376:Application/MENU.c **** 
+ 377:Application/MENU.c ****     case INT16:
+ 378:Application/MENU.c ****         sprintf(String, Option->String, *(int16_t *)Option->StrVarPointer);
+ 379:Application/MENU.c ****         break;
+ 380:Application/MENU.c **** 
+ 381:Application/MENU.c ****     case UINT16:
+ 382:Application/MENU.c ****         sprintf(String, Option->String, *(uint16_t *)Option->StrVarPointer);
+ 383:Application/MENU.c ****         break;
+ 384:Application/MENU.c **** 
+ 385:Application/MENU.c ****     case INT32:
+ 386:Application/MENU.c ****         sprintf(String, Option->String, *(int32_t *)Option->StrVarPointer);
+ 387:Application/MENU.c ****         break;
+ 388:Application/MENU.c **** 
+ 389:Application/MENU.c ****     case UINT32:
+ 390:Application/MENU.c ****         sprintf(String, Option->String, *(uint32_t *)Option->StrVarPointer);
+ 391:Application/MENU.c ****         break;
+ 392:Application/MENU.c **** 
+ 393:Application/MENU.c ****     case CHAR:
+ 394:Application/MENU.c ****         sprintf(String, Option->String, *(char *)Option->StrVarPointer);
+ 395:Application/MENU.c ****         break;
+ 396:Application/MENU.c **** 
+ 397:Application/MENU.c ****     case STRING:
+ 398:Application/MENU.c ****         sprintf(String, Option->String, (char *)Option->StrVarPointer);
+ 399:Application/MENU.c ****         break;
+ 400:Application/MENU.c **** 
+ 401:Application/MENU.c ****     case FLOAT:
+ 402:Application/MENU.c ****         sprintf(String, Option->String, *(float *)Option->StrVarPointer);
+ 403:Application/MENU.c ****         break;
+ 404:Application/MENU.c **** 
+ 405:Application/MENU.c ****     default:
+ 406:Application/MENU.c ****         sprintf(String, Option->String, (void *)Option->StrVarPointer);
+ 407:Application/MENU.c ****         break;
+ 408:Application/MENU.c ****     }
+ 409:Application/MENU.c **** 
+ 410:Application/MENU.c ****     return menu_command_callback(SHOW_STRING, X, Y, String); // 显示字符数组（字符串）
+ 411:Application/MENU.c **** }
+ 412:Application/MENU.c **** 
+ 413:Application/MENU.c **** void MENU_ShowCursor(MENU_HandleTypeDef *hMENU)
+ 414:Application/MENU.c **** {
+ 415:Application/MENU.c ****     static float actual_xsta, actual_ysta, actual_xend, actual_yend; // actual
+ 416:Application/MENU.c ****     static float target_xsta, target_ysta, target_xend, target_yend; // target
+ 417:Application/MENU.c **** 
+ 418:Application/MENU.c **** #if (IS_OVERSHOOT != 0)
+ 419:Application/MENU.c ****     static float bounce_xsta, bounce_ysta, bounce_xend, bounce_yend;                   // bounce
+ 420:Application/MENU.c ****     static uint8_t bounce_cnt_xsta, bounce_cnt_ysta, bounce_cnt_xend, bounce_cnt_yend; // bounce
+ 421:Application/MENU.c **** 
+ 422:Application/MENU.c **** #endif
+ 423:Application/MENU.c **** 
+ 424:Application/MENU.c ****     // static uint16_t Catch_i_Previous = 1, Cursor_i_Previous = 1; // 上一循环的状态
+ 425:Application/MENU.c **** 
+ 426:Application/MENU.c ****     if (hMENU->AnimationUpdateEvent)
+ 427:Application/MENU.c ****     {
+ 428:Application/MENU.c ****         hMENU->AnimationUpdateEvent = 0;
+ 429:Application/MENU.c **** 
+ 430:Application/MENU.c ****         uint16_t cursor_width = (MENU_PADDING + (hMENU->OptionList[hMENU->Catch_i].StrLen * MENU_FO
+ 431:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 19
+
+
+ 432:Application/MENU.c **** 
+ 433:Application/MENU.c **** #if (IS_CENTERED != 0)
+ 434:Application/MENU.c ****         target_xsta = MENU_X + ((MENU_WIDTH - cursor_width) / 2);
+ 435:Application/MENU.c **** #else
+ 436:Application/MENU.c ****         target_xsta = MENU_X + MENU_MARGIN;
+ 437:Application/MENU.c **** #endif
+ 438:Application/MENU.c ****         target_ysta = MENU_Y + MENU_MARGIN + (hMENU->Cursor_i * MENU_LINE_H);
+ 439:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 440:Application/MENU.c ****         target_yend = SIZE_CHANGE_COORD(target_ysta, cursor_height);
+ 441:Application/MENU.c **** 
+ 442:Application/MENU.c **** #if (IS_OVERSHOOT != 0)
+ 443:Application/MENU.c ****         bounce_xsta = target_xsta + (target_xsta - actual_xsta) * OVERSHOOT;
+ 444:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 445:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 446:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 447:Application/MENU.c **** 
+ 448:Application/MENU.c ****         bounce_cnt_xsta = 2; // 反弹次数
+ 449:Application/MENU.c ****         bounce_cnt_ysta = 2;
+ 450:Application/MENU.c ****         bounce_cnt_xend = 2;
+ 451:Application/MENU.c ****         bounce_cnt_yend = 2;
+ 452:Application/MENU.c **** #endif
+ 453:Application/MENU.c ****     }
+ 454:Application/MENU.c **** 
+ 455:Application/MENU.c **** #if (IS_OVERSHOOT != 0)
+ 456:Application/MENU.c **** 
+ 457:Application/MENU.c ****     if (bounce_xsta == actual_xsta)
+ 458:Application/MENU.c ****     {
+ 459:Application/MENU.c ****         if (bounce_cnt_xsta--)
+ 460:Application/MENU.c ****             bounce_xsta = target_xsta + (target_xsta - actual_xsta) * OVERSHOOT;
+ 461:Application/MENU.c ****         else
+ 462:Application/MENU.c ****             bounce_xsta = target_xsta;
+ 463:Application/MENU.c ****     }
+ 464:Application/MENU.c ****     if (bounce_ysta == actual_ysta)
+ 465:Application/MENU.c ****     {
+ 466:Application/MENU.c ****         if (bounce_cnt_ysta--)
+ 467:Application/MENU.c ****             bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 468:Application/MENU.c ****         else
+ 469:Application/MENU.c ****             bounce_ysta = target_ysta;
+ 470:Application/MENU.c ****     }
+ 471:Application/MENU.c ****     if (bounce_xend == actual_xend)
+ 472:Application/MENU.c ****     {
+ 473:Application/MENU.c ****         if (bounce_cnt_xend--)
+ 474:Application/MENU.c ****             bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 475:Application/MENU.c ****         else
+ 476:Application/MENU.c ****             bounce_xend = target_xend;
+ 477:Application/MENU.c ****     }
+ 478:Application/MENU.c ****     if (bounce_yend == actual_yend)
+ 479:Application/MENU.c ****     {
+ 480:Application/MENU.c ****         if (bounce_cnt_yend--)
+ 481:Application/MENU.c ****             bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 482:Application/MENU.c ****         else
+ 483:Application/MENU.c ****             bounce_yend = target_yend;
+ 484:Application/MENU.c ****     }
+ 485:Application/MENU.c **** 
+ 486:Application/MENU.c ****     actual_xsta = STEPWISE_TO_TARGET(actual_xsta, bounce_xsta, ANIMATION_SPEED);
+ 487:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 488:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 20
+
+
+ 489:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 490:Application/MENU.c **** 
+ 491:Application/MENU.c **** #else
+ 492:Application/MENU.c **** 
+ 493:Application/MENU.c ****     actual_xsta = STEPWISE_TO_TARGET(actual_xsta, target_xsta, ANIMATION_SPEED);
+ 494:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, target_ysta, ANIMATION_SPEED);
+ 495:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, target_xend, ANIMATION_SPEED);
+ 496:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, target_yend, ANIMATION_SPEED);
+ 497:Application/MENU.c **** 
+ 498:Application/MENU.c **** #endif
+ 499:Application/MENU.c **** 
+ 500:Application/MENU.c ****     menu_command_callback(SHOW_CURSOR, (int)(actual_xsta + 0.5), (int)(actual_ysta + 0.5), (int)(ac
+ 501:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 502:Application/MENU.c **** }
+ 503:Application/MENU.c **** 
+ 504:Application/MENU.c **** void MENU_ShowBorder(MENU_HandleTypeDef *hMENU) // 显示边框
+ 505:Application/MENU.c **** {
+ 506:Application/MENU.c ****     for (int16_t i = 0; i < MENU_BORDER; i++)
+ 507:Application/MENU.c ****     {
+ 508:Application/MENU.c ****         menu_command_callback(DRAW_FRAME, MENU_X + i, MENU_Y + i, MENU_WIDTH - i - i, MENU_HEIGHT -
+ 509:Application/MENU.c ****     }
+ 510:Application/MENU.c **** }
+ 511:Application/MENU.c **** 
+ 512:Application/MENU.c **** /* ******************************************************** */
+ 513:Application/MENU.c **** 
+ 514:Application/MENU.c **** /* ******************************************************** */
+ 515:Application/MENU.c **** /* 应用示例 */
+ 516:Application/MENU.c **** 
+ 517:Application/MENU.c **** void MENU_RunMainMenu(void)
+ 518:Application/MENU.c **** {
+ 519:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 520:Application/MENU.c ****                                                    {"Tools", MENU_RunToolsMenu},      // 工具
+ 521:Application/MENU.c ****                                                    {"Games", MENU_RunGamesMenu},      // 游戏
+ 522:Application/MENU.c ****                                                    {"Setting", NULL},                 // 设置
+ 523:Application/MENU.c ****                                                    {"Information", MENU_Information}, // 信息
+ 524:Application/MENU.c ****                                                    {".."}};
+ 525:Application/MENU.c **** 
+ 526:Application/MENU.c ****     static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
+ 527:Application/MENU.c **** 
+ 528:Application/MENU.c ****     MENU_RunMenu(&MENU);
+ 529:Application/MENU.c **** }
+ 530:Application/MENU.c **** 
+ 531:Application/MENU.c **** void MENU_RunToolsMenu(void)
+ 532:Application/MENU.c **** {
+ 533:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 534:Application/MENU.c ****                                                    {"Seria", NULL},        // 串口
+ 535:Application/MENU.c ****                                                    {"Oscilloscope", NULL}, // 示波器
+ 536:Application/MENU.c ****                                                    {"PWM Output", NULL},   // PWM 输出
+ 537:Application/MENU.c ****                                                    {"PWM Input", NULL},    // PWM 输入
+ 538:Application/MENU.c ****                                                    {"ADC Input", NULL},    // ADC 输入
+ 539:Application/MENU.c ****                                                    {".."}};
+ 540:Application/MENU.c **** 
+ 541:Application/MENU.c ****     static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
+ 542:Application/MENU.c **** 
+ 543:Application/MENU.c ****     MENU_RunMenu(&MENU);
+ 544:Application/MENU.c **** }
+ 545:Application/MENU.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 21
+
+
+ 546:Application/MENU.c **** void MENU_RunGamesMenu(void)
+ 547:Application/MENU.c **** {
+ 548:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 549:Application/MENU.c ****                                                    {"Snake", NULL},        // 贪吃蛇
+ 550:Application/MENU.c ****                                                    {"Snake II", NULL},     // 贪吃蛇2
+ 551:Application/MENU.c ****                                                    {"Snake III", NULL},    // 贪吃蛇3
+ 552:Application/MENU.c ****                                                    {"Game of Life", NULL}, // 康威生命游戏
+ 553:Application/MENU.c ****                                                    {".."}};
+ 554:Application/MENU.c **** 
+ 555:Application/MENU.c ****     static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
+ 556:Application/MENU.c **** 
+ 557:Application/MENU.c ****     MENU_RunMenu(&MENU);
+ 558:Application/MENU.c **** }
+ 559:Application/MENU.c **** 
+ 560:Application/MENU.c **** //! 函数入口用法
+ 561:Application/MENU.c **** void MENU_Information(void)
+ 562:Application/MENU.c **** {
+ 522              		.loc 1 562 1 is_stmt 1 view -0
+ 523              		.cfi_startproc
+ 524              		@ args = 0, pretend = 0, frame = 0
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526 0000 08B5     		push	{r3, lr}
+ 527              	.LCFI7:
+ 528              		.cfi_def_cfa_offset 8
+ 529              		.cfi_offset 3, -8
+ 530              		.cfi_offset 14, -4
+ 563:Application/MENU.c ****     menu_command_callback(BUFFER_CLEAR);
+ 531              		.loc 1 563 5 view .LVU133
+ 532 0002 0120     		movs	r0, #1
+ 533 0004 FFF7FEFF 		bl	menu_command_callback
+ 534              	.LVL57:
+ 564:Application/MENU.c ****     menu_command_callback(SHOW_STRING, 5, 0, "R6-CAR");
+ 535              		.loc 1 564 5 view .LVU134
+ 536 0008 0F4B     		ldr	r3, .L42
+ 537 000a 0022     		movs	r2, #0
+ 538 000c 0521     		movs	r1, #5
+ 539 000e 0220     		movs	r0, #2
+ 540 0010 FFF7FEFF 		bl	menu_command_callback
+ 541              	.LVL58:
+ 565:Application/MENU.c ****     menu_command_callback(SHOW_STRING, 5, 20, "V0.1 Beta");
+ 542              		.loc 1 565 5 view .LVU135
+ 543 0014 0D4B     		ldr	r3, .L42+4
+ 544 0016 1422     		movs	r2, #20
+ 545 0018 0521     		movs	r1, #5
+ 546 001a 0220     		movs	r0, #2
+ 547 001c FFF7FEFF 		bl	menu_command_callback
+ 548              	.LVL59:
+ 566:Application/MENU.c ****     menu_command_callback(SHOW_STRING, 5, 40, "By CAYON");
+ 549              		.loc 1 566 5 view .LVU136
+ 550 0020 0B4B     		ldr	r3, .L42+8
+ 551 0022 2822     		movs	r2, #40
+ 552 0024 0521     		movs	r1, #5
+ 553 0026 0220     		movs	r0, #2
+ 554 0028 FFF7FEFF 		bl	menu_command_callback
+ 555              	.LVL60:
+ 567:Application/MENU.c ****     menu_command_callback(BUFFER_DISPLAY);
+ 556              		.loc 1 567 5 view .LVU137
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 22
+
+
+ 557 002c 0020     		movs	r0, #0
+ 558 002e FFF7FEFF 		bl	menu_command_callback
+ 559              	.LVL61:
+ 560              	.L40:
+ 568:Application/MENU.c **** 
+ 569:Application/MENU.c ****     while (1)
+ 561              		.loc 1 569 5 view .LVU138
+ 570:Application/MENU.c ****     {
+ 571:Application/MENU.c ****         if (menu_command_callback(GET_EVENT_ENTER))
+ 562              		.loc 1 571 9 view .LVU139
+ 563              		.loc 1 571 13 is_stmt 0 view .LVU140
+ 564 0032 0520     		movs	r0, #5
+ 565 0034 FFF7FEFF 		bl	menu_command_callback
+ 566              	.LVL62:
+ 567              		.loc 1 571 12 view .LVU141
+ 568 0038 20B9     		cbnz	r0, .L38
+ 572:Application/MENU.c ****             break;
+ 573:Application/MENU.c **** 
+ 574:Application/MENU.c ****         if (menu_command_callback(GET_EVENT_BACK))
+ 569              		.loc 1 574 9 is_stmt 1 view .LVU142
+ 570              		.loc 1 574 13 is_stmt 0 view .LVU143
+ 571 003a 0620     		movs	r0, #6
+ 572 003c FFF7FEFF 		bl	menu_command_callback
+ 573              	.LVL63:
+ 574              		.loc 1 574 12 view .LVU144
+ 575 0040 0028     		cmp	r0, #0
+ 576 0042 F6D0     		beq	.L40
+ 577              	.L38:
+ 575:Application/MENU.c ****             break;
+ 576:Application/MENU.c ****     }
+ 577:Application/MENU.c **** }
+ 578              		.loc 1 577 1 view .LVU145
+ 579 0044 08BD     		pop	{r3, pc}
+ 580              	.L43:
+ 581 0046 00BF     		.align	2
+ 582              	.L42:
+ 583 0048 00000000 		.word	.LC0
+ 584 004c 08000000 		.word	.LC1
+ 585 0050 14000000 		.word	.LC2
+ 586              		.cfi_endproc
+ 587              	.LFE85:
+ 589              		.section	.text.MENU_UpdateIndex,"ax",%progbits
+ 590              		.align	1
+ 591              		.global	MENU_UpdateIndex
+ 592              		.syntax unified
+ 593              		.thumb
+ 594              		.thumb_func
+ 596              	MENU_UpdateIndex:
+ 597              	.LVL64:
+ 598              	.LFB77:
+ 298:Application/MENU.c ****     /* 更新下标 */
+ 599              		.loc 1 298 1 is_stmt 1 view -0
+ 600              		.cfi_startproc
+ 601              		@ args = 0, pretend = 0, frame = 0
+ 602              		@ frame_needed = 0, uses_anonymous_args = 0
+ 603              		@ link register save eliminated.
+ 300:Application/MENU.c ****     hMENU->Catch_i += hMENU->Wheel_Event;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 23
+
+
+ 604              		.loc 1 300 5 view .LVU147
+ 300:Application/MENU.c ****     hMENU->Catch_i += hMENU->Wheel_Event;
+ 605              		.loc 1 300 29 is_stmt 0 view .LVU148
+ 606 0000 C389     		ldrh	r3, [r0, #14]
+ 300:Application/MENU.c ****     hMENU->Catch_i += hMENU->Wheel_Event;
+ 607              		.loc 1 300 21 view .LVU149
+ 608 0002 C288     		ldrh	r2, [r0, #6]
+ 609 0004 1A44     		add	r2, r2, r3
+ 610 0006 12B2     		sxth	r2, r2
+ 611 0008 C280     		strh	r2, [r0, #6]	@ movhi
+ 301:Application/MENU.c **** 
+ 612              		.loc 1 301 5 is_stmt 1 view .LVU150
+ 301:Application/MENU.c **** 
+ 613              		.loc 1 301 20 is_stmt 0 view .LVU151
+ 614 000a 8188     		ldrh	r1, [r0, #4]
+ 615 000c 0B44     		add	r3, r3, r1
+ 616 000e 1BB2     		sxth	r3, r3
+ 617 0010 8380     		strh	r3, [r0, #4]	@ movhi
+ 304:Application/MENU.c ****         hMENU->Catch_i = hMENU->Option_Max_i;
+ 618              		.loc 1 304 5 is_stmt 1 view .LVU152
+ 304:Application/MENU.c ****         hMENU->Catch_i = hMENU->Option_Max_i;
+ 619              		.loc 1 304 31 is_stmt 0 view .LVU153
+ 620 0012 B0F90A10 		ldrsh	r1, [r0, #10]
+ 304:Application/MENU.c ****         hMENU->Catch_i = hMENU->Option_Max_i;
+ 621              		.loc 1 304 8 view .LVU154
+ 622 0016 8B42     		cmp	r3, r1
+ 623 0018 00DD     		ble	.L45
+ 305:Application/MENU.c **** 
+ 624              		.loc 1 305 9 is_stmt 1 view .LVU155
+ 305:Application/MENU.c **** 
+ 625              		.loc 1 305 24 is_stmt 0 view .LVU156
+ 626 001a 8180     		strh	r1, [r0, #4]	@ movhi
+ 627              	.L45:
+ 307:Application/MENU.c ****         hMENU->Catch_i = 0;
+ 628              		.loc 1 307 5 is_stmt 1 view .LVU157
+ 307:Application/MENU.c ****         hMENU->Catch_i = 0;
+ 629              		.loc 1 307 14 is_stmt 0 view .LVU158
+ 630 001c B0F90430 		ldrsh	r3, [r0, #4]
+ 307:Application/MENU.c ****         hMENU->Catch_i = 0;
+ 631              		.loc 1 307 8 view .LVU159
+ 632 0020 002B     		cmp	r3, #0
+ 633 0022 14DB     		blt	.L51
+ 634              	.L46:
+ 311:Application/MENU.c ****         hMENU->Cursor_i = CURSOR_CEILING;
+ 635              		.loc 1 311 5 is_stmt 1 view .LVU160
+ 311:Application/MENU.c ****         hMENU->Cursor_i = CURSOR_CEILING;
+ 636              		.loc 1 311 8 is_stmt 0 view .LVU161
+ 637 0024 012A     		cmp	r2, #1
+ 638 0026 01DD     		ble	.L47
+ 312:Application/MENU.c **** 
+ 639              		.loc 1 312 9 is_stmt 1 view .LVU162
+ 312:Application/MENU.c **** 
+ 640              		.loc 1 312 25 is_stmt 0 view .LVU163
+ 641 0028 0123     		movs	r3, #1
+ 642 002a C380     		strh	r3, [r0, #6]	@ movhi
+ 643              	.L47:
+ 314:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Option_Max_i;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 24
+
+
+ 644              		.loc 1 314 5 is_stmt 1 view .LVU164
+ 314:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Option_Max_i;
+ 645              		.loc 1 314 14 is_stmt 0 view .LVU165
+ 646 002c B0F90630 		ldrsh	r3, [r0, #6]
+ 314:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Option_Max_i;
+ 647              		.loc 1 314 8 view .LVU166
+ 648 0030 9942     		cmp	r1, r3
+ 649 0032 00DA     		bge	.L48
+ 315:Application/MENU.c **** 
+ 650              		.loc 1 315 9 is_stmt 1 view .LVU167
+ 315:Application/MENU.c **** 
+ 651              		.loc 1 315 25 is_stmt 0 view .LVU168
+ 652 0034 C180     		strh	r1, [r0, #6]	@ movhi
+ 653              	.L48:
+ 317:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Catch_i;
+ 654              		.loc 1 317 5 is_stmt 1 view .LVU169
+ 317:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Catch_i;
+ 655              		.loc 1 317 14 is_stmt 0 view .LVU170
+ 656 0036 B0F90620 		ldrsh	r2, [r0, #6]
+ 317:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Catch_i;
+ 657              		.loc 1 317 32 view .LVU171
+ 658 003a B0F90430 		ldrsh	r3, [r0, #4]
+ 317:Application/MENU.c ****         hMENU->Cursor_i = hMENU->Catch_i;
+ 659              		.loc 1 317 8 view .LVU172
+ 660 003e 9A42     		cmp	r2, r3
+ 661 0040 00DD     		ble	.L49
+ 318:Application/MENU.c **** 
+ 662              		.loc 1 318 9 is_stmt 1 view .LVU173
+ 318:Application/MENU.c **** 
+ 663              		.loc 1 318 25 is_stmt 0 view .LVU174
+ 664 0042 C380     		strh	r3, [r0, #6]	@ movhi
+ 665              	.L49:
+ 320:Application/MENU.c ****         hMENU->Cursor_i = 0;
+ 666              		.loc 1 320 5 is_stmt 1 view .LVU175
+ 320:Application/MENU.c ****         hMENU->Cursor_i = 0;
+ 667              		.loc 1 320 14 is_stmt 0 view .LVU176
+ 668 0044 B0F90630 		ldrsh	r3, [r0, #6]
+ 320:Application/MENU.c ****         hMENU->Cursor_i = 0;
+ 669              		.loc 1 320 8 view .LVU177
+ 670 0048 002B     		cmp	r3, #0
+ 671 004a 03DB     		blt	.L52
+ 672              	.L44:
+ 322:Application/MENU.c **** 
+ 673              		.loc 1 322 1 view .LVU178
+ 674 004c 7047     		bx	lr
+ 675              	.L51:
+ 308:Application/MENU.c **** 
+ 676              		.loc 1 308 9 is_stmt 1 view .LVU179
+ 308:Application/MENU.c **** 
+ 677              		.loc 1 308 24 is_stmt 0 view .LVU180
+ 678 004e 0023     		movs	r3, #0
+ 679 0050 8380     		strh	r3, [r0, #4]	@ movhi
+ 680 0052 E7E7     		b	.L46
+ 681              	.L52:
+ 321:Application/MENU.c **** }
+ 682              		.loc 1 321 9 is_stmt 1 view .LVU181
+ 321:Application/MENU.c **** }
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 25
+
+
+ 683              		.loc 1 321 25 is_stmt 0 view .LVU182
+ 684 0054 0023     		movs	r3, #0
+ 685 0056 C380     		strh	r3, [r0, #6]	@ movhi
+ 322:Application/MENU.c **** 
+ 686              		.loc 1 322 1 view .LVU183
+ 687 0058 F8E7     		b	.L44
+ 688              		.cfi_endproc
+ 689              	.LFE77:
+ 691              		.section	.text.MENU_Event_and_Action,"ax",%progbits
+ 692              		.align	1
+ 693              		.global	MENU_Event_and_Action
+ 694              		.syntax unified
+ 695              		.thumb
+ 696              		.thumb_func
+ 698              	MENU_Event_and_Action:
+ 699              	.LVL65:
+ 700              	.LFB76:
+ 268:Application/MENU.c ****     if (menu_command_callback(GET_EVENT_ENTER)) /* 确定事件 如果选中的选项功能不为�
+ 701              		.loc 1 268 1 is_stmt 1 view -0
+ 702              		.cfi_startproc
+ 703              		@ args = 0, pretend = 0, frame = 0
+ 704              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268:Application/MENU.c ****     if (menu_command_callback(GET_EVENT_ENTER)) /* 确定事件 如果选中的选项功能不为�
+ 705              		.loc 1 268 1 is_stmt 0 view .LVU185
+ 706 0000 10B5     		push	{r4, lr}
+ 707              	.LCFI8:
+ 708              		.cfi_def_cfa_offset 8
+ 709              		.cfi_offset 4, -8
+ 710              		.cfi_offset 14, -4
+ 711 0002 0446     		mov	r4, r0
+ 269:Application/MENU.c ****     {
+ 712              		.loc 1 269 5 is_stmt 1 view .LVU186
+ 269:Application/MENU.c ****     {
+ 713              		.loc 1 269 9 is_stmt 0 view .LVU187
+ 714 0004 0520     		movs	r0, #5
+ 715              	.LVL66:
+ 269:Application/MENU.c ****     {
+ 716              		.loc 1 269 9 view .LVU188
+ 717 0006 FFF7FEFF 		bl	menu_command_callback
+ 718              	.LVL67:
+ 269:Application/MENU.c ****     {
+ 719              		.loc 1 269 8 view .LVU189
+ 720 000a 68B1     		cbz	r0, .L54
+ 271:Application/MENU.c ****         {
+ 721              		.loc 1 271 9 is_stmt 1 view .LVU190
+ 271:Application/MENU.c ****         {
+ 722              		.loc 1 271 18 is_stmt 0 view .LVU191
+ 723 000c 2368     		ldr	r3, [r4]
+ 271:Application/MENU.c ****         {
+ 724              		.loc 1 271 36 view .LVU192
+ 725 000e B4F90420 		ldrsh	r2, [r4, #4]
+ 271:Application/MENU.c ****         {
+ 726              		.loc 1 271 30 view .LVU193
+ 727 0012 03EB0213 		add	r3, r3, r2, lsl #4
+ 271:Application/MENU.c ****         {
+ 728              		.loc 1 271 46 view .LVU194
+ 729 0016 5B68     		ldr	r3, [r3, #4]
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 26
+
+
+ 271:Application/MENU.c ****         {
+ 730              		.loc 1 271 12 view .LVU195
+ 731 0018 1BB1     		cbz	r3, .L55
+ 273:Application/MENU.c ****         }
+ 732              		.loc 1 273 13 is_stmt 1 view .LVU196
+ 733 001a 9847     		blx	r3
+ 734              	.LVL68:
+ 735              	.L56:
+ 279:Application/MENU.c ****     }
+ 736              		.loc 1 279 9 view .LVU197
+ 279:Application/MENU.c ****     }
+ 737              		.loc 1 279 37 is_stmt 0 view .LVU198
+ 738 001c 0123     		movs	r3, #1
+ 739 001e 2374     		strb	r3, [r4, #16]
+ 740              	.L53:
+ 295:Application/MENU.c **** 
+ 741              		.loc 1 295 1 view .LVU199
+ 742 0020 10BD     		pop	{r4, pc}
+ 743              	.LVL69:
+ 744              	.L55:
+ 277:Application/MENU.c ****         }
+ 745              		.loc 1 277 13 is_stmt 1 view .LVU200
+ 277:Application/MENU.c ****         }
+ 746              		.loc 1 277 26 is_stmt 0 view .LVU201
+ 747 0022 0023     		movs	r3, #0
+ 748 0024 6374     		strb	r3, [r4, #17]
+ 749 0026 F9E7     		b	.L56
+ 750              	.L54:
+ 281:Application/MENU.c ****     {
+ 751              		.loc 1 281 10 is_stmt 1 view .LVU202
+ 281:Application/MENU.c ****     {
+ 752              		.loc 1 281 14 is_stmt 0 view .LVU203
+ 753 0028 0620     		movs	r0, #6
+ 754 002a FFF7FEFF 		bl	menu_command_callback
+ 755              	.LVL70:
+ 281:Application/MENU.c ****     {
+ 756              		.loc 1 281 13 view .LVU204
+ 757 002e 10B1     		cbz	r0, .L58
+ 283:Application/MENU.c ****     }
+ 758              		.loc 1 283 9 is_stmt 1 view .LVU205
+ 283:Application/MENU.c ****     }
+ 759              		.loc 1 283 22 is_stmt 0 view .LVU206
+ 760 0030 0023     		movs	r3, #0
+ 761 0032 6374     		strb	r3, [r4, #17]
+ 762 0034 F4E7     		b	.L53
+ 763              	.L58:
+ 287:Application/MENU.c **** 
+ 764              		.loc 1 287 9 is_stmt 1 view .LVU207
+ 287:Application/MENU.c **** 
+ 765              		.loc 1 287 31 is_stmt 0 view .LVU208
+ 766 0036 0720     		movs	r0, #7
+ 767 0038 FFF7FEFF 		bl	menu_command_callback
+ 768              	.LVL71:
+ 287:Application/MENU.c **** 
+ 769              		.loc 1 287 28 view .LVU209
+ 770 003c 4042     		rsbs	r0, r0, #0
+ 771 003e 00B2     		sxth	r0, r0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 27
+
+
+ 772 0040 E081     		strh	r0, [r4, #14]	@ movhi
+ 289:Application/MENU.c ****         {
+ 773              		.loc 1 289 9 is_stmt 1 view .LVU210
+ 289:Application/MENU.c ****         {
+ 774              		.loc 1 289 12 is_stmt 0 view .LVU211
+ 775 0042 0028     		cmp	r0, #0
+ 776 0044 ECD0     		beq	.L53
+ 291:Application/MENU.c ****             hMENU->AnimationUpdateEvent = 1;
+ 777              		.loc 1 291 13 is_stmt 1 view .LVU212
+ 778 0046 2046     		mov	r0, r4
+ 779 0048 FFF7FEFF 		bl	MENU_UpdateIndex
+ 780              	.LVL72:
+ 292:Application/MENU.c ****         }
+ 781              		.loc 1 292 13 view .LVU213
+ 292:Application/MENU.c ****         }
+ 782              		.loc 1 292 41 is_stmt 0 view .LVU214
+ 783 004c 0123     		movs	r3, #1
+ 784 004e 2374     		strb	r3, [r4, #16]
+ 295:Application/MENU.c **** 
+ 785              		.loc 1 295 1 view .LVU215
+ 786 0050 E6E7     		b	.L53
+ 787              		.cfi_endproc
+ 788              	.LFE76:
+ 790              		.global	__aeabi_f2d
+ 791              		.section	.text.MENU_ShowOption,"ax",%progbits
+ 792              		.align	1
+ 793              		.global	MENU_ShowOption
+ 794              		.syntax unified
+ 795              		.thumb
+ 796              		.thumb_func
+ 798              	MENU_ShowOption:
+ 799              	.LVL73:
+ 800              	.LFB79:
+ 364:Application/MENU.c ****     char String[64]; // 定义字符数组
+ 801              		.loc 1 364 1 is_stmt 1 view -0
+ 802              		.cfi_startproc
+ 803              		@ args = 0, pretend = 0, frame = 64
+ 804              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364:Application/MENU.c ****     char String[64]; // 定义字符数组
+ 805              		.loc 1 364 1 is_stmt 0 view .LVU217
+ 806 0000 70B5     		push	{r4, r5, r6, lr}
+ 807              	.LCFI9:
+ 808              		.cfi_def_cfa_offset 16
+ 809              		.cfi_offset 4, -16
+ 810              		.cfi_offset 5, -12
+ 811              		.cfi_offset 6, -8
+ 812              		.cfi_offset 14, -4
+ 813 0002 90B0     		sub	sp, sp, #64
+ 814              	.LCFI10:
+ 815              		.cfi_def_cfa_offset 80
+ 816 0004 0446     		mov	r4, r0
+ 817 0006 0D46     		mov	r5, r1
+ 818 0008 1346     		mov	r3, r2
+ 365:Application/MENU.c **** 
+ 819              		.loc 1 365 5 is_stmt 1 view .LVU218
+ 367:Application/MENU.c ****     {
+ 820              		.loc 1 367 5 view .LVU219
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 28
+
+
+ 367:Application/MENU.c ****     {
+ 821              		.loc 1 367 19 is_stmt 0 view .LVU220
+ 822 000a 127B     		ldrb	r2, [r2, #12]	@ zero_extendqisi2
+ 823              	.LVL74:
+ 367:Application/MENU.c ****     {
+ 824              		.loc 1 367 5 view .LVU221
+ 825 000c 082A     		cmp	r2, #8
+ 826 000e 53D8     		bhi	.L61
+ 827 0010 DFE802F0 		tbb	[pc, r2]
+ 828              	.LVL75:
+ 829              	.L63:
+ 830 0014 05       		.byte	(.L71-.L63)/2
+ 831 0015 15       		.byte	(.L70-.L63)/2
+ 832 0016 1C       		.byte	(.L69-.L63)/2
+ 833 0017 24       		.byte	(.L68-.L63)/2
+ 834 0018 2B       		.byte	(.L67-.L63)/2
+ 835 0019 32       		.byte	(.L66-.L63)/2
+ 836 001a 40       		.byte	(.L65-.L63)/2
+ 837 001b 39       		.byte	(.L64-.L63)/2
+ 838 001c 46       		.byte	(.L62-.L63)/2
+ 839 001d 00       		.p2align 1
+ 840              	.L71:
+ 370:Application/MENU.c ****         break;
+ 841              		.loc 1 370 9 is_stmt 1 view .LVU222
+ 370:Application/MENU.c ****         break;
+ 842              		.loc 1 370 58 is_stmt 0 view .LVU223
+ 843 001e 9A68     		ldr	r2, [r3, #8]
+ 370:Application/MENU.c ****         break;
+ 844              		.loc 1 370 9 view .LVU224
+ 845 0020 92F90020 		ldrsb	r2, [r2]
+ 846 0024 1968     		ldr	r1, [r3]
+ 847 0026 6846     		mov	r0, sp
+ 848              	.LVL76:
+ 370:Application/MENU.c ****         break;
+ 849              		.loc 1 370 9 view .LVU225
+ 850 0028 FFF7FEFF 		bl	sprintf
+ 851              	.LVL77:
+ 371:Application/MENU.c **** 
+ 852              		.loc 1 371 9 is_stmt 1 view .LVU226
+ 853              	.L72:
+ 410:Application/MENU.c **** }
+ 854              		.loc 1 410 5 view .LVU227
+ 410:Application/MENU.c **** }
+ 855              		.loc 1 410 12 is_stmt 0 view .LVU228
+ 856 002c 6B46     		mov	r3, sp
+ 857 002e 2A46     		mov	r2, r5
+ 858 0030 2146     		mov	r1, r4
+ 859 0032 0220     		movs	r0, #2
+ 860 0034 FFF7FEFF 		bl	menu_command_callback
+ 861              	.LVL78:
+ 411:Application/MENU.c **** 
+ 862              		.loc 1 411 1 view .LVU229
+ 863 0038 C0B2     		uxtb	r0, r0
+ 864 003a 10B0     		add	sp, sp, #64
+ 865              	.LCFI11:
+ 866              		.cfi_remember_state
+ 867              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 29
+
+
+ 868              		@ sp needed
+ 869 003c 70BD     		pop	{r4, r5, r6, pc}
+ 870              	.LVL79:
+ 871              	.L70:
+ 872              	.LCFI12:
+ 873              		.cfi_restore_state
+ 374:Application/MENU.c ****         break;
+ 874              		.loc 1 374 9 is_stmt 1 view .LVU230
+ 374:Application/MENU.c ****         break;
+ 875              		.loc 1 374 59 is_stmt 0 view .LVU231
+ 876 003e 9A68     		ldr	r2, [r3, #8]
+ 374:Application/MENU.c ****         break;
+ 877              		.loc 1 374 9 view .LVU232
+ 878 0040 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 879 0042 1968     		ldr	r1, [r3]
+ 880 0044 6846     		mov	r0, sp
+ 881              	.LVL80:
+ 374:Application/MENU.c ****         break;
+ 882              		.loc 1 374 9 view .LVU233
+ 883 0046 FFF7FEFF 		bl	sprintf
+ 884              	.LVL81:
+ 375:Application/MENU.c **** 
+ 885              		.loc 1 375 9 is_stmt 1 view .LVU234
+ 886 004a EFE7     		b	.L72
+ 887              	.LVL82:
+ 888              	.L69:
+ 378:Application/MENU.c ****         break;
+ 889              		.loc 1 378 9 view .LVU235
+ 378:Application/MENU.c ****         break;
+ 890              		.loc 1 378 59 is_stmt 0 view .LVU236
+ 891 004c 9A68     		ldr	r2, [r3, #8]
+ 378:Application/MENU.c ****         break;
+ 892              		.loc 1 378 9 view .LVU237
+ 893 004e B2F90020 		ldrsh	r2, [r2]
+ 894 0052 1968     		ldr	r1, [r3]
+ 895 0054 6846     		mov	r0, sp
+ 896              	.LVL83:
+ 378:Application/MENU.c ****         break;
+ 897              		.loc 1 378 9 view .LVU238
+ 898 0056 FFF7FEFF 		bl	sprintf
+ 899              	.LVL84:
+ 379:Application/MENU.c **** 
+ 900              		.loc 1 379 9 is_stmt 1 view .LVU239
+ 901 005a E7E7     		b	.L72
+ 902              	.LVL85:
+ 903              	.L68:
+ 382:Application/MENU.c ****         break;
+ 904              		.loc 1 382 9 view .LVU240
+ 382:Application/MENU.c ****         break;
+ 905              		.loc 1 382 60 is_stmt 0 view .LVU241
+ 906 005c 9A68     		ldr	r2, [r3, #8]
+ 382:Application/MENU.c ****         break;
+ 907              		.loc 1 382 9 view .LVU242
+ 908 005e 1288     		ldrh	r2, [r2]
+ 909 0060 1968     		ldr	r1, [r3]
+ 910 0062 6846     		mov	r0, sp
+ 911              	.LVL86:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 30
+
+
+ 382:Application/MENU.c ****         break;
+ 912              		.loc 1 382 9 view .LVU243
+ 913 0064 FFF7FEFF 		bl	sprintf
+ 914              	.LVL87:
+ 383:Application/MENU.c **** 
+ 915              		.loc 1 383 9 is_stmt 1 view .LVU244
+ 916 0068 E0E7     		b	.L72
+ 917              	.LVL88:
+ 918              	.L67:
+ 386:Application/MENU.c ****         break;
+ 919              		.loc 1 386 9 view .LVU245
+ 386:Application/MENU.c ****         break;
+ 920              		.loc 1 386 59 is_stmt 0 view .LVU246
+ 921 006a 9A68     		ldr	r2, [r3, #8]
+ 386:Application/MENU.c ****         break;
+ 922              		.loc 1 386 9 view .LVU247
+ 923 006c 1268     		ldr	r2, [r2]
+ 924 006e 1968     		ldr	r1, [r3]
+ 925 0070 6846     		mov	r0, sp
+ 926              	.LVL89:
+ 386:Application/MENU.c ****         break;
+ 927              		.loc 1 386 9 view .LVU248
+ 928 0072 FFF7FEFF 		bl	sprintf
+ 929              	.LVL90:
+ 387:Application/MENU.c **** 
+ 930              		.loc 1 387 9 is_stmt 1 view .LVU249
+ 931 0076 D9E7     		b	.L72
+ 932              	.LVL91:
+ 933              	.L66:
+ 390:Application/MENU.c ****         break;
+ 934              		.loc 1 390 9 view .LVU250
+ 390:Application/MENU.c ****         break;
+ 935              		.loc 1 390 60 is_stmt 0 view .LVU251
+ 936 0078 9A68     		ldr	r2, [r3, #8]
+ 390:Application/MENU.c ****         break;
+ 937              		.loc 1 390 9 view .LVU252
+ 938 007a 1268     		ldr	r2, [r2]
+ 939 007c 1968     		ldr	r1, [r3]
+ 940 007e 6846     		mov	r0, sp
+ 941              	.LVL92:
+ 390:Application/MENU.c ****         break;
+ 942              		.loc 1 390 9 view .LVU253
+ 943 0080 FFF7FEFF 		bl	sprintf
+ 944              	.LVL93:
+ 391:Application/MENU.c **** 
+ 945              		.loc 1 391 9 is_stmt 1 view .LVU254
+ 946 0084 D2E7     		b	.L72
+ 947              	.LVL94:
+ 948              	.L64:
+ 394:Application/MENU.c ****         break;
+ 949              		.loc 1 394 9 view .LVU255
+ 394:Application/MENU.c ****         break;
+ 950              		.loc 1 394 56 is_stmt 0 view .LVU256
+ 951 0086 9A68     		ldr	r2, [r3, #8]
+ 394:Application/MENU.c ****         break;
+ 952              		.loc 1 394 9 view .LVU257
+ 953 0088 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 31
+
+
+ 954 008a 1968     		ldr	r1, [r3]
+ 955 008c 6846     		mov	r0, sp
+ 956              	.LVL95:
+ 394:Application/MENU.c ****         break;
+ 957              		.loc 1 394 9 view .LVU258
+ 958 008e FFF7FEFF 		bl	sprintf
+ 959              	.LVL96:
+ 395:Application/MENU.c **** 
+ 960              		.loc 1 395 9 is_stmt 1 view .LVU259
+ 961 0092 CBE7     		b	.L72
+ 962              	.LVL97:
+ 963              	.L65:
+ 398:Application/MENU.c ****         break;
+ 964              		.loc 1 398 9 view .LVU260
+ 965 0094 9A68     		ldr	r2, [r3, #8]
+ 966 0096 1968     		ldr	r1, [r3]
+ 967 0098 6846     		mov	r0, sp
+ 968              	.LVL98:
+ 398:Application/MENU.c ****         break;
+ 969              		.loc 1 398 9 is_stmt 0 view .LVU261
+ 970 009a FFF7FEFF 		bl	sprintf
+ 971              	.LVL99:
+ 399:Application/MENU.c **** 
+ 972              		.loc 1 399 9 is_stmt 1 view .LVU262
+ 973 009e C5E7     		b	.L72
+ 974              	.LVL100:
+ 975              	.L62:
+ 402:Application/MENU.c ****         break;
+ 976              		.loc 1 402 9 view .LVU263
+ 402:Application/MENU.c ****         break;
+ 977              		.loc 1 402 31 is_stmt 0 view .LVU264
+ 978 00a0 1E68     		ldr	r6, [r3]
+ 402:Application/MENU.c ****         break;
+ 979              		.loc 1 402 57 view .LVU265
+ 980 00a2 9B68     		ldr	r3, [r3, #8]
+ 981              	.LVL101:
+ 402:Application/MENU.c ****         break;
+ 982              		.loc 1 402 9 view .LVU266
+ 983 00a4 1868     		ldr	r0, [r3]	@ float
+ 984              	.LVL102:
+ 402:Application/MENU.c ****         break;
+ 985              		.loc 1 402 9 view .LVU267
+ 986 00a6 FFF7FEFF 		bl	__aeabi_f2d
+ 987              	.LVL103:
+ 988 00aa 0246     		mov	r2, r0
+ 989 00ac 0B46     		mov	r3, r1
+ 990 00ae 3146     		mov	r1, r6
+ 991 00b0 6846     		mov	r0, sp
+ 992 00b2 FFF7FEFF 		bl	sprintf
+ 993              	.LVL104:
+ 403:Application/MENU.c **** 
+ 994              		.loc 1 403 9 is_stmt 1 view .LVU268
+ 995 00b6 B9E7     		b	.L72
+ 996              	.LVL105:
+ 997              	.L61:
+ 406:Application/MENU.c ****         break;
+ 998              		.loc 1 406 9 view .LVU269
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 32
+
+
+ 999 00b8 9A68     		ldr	r2, [r3, #8]
+ 1000 00ba 1968     		ldr	r1, [r3]
+ 1001 00bc 6846     		mov	r0, sp
+ 1002              	.LVL106:
+ 406:Application/MENU.c ****         break;
+ 1003              		.loc 1 406 9 is_stmt 0 view .LVU270
+ 1004 00be FFF7FEFF 		bl	sprintf
+ 1005              	.LVL107:
+ 407:Application/MENU.c ****     }
+ 1006              		.loc 1 407 9 is_stmt 1 view .LVU271
+ 1007 00c2 B3E7     		b	.L72
+ 1008              		.cfi_endproc
+ 1009              	.LFE79:
+ 1011              		.section	.text.MENU_HandleInit,"ax",%progbits
+ 1012              		.align	1
+ 1013              		.global	MENU_HandleInit
+ 1014              		.syntax unified
+ 1015              		.thumb
+ 1016              		.thumb_func
+ 1018              	MENU_HandleInit:
+ 1019              	.LVL108:
+ 1020              	.LFB75:
+ 249:Application/MENU.c ****     hMENU->isRun = 1;                // 运行标志
+ 1021              		.loc 1 249 1 view -0
+ 1022              		.cfi_startproc
+ 1023              		@ args = 0, pretend = 0, frame = 0
+ 1024              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249:Application/MENU.c ****     hMENU->isRun = 1;                // 运行标志
+ 1025              		.loc 1 249 1 is_stmt 0 view .LVU273
+ 1026 0000 38B5     		push	{r3, r4, r5, lr}
+ 1027              	.LCFI13:
+ 1028              		.cfi_def_cfa_offset 16
+ 1029              		.cfi_offset 3, -16
+ 1030              		.cfi_offset 4, -12
+ 1031              		.cfi_offset 5, -8
+ 1032              		.cfi_offset 14, -4
+ 1033 0002 0446     		mov	r4, r0
+ 250:Application/MENU.c ****     hMENU->AnimationUpdateEvent = 1; // 动画更新事件
+ 1034              		.loc 1 250 5 is_stmt 1 view .LVU274
+ 250:Application/MENU.c ****     hMENU->AnimationUpdateEvent = 1; // 动画更新事件
+ 1035              		.loc 1 250 18 is_stmt 0 view .LVU275
+ 1036 0004 0123     		movs	r3, #1
+ 1037 0006 4374     		strb	r3, [r0, #17]
+ 251:Application/MENU.c ****     hMENU->Catch_i = 1;              // 选中下标默认为1,(因为hMENU->OptionList[0]为"<<<")
+ 1038              		.loc 1 251 5 is_stmt 1 view .LVU276
+ 251:Application/MENU.c ****     hMENU->Catch_i = 1;              // 选中下标默认为1,(因为hMENU->OptionList[0]为"<<<")
+ 1039              		.loc 1 251 33 is_stmt 0 view .LVU277
+ 1040 0008 0374     		strb	r3, [r0, #16]
+ 252:Application/MENU.c ****     hMENU->Cursor_i = 0;             // 光标下标默认为0
+ 1041              		.loc 1 252 5 is_stmt 1 view .LVU278
+ 252:Application/MENU.c ****     hMENU->Cursor_i = 0;             // 光标下标默认为0
+ 1042              		.loc 1 252 20 is_stmt 0 view .LVU279
+ 1043 000a 8380     		strh	r3, [r0, #4]	@ movhi
+ 253:Application/MENU.c ****     hMENU->Show_i = 0;               // 显示(遍历)起始下标
+ 1044              		.loc 1 253 5 is_stmt 1 view .LVU280
+ 253:Application/MENU.c ****     hMENU->Show_i = 0;               // 显示(遍历)起始下标
+ 1045              		.loc 1 253 21 is_stmt 0 view .LVU281
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 33
+
+
+ 1046 000c 0022     		movs	r2, #0
+ 1047 000e C280     		strh	r2, [r0, #6]	@ movhi
+ 254:Application/MENU.c ****     hMENU->Show_i_Previous = 1;      // CURSOR_CEILING + 1; // 上一次循环的显示下标
+ 1048              		.loc 1 254 5 is_stmt 1 view .LVU282
+ 254:Application/MENU.c ****     hMENU->Show_i_Previous = 1;      // CURSOR_CEILING + 1; // 上一次循环的显示下标
+ 1049              		.loc 1 254 19 is_stmt 0 view .LVU283
+ 1050 0010 0281     		strh	r2, [r0, #8]	@ movhi
+ 255:Application/MENU.c ****     hMENU->Option_Max_i = 0;         // 选项列表长度
+ 1051              		.loc 1 255 5 is_stmt 1 view .LVU284
+ 255:Application/MENU.c ****     hMENU->Option_Max_i = 0;         // 选项列表长度
+ 1052              		.loc 1 255 28 is_stmt 0 view .LVU285
+ 1053 0012 8381     		strh	r3, [r0, #12]	@ movhi
+ 256:Application/MENU.c **** 
+ 1054              		.loc 1 256 5 is_stmt 1 view .LVU286
+ 256:Application/MENU.c **** 
+ 1055              		.loc 1 256 25 is_stmt 0 view .LVU287
+ 1056 0014 4281     		strh	r2, [r0, #10]	@ movhi
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1057              		.loc 1 258 5 is_stmt 1 view .LVU288
+ 1058 0016 09E0     		b	.L75
+ 1059              	.LVL109:
+ 1060              	.L76:
+ 261:Application/MENU.c ****             MENU_ShowOption(0, 0, &hMENU->OptionList[hMENU->Option_Max_i]); // 获取字符串长�
+ 1061              		.loc 1 261 9 view .LVU289
+ 262:Application/MENU.c ****     }
+ 1062              		.loc 1 262 13 is_stmt 0 view .LVU290
+ 1063 0018 2A46     		mov	r2, r5
+ 1064 001a 0021     		movs	r1, #0
+ 1065 001c 0846     		mov	r0, r1
+ 1066 001e FFF7FEFF 		bl	MENU_ShowOption
+ 1067              	.LVL110:
+ 261:Application/MENU.c ****             MENU_ShowOption(0, 0, &hMENU->OptionList[hMENU->Option_Max_i]); // 获取字符串长�
+ 1068              		.loc 1 261 55 view .LVU291
+ 1069 0022 6873     		strb	r0, [r5, #13]
+ 259:Application/MENU.c ****     {
+ 1070              		.loc 1 259 10 is_stmt 1 view .LVU292
+ 259:Application/MENU.c ****     {
+ 1071              		.loc 1 259 15 is_stmt 0 view .LVU293
+ 1072 0024 B4F90A30 		ldrsh	r3, [r4, #10]
+ 259:Application/MENU.c ****     {
+ 1073              		.loc 1 259 29 view .LVU294
+ 1074 0028 0133     		adds	r3, r3, #1
+ 1075 002a 6381     		strh	r3, [r4, #10]	@ movhi
+ 1076              	.L75:
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1077              		.loc 1 258 35 is_stmt 1 discriminator 1 view .LVU295
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1078              		.loc 1 258 40 is_stmt 0 discriminator 1 view .LVU296
+ 1079 002c 2268     		ldr	r2, [r4]
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1080              		.loc 1 258 58 discriminator 1 view .LVU297
+ 1081 002e B4F90A30 		ldrsh	r3, [r4, #10]
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1082              		.loc 1 258 52 discriminator 1 view .LVU298
+ 1083 0032 1901     		lsls	r1, r3, #4
+ 1084 0034 02EB0315 		add	r5, r2, r3, lsl #4
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 34
+
+
+ 1085              		.loc 1 258 73 discriminator 1 view .LVU299
+ 1086 0038 5258     		ldr	r2, [r2, r1]
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1087              		.loc 1 258 80 discriminator 1 view .LVU300
+ 1088 003a 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 258:Application/MENU.c ****          hMENU->Option_Max_i++) // 计算选项列表长度
+ 1089              		.loc 1 258 5 discriminator 1 view .LVU301
+ 1090 003c 2E2A     		cmp	r2, #46
+ 1091 003e EBD1     		bne	.L76
+ 264:Application/MENU.c **** }
+ 1092              		.loc 1 264 5 is_stmt 1 view .LVU302
+ 264:Application/MENU.c **** }
+ 1093              		.loc 1 264 24 is_stmt 0 view .LVU303
+ 1094 0040 013B     		subs	r3, r3, #1
+ 1095 0042 6381     		strh	r3, [r4, #10]	@ movhi
+ 265:Application/MENU.c **** 
+ 1096              		.loc 1 265 1 view .LVU304
+ 1097 0044 38BD     		pop	{r3, r4, r5, pc}
+ 265:Application/MENU.c **** 
+ 1098              		.loc 1 265 1 view .LVU305
+ 1099              		.cfi_endproc
+ 1100              	.LFE75:
+ 1102              		.global	__aeabi_i2f
+ 1103              		.global	__aeabi_fcmpeq
+ 1104              		.global	__aeabi_fsub
+ 1105              		.global	__aeabi_fcmpgt
+ 1106              		.global	__aeabi_dadd
+ 1107              		.global	__aeabi_dmul
+ 1108              		.global	__aeabi_d2f
+ 1109              		.global	__aeabi_fcmplt
+ 1110              		.global	__aeabi_dsub
+ 1111              		.global	__aeabi_f2iz
+ 1112              		.section	.text.MENU_ShowOptionList,"ax",%progbits
+ 1113              		.align	1
+ 1114              		.global	MENU_ShowOptionList
+ 1115              		.syntax unified
+ 1116              		.thumb
+ 1117              		.thumb_func
+ 1119              	MENU_ShowOptionList:
+ 1120              	.LVL111:
+ 1121              	.LFB78:
+ 325:Application/MENU.c ****     static float VerticalOffsetBuffer; // 垂直偏移缓冲
+ 1122              		.loc 1 325 1 is_stmt 1 view -0
+ 1123              		.cfi_startproc
+ 1124              		@ args = 0, pretend = 0, frame = 0
+ 1125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 325:Application/MENU.c ****     static float VerticalOffsetBuffer; // 垂直偏移缓冲
+ 1126              		.loc 1 325 1 is_stmt 0 view .LVU307
+ 1127 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 1128              	.LCFI14:
+ 1129              		.cfi_def_cfa_offset 32
+ 1130              		.cfi_offset 3, -32
+ 1131              		.cfi_offset 4, -28
+ 1132              		.cfi_offset 5, -24
+ 1133              		.cfi_offset 6, -20
+ 1134              		.cfi_offset 7, -16
+ 1135              		.cfi_offset 8, -12
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 35
+
+
+ 1136              		.cfi_offset 9, -8
+ 1137              		.cfi_offset 14, -4
+ 1138 0004 0646     		mov	r6, r0
+ 326:Application/MENU.c **** 
+ 1139              		.loc 1 326 5 is_stmt 1 view .LVU308
+ 329:Application/MENU.c **** 
+ 1140              		.loc 1 329 5 view .LVU309
+ 329:Application/MENU.c **** 
+ 1141              		.loc 1 329 26 is_stmt 0 view .LVU310
+ 1142 0006 8488     		ldrh	r4, [r0, #4]
+ 329:Application/MENU.c **** 
+ 1143              		.loc 1 329 43 view .LVU311
+ 1144 0008 C388     		ldrh	r3, [r0, #6]
+ 329:Application/MENU.c **** 
+ 1145              		.loc 1 329 36 view .LVU312
+ 1146 000a E41A     		subs	r4, r4, r3
+ 1147 000c 24B2     		sxth	r4, r4
+ 329:Application/MENU.c **** 
+ 1148              		.loc 1 329 19 view .LVU313
+ 1149 000e 0481     		strh	r4, [r0, #8]	@ movhi
+ 331:Application/MENU.c ****     {
+ 1150              		.loc 1 331 5 is_stmt 1 view .LVU314
+ 331:Application/MENU.c ****     {
+ 1151              		.loc 1 331 14 is_stmt 0 view .LVU315
+ 1152 0010 B0F90C00 		ldrsh	r0, [r0, #12]
+ 1153              	.LVL112:
+ 331:Application/MENU.c ****     {
+ 1154              		.loc 1 331 8 view .LVU316
+ 1155 0014 8442     		cmp	r4, r0
+ 1156 0016 08D0     		beq	.L79
+ 333:Application/MENU.c ****         hMENU->Show_i_Previous = hMENU->Show_i;
+ 1157              		.loc 1 333 9 is_stmt 1 view .LVU317
+ 333:Application/MENU.c ****         hMENU->Show_i_Previous = hMENU->Show_i;
+ 1158              		.loc 1 333 48 is_stmt 0 view .LVU318
+ 1159 0018 201A     		subs	r0, r4, r0
+ 333:Application/MENU.c ****         hMENU->Show_i_Previous = hMENU->Show_i;
+ 1160              		.loc 1 333 74 view .LVU319
+ 1161 001a 00EB8000 		add	r0, r0, r0, lsl #2
+ 333:Application/MENU.c ****         hMENU->Show_i_Previous = hMENU->Show_i;
+ 1162              		.loc 1 333 30 view .LVU320
+ 1163 001e 8000     		lsls	r0, r0, #2
+ 1164 0020 FFF7FEFF 		bl	__aeabi_i2f
+ 1165              	.LVL113:
+ 1166 0024 3E4B     		ldr	r3, .L98+8
+ 1167 0026 1860     		str	r0, [r3]	@ float
+ 334:Application/MENU.c ****     }
+ 1168              		.loc 1 334 9 is_stmt 1 view .LVU321
+ 334:Application/MENU.c ****     }
+ 1169              		.loc 1 334 32 is_stmt 0 view .LVU322
+ 1170 0028 B481     		strh	r4, [r6, #12]	@ movhi
+ 1171              	.L79:
+ 337:Application/MENU.c ****     {
+ 1172              		.loc 1 337 5 is_stmt 1 view .LVU323
+ 337:Application/MENU.c ****     {
+ 1173              		.loc 1 337 9 is_stmt 0 view .LVU324
+ 1174 002a 3D4B     		ldr	r3, .L98+8
+ 1175 002c 1C68     		ldr	r4, [r3]	@ float
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 36
+
+
+ 337:Application/MENU.c ****     {
+ 1176              		.loc 1 337 8 view .LVU325
+ 1177 002e 0021     		movs	r1, #0
+ 1178 0030 2046     		mov	r0, r4
+ 1179 0032 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 1180              	.LVL114:
+ 1181 0036 20BB     		cbnz	r0, .L80
+ 339:Application/MENU.c ****     }
+ 1182              		.loc 1 339 9 is_stmt 1 view .LVU326
+ 339:Application/MENU.c ****     }
+ 1183              		.loc 1 339 32 is_stmt 0 view .LVU327
+ 1184 0038 2146     		mov	r1, r4
+ 1185 003a 0020     		movs	r0, #0
+ 1186 003c FFF7FEFF 		bl	__aeabi_fsub
+ 1187              	.LVL115:
+ 1188 0040 0546     		mov	r5, r0
+ 1189 0042 4FF07651 		mov	r1, #1031798784
+ 1190 0046 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1191              	.LVL116:
+ 1192 004a E8B1     		cbz	r0, .L94
+ 339:Application/MENU.c ****     }
+ 1193              		.loc 1 339 32 discriminator 1 view .LVU328
+ 1194 004c 2046     		mov	r0, r4
+ 1195 004e FFF7FEFF 		bl	__aeabi_f2d
+ 1196              	.LVL117:
+ 1197 0052 0022     		movs	r2, #0
+ 1198 0054 334B     		ldr	r3, .L98+12
+ 1199 0056 FFF7FEFF 		bl	__aeabi_dadd
+ 1200              	.LVL118:
+ 1201 005a 8046     		mov	r8, r0
+ 1202 005c 8946     		mov	r9, r1
+ 1203 005e 2846     		mov	r0, r5
+ 1204 0060 FFF7FEFF 		bl	__aeabi_f2d
+ 1205              	.LVL119:
+ 1206 0064 2CA3     		adr	r3, .L98
+ 1207 0066 D3E90023 		ldrd	r2, [r3]
+ 1208 006a FFF7FEFF 		bl	__aeabi_dmul
+ 1209              	.LVL120:
+ 1210 006e 0246     		mov	r2, r0
+ 1211 0070 0B46     		mov	r3, r1
+ 1212 0072 4046     		mov	r0, r8
+ 1213 0074 4946     		mov	r1, r9
+ 1214 0076 FFF7FEFF 		bl	__aeabi_dadd
+ 1215              	.LVL121:
+ 1216 007a FFF7FEFF 		bl	__aeabi_d2f
+ 1217              	.LVL122:
+ 1218              	.L84:
+ 339:Application/MENU.c ****     }
+ 1219              		.loc 1 339 30 discriminator 8 view .LVU329
+ 1220 007e 284B     		ldr	r3, .L98+8
+ 1221 0080 1860     		str	r0, [r3]	@ float
+ 1222              	.L80:
+ 339:Application/MENU.c ****     }
+ 1223              		.loc 1 339 32 discriminator 1 view .LVU330
+ 1224 0082 4FF0FF34 		mov	r4, #-1
+ 1225 0086 3BE0     		b	.L86
+ 1226              	.L94:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 37
+
+
+ 339:Application/MENU.c ****     }
+ 1227              		.loc 1 339 32 discriminator 2 view .LVU331
+ 1228 0088 2749     		ldr	r1, .L98+16
+ 1229 008a 2846     		mov	r0, r5
+ 1230 008c FFF7FEFF 		bl	__aeabi_fcmplt
+ 1231              	.LVL123:
+ 1232 0090 C8B1     		cbz	r0, .L95
+ 339:Application/MENU.c ****     }
+ 1233              		.loc 1 339 32 discriminator 4 view .LVU332
+ 1234 0092 2046     		mov	r0, r4
+ 1235 0094 FFF7FEFF 		bl	__aeabi_f2d
+ 1236              	.LVL124:
+ 1237 0098 0022     		movs	r2, #0
+ 1238 009a 224B     		ldr	r3, .L98+12
+ 1239 009c FFF7FEFF 		bl	__aeabi_dsub
+ 1240              	.LVL125:
+ 1241 00a0 8046     		mov	r8, r0
+ 1242 00a2 8946     		mov	r9, r1
+ 1243 00a4 2846     		mov	r0, r5
+ 1244 00a6 FFF7FEFF 		bl	__aeabi_f2d
+ 1245              	.LVL126:
+ 1246 00aa 1BA3     		adr	r3, .L98
+ 1247 00ac D3E90023 		ldrd	r2, [r3]
+ 1248 00b0 FFF7FEFF 		bl	__aeabi_dmul
+ 1249              	.LVL127:
+ 1250 00b4 0246     		mov	r2, r0
+ 1251 00b6 0B46     		mov	r3, r1
+ 1252 00b8 4046     		mov	r0, r8
+ 1253 00ba 4946     		mov	r1, r9
+ 1254 00bc FFF7FEFF 		bl	__aeabi_dadd
+ 1255              	.LVL128:
+ 1256 00c0 FFF7FEFF 		bl	__aeabi_d2f
+ 1257              	.LVL129:
+ 1258 00c4 DBE7     		b	.L84
+ 1259              	.L95:
+ 339:Application/MENU.c ****     }
+ 1260              		.loc 1 339 32 view .LVU333
+ 1261 00c6 0020     		movs	r0, #0
+ 1262 00c8 D9E7     		b	.L84
+ 1263              	.LVL130:
+ 1264              	.L97:
+ 1265              	.LBB5:
+ 1266              	.LBB6:
+ 351:Application/MENU.c **** #else
+ 1267              		.loc 1 351 9 is_stmt 1 view .LVU334
+ 351:Application/MENU.c **** #else
+ 1268              		.loc 1 351 51 is_stmt 0 view .LVU335
+ 1269 00ca 3368     		ldr	r3, [r6]
+ 351:Application/MENU.c **** #else
+ 1270              		.loc 1 351 63 view .LVU336
+ 1271 00cc 03EB0717 		add	r7, r3, r7, lsl #4
+ 351:Application/MENU.c **** #else
+ 1272              		.loc 1 351 82 view .LVU337
+ 1273 00d0 97F80D80 		ldrb	r8, [r7, #13]	@ zero_extendqisi2
+ 351:Application/MENU.c **** #else
+ 1274              		.loc 1 351 43 view .LVU338
+ 1275 00d4 C8F11008 		rsb	r8, r8, #16
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 38
+
+
+ 351:Application/MENU.c **** #else
+ 1276              		.loc 1 351 17 view .LVU339
+ 1277 00d8 4FEA8808 		lsl	r8, r8, #2
+ 1278              	.LVL131:
+ 356:Application/MENU.c **** 
+ 1279              		.loc 1 356 9 is_stmt 1 view .LVU340
+ 356:Application/MENU.c **** 
+ 1280              		.loc 1 356 47 is_stmt 0 view .LVU341
+ 1281 00dc 04EB8405 		add	r5, r4, r4, lsl #2
+ 1282 00e0 AD00     		lsls	r5, r5, #2
+ 1283 00e2 ADB2     		uxth	r5, r5
+ 356:Application/MENU.c **** 
+ 1284              		.loc 1 356 100 view .LVU342
+ 1285 00e4 0E4B     		ldr	r3, .L98+8
+ 1286 00e6 1868     		ldr	r0, [r3]	@ float
+ 1287 00e8 FFF7FEFF 		bl	__aeabi_f2iz
+ 1288              	.LVL132:
+ 356:Application/MENU.c **** 
+ 1289              		.loc 1 356 98 view .LVU343
+ 1290 00ec 2918     		adds	r1, r5, r0
+ 1291 00ee 0531     		adds	r1, r1, #5
+ 1292              	.LVL133:
+ 359:Application/MENU.c ****     }
+ 1293              		.loc 1 359 9 is_stmt 1 view .LVU344
+ 359:Application/MENU.c ****     }
+ 1294              		.loc 1 359 55 is_stmt 0 view .LVU345
+ 1295 00f0 3A46     		mov	r2, r7
+ 1296 00f2 09B2     		sxth	r1, r1
+ 359:Application/MENU.c ****     }
+ 1297              		.loc 1 359 55 view .LVU346
+ 1298 00f4 4046     		mov	r0, r8
+ 1299 00f6 FFF7FEFF 		bl	MENU_ShowOption
+ 1300              	.LVL134:
+ 359:Application/MENU.c ****     }
+ 1301              		.loc 1 359 53 view .LVU347
+ 1302 00fa 7873     		strb	r0, [r7, #13]
+ 1303              	.LVL135:
+ 1304              	.L87:
+ 359:Application/MENU.c ****     }
+ 1305              		.loc 1 359 53 view .LVU348
+ 1306              	.LBE6:
+ 342:Application/MENU.c ****     {
+ 1307              		.loc 1 342 51 is_stmt 1 discriminator 2 view .LVU349
+ 342:Application/MENU.c ****     {
+ 1308              		.loc 1 342 52 is_stmt 0 discriminator 2 view .LVU350
+ 1309 00fc 0134     		adds	r4, r4, #1
+ 1310              	.LVL136:
+ 342:Application/MENU.c ****     {
+ 1311              		.loc 1 342 52 discriminator 2 view .LVU351
+ 1312 00fe 24B2     		sxth	r4, r4
+ 1313              	.LVL137:
+ 1314              	.L86:
+ 342:Application/MENU.c ****     {
+ 1315              		.loc 1 342 26 is_stmt 1 discriminator 1 view .LVU352
+ 342:Application/MENU.c ****     {
+ 1316              		.loc 1 342 5 is_stmt 0 discriminator 1 view .LVU353
+ 1317 0100 022C     		cmp	r4, #2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 39
+
+
+ 1318 0102 07DC     		bgt	.L78
+ 1319              	.LBB7:
+ 344:Application/MENU.c ****             continue;
+ 1320              		.loc 1 344 9 is_stmt 1 view .LVU354
+ 344:Application/MENU.c ****             continue;
+ 1321              		.loc 1 344 18 is_stmt 0 view .LVU355
+ 1322 0104 B6F90870 		ldrsh	r7, [r6, #8]
+ 344:Application/MENU.c ****             continue;
+ 1323              		.loc 1 344 12 view .LVU356
+ 1324 0108 E719     		adds	r7, r4, r7
+ 1325 010a F7D4     		bmi	.L87
+ 347:Application/MENU.c ****             break;
+ 1326              		.loc 1 347 9 is_stmt 1 view .LVU357
+ 347:Application/MENU.c ****             break;
+ 1327              		.loc 1 347 38 is_stmt 0 view .LVU358
+ 1328 010c B6F90A30 		ldrsh	r3, [r6, #10]
+ 347:Application/MENU.c ****             break;
+ 1329              		.loc 1 347 12 view .LVU359
+ 1330 0110 9F42     		cmp	r7, r3
+ 1331 0112 DADD     		ble	.L97
+ 1332              	.L78:
+ 347:Application/MENU.c ****             break;
+ 1333              		.loc 1 347 12 view .LVU360
+ 1334              	.LBE7:
+ 1335              	.LBE5:
+ 361:Application/MENU.c **** 
+ 1336              		.loc 1 361 1 view .LVU361
+ 1337 0114 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 1338              	.LVL138:
+ 1339              	.L99:
+ 361:Application/MENU.c **** 
+ 1340              		.loc 1 361 1 view .LVU362
+ 1341              		.align	3
+ 1342              	.L98:
+ 1343 0118 66666666 		.word	1717986918
+ 1344 011c 6666D63F 		.word	1071015526
+ 1345 0120 00000000 		.word	.LANCHOR1
+ 1346 0124 0000B03F 		.word	1068498944
+ 1347 0128 000080BD 		.word	-1115684864
+ 1348              		.cfi_endproc
+ 1349              	.LFE78:
+ 1351              		.global	__aeabi_fadd
+ 1352              		.global	__aeabi_d2iz
+ 1353              		.section	.text.MENU_ShowCursor,"ax",%progbits
+ 1354              		.align	1
+ 1355              		.global	MENU_ShowCursor
+ 1356              		.syntax unified
+ 1357              		.thumb
+ 1358              		.thumb_func
+ 1360              	MENU_ShowCursor:
+ 1361              	.LVL139:
+ 1362              	.LFB80:
+ 414:Application/MENU.c ****     static float actual_xsta, actual_ysta, actual_xend, actual_yend; // actual
+ 1363              		.loc 1 414 1 is_stmt 1 view -0
+ 1364              		.cfi_startproc
+ 1365              		@ args = 0, pretend = 0, frame = 0
+ 1366              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 40
+
+
+ 414:Application/MENU.c ****     static float actual_xsta, actual_ysta, actual_xend, actual_yend; // actual
+ 1367              		.loc 1 414 1 is_stmt 0 view .LVU364
+ 1368 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1369              	.LCFI15:
+ 1370              		.cfi_def_cfa_offset 36
+ 1371              		.cfi_offset 4, -36
+ 1372              		.cfi_offset 5, -32
+ 1373              		.cfi_offset 6, -28
+ 1374              		.cfi_offset 7, -24
+ 1375              		.cfi_offset 8, -20
+ 1376              		.cfi_offset 9, -16
+ 1377              		.cfi_offset 10, -12
+ 1378              		.cfi_offset 11, -8
+ 1379              		.cfi_offset 14, -4
+ 1380 0004 83B0     		sub	sp, sp, #12
+ 1381              	.LCFI16:
+ 1382              		.cfi_def_cfa_offset 48
+ 415:Application/MENU.c ****     static float target_xsta, target_ysta, target_xend, target_yend; // target
+ 1383              		.loc 1 415 5 is_stmt 1 view .LVU365
+ 416:Application/MENU.c **** 
+ 1384              		.loc 1 416 5 view .LVU366
+ 419:Application/MENU.c ****     static uint8_t bounce_cnt_xsta, bounce_cnt_ysta, bounce_cnt_xend, bounce_cnt_yend; // bounce
+ 1385              		.loc 1 419 5 view .LVU367
+ 420:Application/MENU.c **** 
+ 1386              		.loc 1 420 5 view .LVU368
+ 426:Application/MENU.c ****     {
+ 1387              		.loc 1 426 5 view .LVU369
+ 426:Application/MENU.c ****     {
+ 1388              		.loc 1 426 14 is_stmt 0 view .LVU370
+ 1389 0006 037C     		ldrb	r3, [r0, #16]	@ zero_extendqisi2
+ 426:Application/MENU.c ****     {
+ 1390              		.loc 1 426 8 view .LVU371
+ 1391 0008 002B     		cmp	r3, #0
+ 1392 000a 00F0A380 		beq	.L101
+ 1393 000e 0446     		mov	r4, r0
+ 1394              	.LBB8:
+ 428:Application/MENU.c **** 
+ 1395              		.loc 1 428 9 is_stmt 1 view .LVU372
+ 428:Application/MENU.c **** 
+ 1396              		.loc 1 428 37 is_stmt 0 view .LVU373
+ 1397 0010 0023     		movs	r3, #0
+ 1398 0012 0374     		strb	r3, [r0, #16]
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1399              		.loc 1 430 9 is_stmt 1 view .LVU374
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1400              		.loc 1 430 55 is_stmt 0 view .LVU375
+ 1401 0014 0368     		ldr	r3, [r0]
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1402              		.loc 1 430 73 view .LVU376
+ 1403 0016 B0F90420 		ldrsh	r2, [r0, #4]
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1404              		.loc 1 430 67 view .LVU377
+ 1405 001a 03EB0213 		add	r3, r3, r2, lsl #4
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1406              		.loc 1 430 83 view .LVU378
+ 1407 001e 587B     		ldrb	r0, [r3, #13]	@ zero_extendqisi2
+ 1408              	.LVL140:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 41
+
+
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1409              		.loc 1 430 106 view .LVU379
+ 1410 0020 C000     		lsls	r0, r0, #3
+ 430:Application/MENU.c ****         uint16_t cursor_height = MENU_LINE_H;
+ 1411              		.loc 1 430 18 view .LVU380
+ 1412 0022 861D     		adds	r6, r0, #6
+ 1413              	.LVL141:
+ 431:Application/MENU.c **** 
+ 1414              		.loc 1 431 9 is_stmt 1 view .LVU381
+ 434:Application/MENU.c **** #else
+ 1415              		.loc 1 434 9 view .LVU382
+ 434:Application/MENU.c **** #else
+ 1416              		.loc 1 434 45 is_stmt 0 view .LVU383
+ 1417 0024 C0F17A00 		rsb	r0, r0, #122
+ 434:Application/MENU.c **** #else
+ 1418              		.loc 1 434 21 view .LVU384
+ 1419 0028 4010     		asrs	r0, r0, #1
+ 1420 002a FFF7FEFF 		bl	__aeabi_i2f
+ 1421              	.LVL142:
+ 1422 002e 0546     		mov	r5, r0
+ 1423 0030 B94B     		ldr	r3, .L147+16
+ 1424 0032 1860     		str	r0, [r3]	@ float
+ 438:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 1425              		.loc 1 438 9 is_stmt 1 view .LVU385
+ 438:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 1426              		.loc 1 438 52 is_stmt 0 view .LVU386
+ 1427 0034 B4F90600 		ldrsh	r0, [r4, #6]
+ 438:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 1428              		.loc 1 438 63 view .LVU387
+ 1429 0038 00EB8000 		add	r0, r0, r0, lsl #2
+ 1430 003c 8000     		lsls	r0, r0, #2
+ 438:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 1431              		.loc 1 438 21 view .LVU388
+ 1432 003e 0330     		adds	r0, r0, #3
+ 1433 0040 FFF7FEFF 		bl	__aeabi_i2f
+ 1434              	.LVL143:
+ 1435 0044 0446     		mov	r4, r0
+ 1436              	.LVL144:
+ 438:Application/MENU.c ****         target_xend = SIZE_CHANGE_COORD(target_xsta, cursor_width);
+ 1437              		.loc 1 438 21 view .LVU389
+ 1438 0046 B54B     		ldr	r3, .L147+20
+ 1439 0048 1860     		str	r0, [r3]	@ float
+ 439:Application/MENU.c ****         target_yend = SIZE_CHANGE_COORD(target_ysta, cursor_height);
+ 1440              		.loc 1 439 9 is_stmt 1 view .LVU390
+ 439:Application/MENU.c ****         target_yend = SIZE_CHANGE_COORD(target_ysta, cursor_height);
+ 1441              		.loc 1 439 23 is_stmt 0 view .LVU391
+ 1442 004a 3046     		mov	r0, r6
+ 1443 004c FFF7FEFF 		bl	__aeabi_i2f
+ 1444              	.LVL145:
+ 1445 0050 2946     		mov	r1, r5
+ 1446 0052 FFF7FEFF 		bl	__aeabi_fadd
+ 1447              	.LVL146:
+ 1448 0056 4FF07E51 		mov	r1, #1065353216
+ 1449 005a FFF7FEFF 		bl	__aeabi_fsub
+ 1450              	.LVL147:
+ 1451 005e 0746     		mov	r7, r0
+ 439:Application/MENU.c ****         target_yend = SIZE_CHANGE_COORD(target_ysta, cursor_height);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 42
+
+
+ 1452              		.loc 1 439 21 view .LVU392
+ 1453 0060 AF4B     		ldr	r3, .L147+24
+ 1454 0062 1860     		str	r0, [r3]	@ float
+ 440:Application/MENU.c **** 
+ 1455              		.loc 1 440 9 is_stmt 1 view .LVU393
+ 440:Application/MENU.c **** 
+ 1456              		.loc 1 440 23 is_stmt 0 view .LVU394
+ 1457 0064 AF49     		ldr	r1, .L147+28
+ 1458 0066 2046     		mov	r0, r4
+ 1459 0068 FFF7FEFF 		bl	__aeabi_fadd
+ 1460              	.LVL148:
+ 1461 006c 4FF07E51 		mov	r1, #1065353216
+ 1462 0070 FFF7FEFF 		bl	__aeabi_fsub
+ 1463              	.LVL149:
+ 1464 0074 0646     		mov	r6, r0
+ 1465              	.LVL150:
+ 440:Application/MENU.c **** 
+ 1466              		.loc 1 440 21 view .LVU395
+ 1467 0076 AC4B     		ldr	r3, .L147+32
+ 1468 0078 1860     		str	r0, [r3]	@ float
+ 443:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1469              		.loc 1 443 9 is_stmt 1 view .LVU396
+ 443:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1470              		.loc 1 443 50 is_stmt 0 view .LVU397
+ 1471 007a AC4B     		ldr	r3, .L147+36
+ 1472 007c 1968     		ldr	r1, [r3]	@ float
+ 1473 007e 2846     		mov	r0, r5
+ 1474 0080 FFF7FEFF 		bl	__aeabi_fsub
+ 1475              	.LVL151:
+ 1476 0084 FFF7FEFF 		bl	__aeabi_f2d
+ 1477              	.LVL152:
+ 443:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1478              		.loc 1 443 65 view .LVU398
+ 1479 0088 9FA3     		adr	r3, .L147
+ 1480 008a D3E90023 		ldrd	r2, [r3]
+ 1481 008e FFF7FEFF 		bl	__aeabi_dmul
+ 1482              	.LVL153:
+ 1483 0092 8046     		mov	r8, r0
+ 1484 0094 8946     		mov	r9, r1
+ 443:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1485              		.loc 1 443 35 view .LVU399
+ 1486 0096 2846     		mov	r0, r5
+ 1487 0098 FFF7FEFF 		bl	__aeabi_f2d
+ 1488              	.LVL154:
+ 1489 009c 4246     		mov	r2, r8
+ 1490 009e 4B46     		mov	r3, r9
+ 1491 00a0 FFF7FEFF 		bl	__aeabi_dadd
+ 1492              	.LVL155:
+ 1493 00a4 FFF7FEFF 		bl	__aeabi_d2f
+ 1494              	.LVL156:
+ 443:Application/MENU.c ****         bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1495              		.loc 1 443 21 view .LVU400
+ 1496 00a8 A14B     		ldr	r3, .L147+40
+ 1497 00aa 1860     		str	r0, [r3]	@ float
+ 444:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1498              		.loc 1 444 9 is_stmt 1 view .LVU401
+ 444:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 43
+
+
+ 1499              		.loc 1 444 50 is_stmt 0 view .LVU402
+ 1500 00ac A14B     		ldr	r3, .L147+44
+ 1501 00ae 1968     		ldr	r1, [r3]	@ float
+ 1502 00b0 2046     		mov	r0, r4
+ 1503 00b2 FFF7FEFF 		bl	__aeabi_fsub
+ 1504              	.LVL157:
+ 1505 00b6 FFF7FEFF 		bl	__aeabi_f2d
+ 1506              	.LVL158:
+ 444:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1507              		.loc 1 444 65 view .LVU403
+ 1508 00ba 93A3     		adr	r3, .L147
+ 1509 00bc D3E90023 		ldrd	r2, [r3]
+ 1510 00c0 FFF7FEFF 		bl	__aeabi_dmul
+ 1511              	.LVL159:
+ 1512 00c4 8046     		mov	r8, r0
+ 1513 00c6 8946     		mov	r9, r1
+ 444:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1514              		.loc 1 444 35 view .LVU404
+ 1515 00c8 2046     		mov	r0, r4
+ 1516 00ca FFF7FEFF 		bl	__aeabi_f2d
+ 1517              	.LVL160:
+ 1518 00ce 4246     		mov	r2, r8
+ 1519 00d0 4B46     		mov	r3, r9
+ 1520 00d2 FFF7FEFF 		bl	__aeabi_dadd
+ 1521              	.LVL161:
+ 1522 00d6 FFF7FEFF 		bl	__aeabi_d2f
+ 1523              	.LVL162:
+ 444:Application/MENU.c ****         bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1524              		.loc 1 444 21 view .LVU405
+ 1525 00da 974B     		ldr	r3, .L147+48
+ 1526 00dc 1860     		str	r0, [r3]	@ float
+ 445:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1527              		.loc 1 445 9 is_stmt 1 view .LVU406
+ 445:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1528              		.loc 1 445 50 is_stmt 0 view .LVU407
+ 1529 00de 974B     		ldr	r3, .L147+52
+ 1530 00e0 1968     		ldr	r1, [r3]	@ float
+ 1531 00e2 3846     		mov	r0, r7
+ 1532 00e4 FFF7FEFF 		bl	__aeabi_fsub
+ 1533              	.LVL163:
+ 1534 00e8 FFF7FEFF 		bl	__aeabi_f2d
+ 1535              	.LVL164:
+ 445:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1536              		.loc 1 445 65 view .LVU408
+ 1537 00ec 86A3     		adr	r3, .L147
+ 1538 00ee D3E90023 		ldrd	r2, [r3]
+ 1539 00f2 FFF7FEFF 		bl	__aeabi_dmul
+ 1540              	.LVL165:
+ 1541 00f6 0446     		mov	r4, r0
+ 1542 00f8 0D46     		mov	r5, r1
+ 445:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1543              		.loc 1 445 35 view .LVU409
+ 1544 00fa 3846     		mov	r0, r7
+ 1545 00fc FFF7FEFF 		bl	__aeabi_f2d
+ 1546              	.LVL166:
+ 1547 0100 2246     		mov	r2, r4
+ 1548 0102 2B46     		mov	r3, r5
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 44
+
+
+ 1549 0104 FFF7FEFF 		bl	__aeabi_dadd
+ 1550              	.LVL167:
+ 1551 0108 FFF7FEFF 		bl	__aeabi_d2f
+ 1552              	.LVL168:
+ 445:Application/MENU.c ****         bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1553              		.loc 1 445 21 view .LVU410
+ 1554 010c 8C4B     		ldr	r3, .L147+56
+ 1555 010e 1860     		str	r0, [r3]	@ float
+ 446:Application/MENU.c **** 
+ 1556              		.loc 1 446 9 is_stmt 1 view .LVU411
+ 446:Application/MENU.c **** 
+ 1557              		.loc 1 446 50 is_stmt 0 view .LVU412
+ 1558 0110 8C4B     		ldr	r3, .L147+60
+ 1559 0112 1968     		ldr	r1, [r3]	@ float
+ 1560 0114 3046     		mov	r0, r6
+ 1561 0116 FFF7FEFF 		bl	__aeabi_fsub
+ 1562              	.LVL169:
+ 1563 011a FFF7FEFF 		bl	__aeabi_f2d
+ 1564              	.LVL170:
+ 446:Application/MENU.c **** 
+ 1565              		.loc 1 446 65 view .LVU413
+ 1566 011e 7AA3     		adr	r3, .L147
+ 1567 0120 D3E90023 		ldrd	r2, [r3]
+ 1568 0124 FFF7FEFF 		bl	__aeabi_dmul
+ 1569              	.LVL171:
+ 1570 0128 0446     		mov	r4, r0
+ 1571 012a 0D46     		mov	r5, r1
+ 446:Application/MENU.c **** 
+ 1572              		.loc 1 446 35 view .LVU414
+ 1573 012c 3046     		mov	r0, r6
+ 1574 012e FFF7FEFF 		bl	__aeabi_f2d
+ 1575              	.LVL172:
+ 1576 0132 2246     		mov	r2, r4
+ 1577 0134 2B46     		mov	r3, r5
+ 1578 0136 FFF7FEFF 		bl	__aeabi_dadd
+ 1579              	.LVL173:
+ 1580 013a FFF7FEFF 		bl	__aeabi_d2f
+ 1581              	.LVL174:
+ 446:Application/MENU.c **** 
+ 1582              		.loc 1 446 21 view .LVU415
+ 1583 013e 824B     		ldr	r3, .L147+64
+ 1584 0140 1860     		str	r0, [r3]	@ float
+ 448:Application/MENU.c ****         bounce_cnt_ysta = 2;
+ 1585              		.loc 1 448 9 is_stmt 1 view .LVU416
+ 448:Application/MENU.c ****         bounce_cnt_ysta = 2;
+ 1586              		.loc 1 448 25 is_stmt 0 view .LVU417
+ 1587 0142 0223     		movs	r3, #2
+ 1588 0144 814A     		ldr	r2, .L147+68
+ 1589 0146 1370     		strb	r3, [r2]
+ 449:Application/MENU.c ****         bounce_cnt_xend = 2;
+ 1590              		.loc 1 449 9 is_stmt 1 view .LVU418
+ 449:Application/MENU.c ****         bounce_cnt_xend = 2;
+ 1591              		.loc 1 449 25 is_stmt 0 view .LVU419
+ 1592 0148 814A     		ldr	r2, .L147+72
+ 1593 014a 1370     		strb	r3, [r2]
+ 450:Application/MENU.c ****         bounce_cnt_yend = 2;
+ 1594              		.loc 1 450 9 is_stmt 1 view .LVU420
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 45
+
+
+ 450:Application/MENU.c ****         bounce_cnt_yend = 2;
+ 1595              		.loc 1 450 25 is_stmt 0 view .LVU421
+ 1596 014c 814A     		ldr	r2, .L147+76
+ 1597 014e 1370     		strb	r3, [r2]
+ 451:Application/MENU.c **** #endif
+ 1598              		.loc 1 451 9 is_stmt 1 view .LVU422
+ 451:Application/MENU.c **** #endif
+ 1599              		.loc 1 451 25 is_stmt 0 view .LVU423
+ 1600 0150 814A     		ldr	r2, .L147+80
+ 1601 0152 1370     		strb	r3, [r2]
+ 1602              	.LVL175:
+ 1603              	.L101:
+ 451:Application/MENU.c **** #endif
+ 1604              		.loc 1 451 25 view .LVU424
+ 1605              	.LBE8:
+ 457:Application/MENU.c ****     {
+ 1606              		.loc 1 457 5 is_stmt 1 view .LVU425
+ 457:Application/MENU.c ****     {
+ 1607              		.loc 1 457 21 is_stmt 0 view .LVU426
+ 1608 0154 754B     		ldr	r3, .L147+36
+ 1609 0156 D3F800A0 		ldr	r10, [r3]	@ float
+ 457:Application/MENU.c ****     {
+ 1610              		.loc 1 457 8 view .LVU427
+ 1611 015a 5146     		mov	r1, r10
+ 1612 015c 744B     		ldr	r3, .L147+40
+ 1613 015e 1868     		ldr	r0, [r3]	@ float
+ 1614 0160 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 1615              	.LVL176:
+ 1616 0164 00B3     		cbz	r0, .L102
+ 459:Application/MENU.c ****             bounce_xsta = target_xsta + (target_xsta - actual_xsta) * OVERSHOOT;
+ 1617              		.loc 1 459 9 is_stmt 1 view .LVU428
+ 459:Application/MENU.c ****             bounce_xsta = target_xsta + (target_xsta - actual_xsta) * OVERSHOOT;
+ 1618              		.loc 1 459 28 is_stmt 0 view .LVU429
+ 1619 0166 794A     		ldr	r2, .L147+68
+ 1620 0168 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1621 016a 591E     		subs	r1, r3, #1
+ 1622 016c 1170     		strb	r1, [r2]
+ 459:Application/MENU.c ****             bounce_xsta = target_xsta + (target_xsta - actual_xsta) * OVERSHOOT;
+ 1623              		.loc 1 459 12 view .LVU430
+ 1624 016e 002B     		cmp	r3, #0
+ 1625 0170 00F0B381 		beq	.L104
+ 460:Application/MENU.c ****         else
+ 1626              		.loc 1 460 13 is_stmt 1 view .LVU431
+ 460:Application/MENU.c ****         else
+ 1627              		.loc 1 460 39 is_stmt 0 view .LVU432
+ 1628 0174 684B     		ldr	r3, .L147+16
+ 1629 0176 1E68     		ldr	r6, [r3]	@ float
+ 460:Application/MENU.c ****         else
+ 1630              		.loc 1 460 54 view .LVU433
+ 1631 0178 5146     		mov	r1, r10
+ 1632 017a 3046     		mov	r0, r6
+ 1633 017c FFF7FEFF 		bl	__aeabi_fsub
+ 1634              	.LVL177:
+ 1635 0180 FFF7FEFF 		bl	__aeabi_f2d
+ 1636              	.LVL178:
+ 460:Application/MENU.c ****         else
+ 1637              		.loc 1 460 69 view .LVU434
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 46
+
+
+ 1638 0184 60A3     		adr	r3, .L147
+ 1639 0186 D3E90023 		ldrd	r2, [r3]
+ 1640 018a FFF7FEFF 		bl	__aeabi_dmul
+ 1641              	.LVL179:
+ 1642 018e 0446     		mov	r4, r0
+ 1643 0190 0D46     		mov	r5, r1
+ 460:Application/MENU.c ****         else
+ 1644              		.loc 1 460 39 view .LVU435
+ 1645 0192 3046     		mov	r0, r6
+ 1646 0194 FFF7FEFF 		bl	__aeabi_f2d
+ 1647              	.LVL180:
+ 1648 0198 2246     		mov	r2, r4
+ 1649 019a 2B46     		mov	r3, r5
+ 1650 019c FFF7FEFF 		bl	__aeabi_dadd
+ 1651              	.LVL181:
+ 1652 01a0 FFF7FEFF 		bl	__aeabi_d2f
+ 1653              	.LVL182:
+ 460:Application/MENU.c ****         else
+ 1654              		.loc 1 460 25 view .LVU436
+ 1655 01a4 624B     		ldr	r3, .L147+40
+ 1656 01a6 1860     		str	r0, [r3]	@ float
+ 1657              	.L102:
+ 464:Application/MENU.c ****     {
+ 1658              		.loc 1 464 5 is_stmt 1 view .LVU437
+ 464:Application/MENU.c ****     {
+ 1659              		.loc 1 464 21 is_stmt 0 view .LVU438
+ 1660 01a8 624B     		ldr	r3, .L147+44
+ 1661 01aa 1F68     		ldr	r7, [r3]	@ float
+ 464:Application/MENU.c ****     {
+ 1662              		.loc 1 464 8 view .LVU439
+ 1663 01ac 3946     		mov	r1, r7
+ 1664 01ae 624B     		ldr	r3, .L147+48
+ 1665 01b0 1868     		ldr	r0, [r3]	@ float
+ 1666 01b2 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 1667              	.LVL183:
+ 1668 01b6 00B3     		cbz	r0, .L105
+ 466:Application/MENU.c ****             bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1669              		.loc 1 466 9 is_stmt 1 view .LVU440
+ 466:Application/MENU.c ****             bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1670              		.loc 1 466 28 is_stmt 0 view .LVU441
+ 1671 01b8 654A     		ldr	r2, .L147+72
+ 1672 01ba 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1673 01bc 591E     		subs	r1, r3, #1
+ 1674 01be 1170     		strb	r1, [r2]
+ 466:Application/MENU.c ****             bounce_ysta = target_ysta + (target_ysta - actual_ysta) * OVERSHOOT;
+ 1675              		.loc 1 466 12 view .LVU442
+ 1676 01c0 002B     		cmp	r3, #0
+ 1677 01c2 00F08F81 		beq	.L107
+ 467:Application/MENU.c ****         else
+ 1678              		.loc 1 467 13 is_stmt 1 view .LVU443
+ 467:Application/MENU.c ****         else
+ 1679              		.loc 1 467 39 is_stmt 0 view .LVU444
+ 1680 01c6 554B     		ldr	r3, .L147+20
+ 1681 01c8 1E68     		ldr	r6, [r3]	@ float
+ 467:Application/MENU.c ****         else
+ 1682              		.loc 1 467 54 view .LVU445
+ 1683 01ca 3946     		mov	r1, r7
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 47
+
+
+ 1684 01cc 3046     		mov	r0, r6
+ 1685 01ce FFF7FEFF 		bl	__aeabi_fsub
+ 1686              	.LVL184:
+ 1687 01d2 FFF7FEFF 		bl	__aeabi_f2d
+ 1688              	.LVL185:
+ 467:Application/MENU.c ****         else
+ 1689              		.loc 1 467 69 view .LVU446
+ 1690 01d6 4CA3     		adr	r3, .L147
+ 1691 01d8 D3E90023 		ldrd	r2, [r3]
+ 1692 01dc FFF7FEFF 		bl	__aeabi_dmul
+ 1693              	.LVL186:
+ 1694 01e0 0446     		mov	r4, r0
+ 1695 01e2 0D46     		mov	r5, r1
+ 467:Application/MENU.c ****         else
+ 1696              		.loc 1 467 39 view .LVU447
+ 1697 01e4 3046     		mov	r0, r6
+ 1698 01e6 FFF7FEFF 		bl	__aeabi_f2d
+ 1699              	.LVL187:
+ 1700 01ea 2246     		mov	r2, r4
+ 1701 01ec 2B46     		mov	r3, r5
+ 1702 01ee FFF7FEFF 		bl	__aeabi_dadd
+ 1703              	.LVL188:
+ 1704 01f2 FFF7FEFF 		bl	__aeabi_d2f
+ 1705              	.LVL189:
+ 467:Application/MENU.c ****         else
+ 1706              		.loc 1 467 25 view .LVU448
+ 1707 01f6 504B     		ldr	r3, .L147+48
+ 1708 01f8 1860     		str	r0, [r3]	@ float
+ 1709              	.L105:
+ 471:Application/MENU.c ****     {
+ 1710              		.loc 1 471 5 is_stmt 1 view .LVU449
+ 471:Application/MENU.c ****     {
+ 1711              		.loc 1 471 21 is_stmt 0 view .LVU450
+ 1712 01fa 504B     		ldr	r3, .L147+52
+ 1713 01fc 1D68     		ldr	r5, [r3]	@ float
+ 471:Application/MENU.c ****     {
+ 1714              		.loc 1 471 8 view .LVU451
+ 1715 01fe 2946     		mov	r1, r5
+ 1716 0200 4F4B     		ldr	r3, .L147+56
+ 1717 0202 1868     		ldr	r0, [r3]	@ float
+ 1718 0204 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 1719              	.LVL190:
+ 1720 0208 00B3     		cbz	r0, .L108
+ 473:Application/MENU.c ****             bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1721              		.loc 1 473 9 is_stmt 1 view .LVU452
+ 473:Application/MENU.c ****             bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1722              		.loc 1 473 28 is_stmt 0 view .LVU453
+ 1723 020a 524A     		ldr	r2, .L147+76
+ 1724 020c 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1725 020e 591E     		subs	r1, r3, #1
+ 1726 0210 1170     		strb	r1, [r2]
+ 473:Application/MENU.c ****             bounce_xend = target_xend + (target_xend - actual_xend) * OVERSHOOT;
+ 1727              		.loc 1 473 12 view .LVU454
+ 1728 0212 002B     		cmp	r3, #0
+ 1729 0214 00F06B81 		beq	.L110
+ 474:Application/MENU.c ****         else
+ 1730              		.loc 1 474 13 is_stmt 1 view .LVU455
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 48
+
+
+ 474:Application/MENU.c ****         else
+ 1731              		.loc 1 474 39 is_stmt 0 view .LVU456
+ 1732 0218 414B     		ldr	r3, .L147+24
+ 1733 021a 1C68     		ldr	r4, [r3]	@ float
+ 474:Application/MENU.c ****         else
+ 1734              		.loc 1 474 54 view .LVU457
+ 1735 021c 2946     		mov	r1, r5
+ 1736 021e 2046     		mov	r0, r4
+ 1737 0220 FFF7FEFF 		bl	__aeabi_fsub
+ 1738              	.LVL191:
+ 1739 0224 FFF7FEFF 		bl	__aeabi_f2d
+ 1740              	.LVL192:
+ 474:Application/MENU.c ****         else
+ 1741              		.loc 1 474 69 view .LVU458
+ 1742 0228 37A3     		adr	r3, .L147
+ 1743 022a D3E90023 		ldrd	r2, [r3]
+ 1744 022e FFF7FEFF 		bl	__aeabi_dmul
+ 1745              	.LVL193:
+ 1746 0232 8046     		mov	r8, r0
+ 1747 0234 8946     		mov	r9, r1
+ 474:Application/MENU.c ****         else
+ 1748              		.loc 1 474 39 view .LVU459
+ 1749 0236 2046     		mov	r0, r4
+ 1750 0238 FFF7FEFF 		bl	__aeabi_f2d
+ 1751              	.LVL194:
+ 1752 023c 4246     		mov	r2, r8
+ 1753 023e 4B46     		mov	r3, r9
+ 1754 0240 FFF7FEFF 		bl	__aeabi_dadd
+ 1755              	.LVL195:
+ 1756 0244 FFF7FEFF 		bl	__aeabi_d2f
+ 1757              	.LVL196:
+ 474:Application/MENU.c ****         else
+ 1758              		.loc 1 474 25 view .LVU460
+ 1759 0248 3D4B     		ldr	r3, .L147+56
+ 1760 024a 1860     		str	r0, [r3]	@ float
+ 1761              	.L108:
+ 478:Application/MENU.c ****     {
+ 1762              		.loc 1 478 5 is_stmt 1 view .LVU461
+ 478:Application/MENU.c ****     {
+ 1763              		.loc 1 478 21 is_stmt 0 view .LVU462
+ 1764 024c 3D4B     		ldr	r3, .L147+60
+ 1765 024e 1C68     		ldr	r4, [r3]	@ float
+ 478:Application/MENU.c ****     {
+ 1766              		.loc 1 478 8 view .LVU463
+ 1767 0250 2146     		mov	r1, r4
+ 1768 0252 3D4B     		ldr	r3, .L147+64
+ 1769 0254 1868     		ldr	r0, [r3]	@ float
+ 1770 0256 FFF7FEFF 		bl	__aeabi_fcmpeq
+ 1771              	.LVL197:
+ 1772 025a 00B3     		cbz	r0, .L111
+ 480:Application/MENU.c ****             bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1773              		.loc 1 480 9 is_stmt 1 view .LVU464
+ 480:Application/MENU.c ****             bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1774              		.loc 1 480 28 is_stmt 0 view .LVU465
+ 1775 025c 3E4A     		ldr	r2, .L147+80
+ 1776 025e 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 1777 0260 591E     		subs	r1, r3, #1
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 49
+
+
+ 1778 0262 1170     		strb	r1, [r2]
+ 480:Application/MENU.c ****             bounce_yend = target_yend + (target_yend - actual_yend) * OVERSHOOT;
+ 1779              		.loc 1 480 12 view .LVU466
+ 1780 0264 002B     		cmp	r3, #0
+ 1781 0266 00F04781 		beq	.L113
+ 481:Application/MENU.c ****         else
+ 1782              		.loc 1 481 13 is_stmt 1 view .LVU467
+ 481:Application/MENU.c ****         else
+ 1783              		.loc 1 481 39 is_stmt 0 view .LVU468
+ 1784 026a 2F4B     		ldr	r3, .L147+32
+ 1785 026c 1E68     		ldr	r6, [r3]	@ float
+ 481:Application/MENU.c ****         else
+ 1786              		.loc 1 481 54 view .LVU469
+ 1787 026e 2146     		mov	r1, r4
+ 1788 0270 3046     		mov	r0, r6
+ 1789 0272 FFF7FEFF 		bl	__aeabi_fsub
+ 1790              	.LVL198:
+ 1791 0276 FFF7FEFF 		bl	__aeabi_f2d
+ 1792              	.LVL199:
+ 481:Application/MENU.c ****         else
+ 1793              		.loc 1 481 69 view .LVU470
+ 1794 027a 23A3     		adr	r3, .L147
+ 1795 027c D3E90023 		ldrd	r2, [r3]
+ 1796 0280 FFF7FEFF 		bl	__aeabi_dmul
+ 1797              	.LVL200:
+ 1798 0284 8046     		mov	r8, r0
+ 1799 0286 8946     		mov	r9, r1
+ 481:Application/MENU.c ****         else
+ 1800              		.loc 1 481 39 view .LVU471
+ 1801 0288 3046     		mov	r0, r6
+ 1802 028a FFF7FEFF 		bl	__aeabi_f2d
+ 1803              	.LVL201:
+ 1804 028e 4246     		mov	r2, r8
+ 1805 0290 4B46     		mov	r3, r9
+ 1806 0292 FFF7FEFF 		bl	__aeabi_dadd
+ 1807              	.LVL202:
+ 1808 0296 FFF7FEFF 		bl	__aeabi_d2f
+ 1809              	.LVL203:
+ 481:Application/MENU.c ****         else
+ 1810              		.loc 1 481 25 view .LVU472
+ 1811 029a 2B4B     		ldr	r3, .L147+64
+ 1812 029c 1860     		str	r0, [r3]	@ float
+ 1813              	.L111:
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 1814              		.loc 1 486 5 is_stmt 1 view .LVU473
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 1815              		.loc 1 486 19 is_stmt 0 view .LVU474
+ 1816 029e 244B     		ldr	r3, .L147+40
+ 1817 02a0 D3F80090 		ldr	r9, [r3]	@ float
+ 1818 02a4 5146     		mov	r1, r10
+ 1819 02a6 4846     		mov	r0, r9
+ 1820 02a8 FFF7FEFF 		bl	__aeabi_fsub
+ 1821              	.LVL204:
+ 1822 02ac 0646     		mov	r6, r0
+ 1823 02ae 4FF07651 		mov	r1, #1031798784
+ 1824 02b2 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1825              	.LVL205:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 50
+
+
+ 1826 02b6 0028     		cmp	r0, #0
+ 1827 02b8 00F02381 		beq	.L142
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 1828              		.loc 1 486 19 discriminator 1 view .LVU475
+ 1829 02bc 5046     		mov	r0, r10
+ 1830 02be FFF7FEFF 		bl	__aeabi_f2d
+ 1831              	.LVL206:
+ 1832 02c2 0022     		movs	r2, #0
+ 1833 02c4 254B     		ldr	r3, .L147+84
+ 1834 02c6 FFF7FEFF 		bl	__aeabi_dadd
+ 1835              	.LVL207:
+ 1836 02ca 8046     		mov	r8, r0
+ 1837 02cc 8946     		mov	r9, r1
+ 1838 02ce 3046     		mov	r0, r6
+ 1839 02d0 FFF7FEFF 		bl	__aeabi_f2d
+ 1840              	.LVL208:
+ 1841 02d4 0EA3     		adr	r3, .L147+8
+ 1842 02d6 D3E90023 		ldrd	r2, [r3]
+ 1843 02da FFF7FEFF 		bl	__aeabi_dmul
+ 1844              	.LVL209:
+ 1845 02de 0246     		mov	r2, r0
+ 1846 02e0 0B46     		mov	r3, r1
+ 1847 02e2 4046     		mov	r0, r8
+ 1848 02e4 4946     		mov	r1, r9
+ 1849 02e6 FFF7FEFF 		bl	__aeabi_dadd
+ 1850              	.LVL210:
+ 1851 02ea FFF7FEFF 		bl	__aeabi_d2f
+ 1852              	.LVL211:
+ 1853 02ee 8146     		mov	r9, r0
+ 1854              	.L116:
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 1855              		.loc 1 486 17 discriminator 8 view .LVU476
+ 1856 02f0 0E4B     		ldr	r3, .L147+36
+ 1857 02f2 C3F80090 		str	r9, [r3]	@ float
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 1858              		.loc 1 487 5 is_stmt 1 discriminator 8 view .LVU477
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 1859              		.loc 1 487 19 is_stmt 0 discriminator 8 view .LVU478
+ 1860 02f6 104B     		ldr	r3, .L147+48
+ 1861 02f8 1E68     		ldr	r6, [r3]	@ float
+ 1862 02fa 3946     		mov	r1, r7
+ 1863 02fc 3046     		mov	r0, r6
+ 1864 02fe FFF7FEFF 		bl	__aeabi_fsub
+ 1865              	.LVL212:
+ 1866 0302 2DE0     		b	.L148
+ 1867              	.L149:
+ 1868 0304 AFF30080 		.align	3
+ 1869              	.L147:
+ 1870 0308 33333333 		.word	858993459
+ 1871 030c 3333C33F 		.word	1069757235
+ 1872 0310 66666666 		.word	1717986918
+ 1873 0314 6666D63F 		.word	1071015526
+ 1874 0318 00000000 		.word	.LANCHOR2
+ 1875 031c 00000000 		.word	.LANCHOR3
+ 1876 0320 00000000 		.word	.LANCHOR4
+ 1877 0324 0000A041 		.word	1101004800
+ 1878 0328 00000000 		.word	.LANCHOR5
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 51
+
+
+ 1879 032c 00000000 		.word	.LANCHOR6
+ 1880 0330 00000000 		.word	.LANCHOR7
+ 1881 0334 00000000 		.word	.LANCHOR8
+ 1882 0338 00000000 		.word	.LANCHOR9
+ 1883 033c 00000000 		.word	.LANCHOR10
+ 1884 0340 00000000 		.word	.LANCHOR11
+ 1885 0344 00000000 		.word	.LANCHOR12
+ 1886 0348 00000000 		.word	.LANCHOR13
+ 1887 034c 00000000 		.word	.LANCHOR14
+ 1888 0350 00000000 		.word	.LANCHOR15
+ 1889 0354 00000000 		.word	.LANCHOR16
+ 1890 0358 00000000 		.word	.LANCHOR17
+ 1891 035c 0000B03F 		.word	1068498944
+ 1892              	.L148:
+ 1893 0360 8046     		mov	r8, r0
+ 1894 0362 4FF07651 		mov	r1, #1031798784
+ 1895 0366 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1896              	.LVL213:
+ 1897 036a 0028     		cmp	r0, #0
+ 1898 036c 00F0EB80 		beq	.L143
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 1899              		.loc 1 487 19 discriminator 1 view .LVU479
+ 1900 0370 3846     		mov	r0, r7
+ 1901 0372 FFF7FEFF 		bl	__aeabi_f2d
+ 1902              	.LVL214:
+ 1903 0376 0022     		movs	r2, #0
+ 1904 0378 A94B     		ldr	r3, .L150+8
+ 1905 037a FFF7FEFF 		bl	__aeabi_dadd
+ 1906              	.LVL215:
+ 1907 037e 0646     		mov	r6, r0
+ 1908 0380 0F46     		mov	r7, r1
+ 1909 0382 4046     		mov	r0, r8
+ 1910 0384 FFF7FEFF 		bl	__aeabi_f2d
+ 1911              	.LVL216:
+ 1912 0388 A3A3     		adr	r3, .L150
+ 1913 038a D3E90023 		ldrd	r2, [r3]
+ 1914 038e FFF7FEFF 		bl	__aeabi_dmul
+ 1915              	.LVL217:
+ 1916 0392 0246     		mov	r2, r0
+ 1917 0394 0B46     		mov	r3, r1
+ 1918 0396 3046     		mov	r0, r6
+ 1919 0398 3946     		mov	r1, r7
+ 1920 039a FFF7FEFF 		bl	__aeabi_dadd
+ 1921              	.LVL218:
+ 1922 039e FFF7FEFF 		bl	__aeabi_d2f
+ 1923              	.LVL219:
+ 1924 03a2 0646     		mov	r6, r0
+ 1925              	.L120:
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 1926              		.loc 1 487 17 discriminator 8 view .LVU480
+ 1927 03a4 9F4B     		ldr	r3, .L150+12
+ 1928 03a6 1E60     		str	r6, [r3]	@ float
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 1929              		.loc 1 488 5 is_stmt 1 discriminator 8 view .LVU481
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 1930              		.loc 1 488 19 is_stmt 0 discriminator 8 view .LVU482
+ 1931 03a8 9F4B     		ldr	r3, .L150+16
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 52
+
+
+ 1932 03aa D3F80080 		ldr	r8, [r3]	@ float
+ 1933 03ae 2946     		mov	r1, r5
+ 1934 03b0 4046     		mov	r0, r8
+ 1935 03b2 FFF7FEFF 		bl	__aeabi_fsub
+ 1936              	.LVL220:
+ 1937 03b6 0746     		mov	r7, r0
+ 1938 03b8 4FF07651 		mov	r1, #1031798784
+ 1939 03bc FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1940              	.LVL221:
+ 1941 03c0 0028     		cmp	r0, #0
+ 1942 03c2 00F0E280 		beq	.L144
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 1943              		.loc 1 488 19 discriminator 1 view .LVU483
+ 1944 03c6 2846     		mov	r0, r5
+ 1945 03c8 FFF7FEFF 		bl	__aeabi_f2d
+ 1946              	.LVL222:
+ 1947 03cc 0022     		movs	r2, #0
+ 1948 03ce 944B     		ldr	r3, .L150+8
+ 1949 03d0 FFF7FEFF 		bl	__aeabi_dadd
+ 1950              	.LVL223:
+ 1951 03d4 8246     		mov	r10, r0
+ 1952 03d6 8B46     		mov	fp, r1
+ 1953 03d8 3846     		mov	r0, r7
+ 1954 03da FFF7FEFF 		bl	__aeabi_f2d
+ 1955              	.LVL224:
+ 1956 03de 8EA3     		adr	r3, .L150
+ 1957 03e0 D3E90023 		ldrd	r2, [r3]
+ 1958 03e4 FFF7FEFF 		bl	__aeabi_dmul
+ 1959              	.LVL225:
+ 1960 03e8 0246     		mov	r2, r0
+ 1961 03ea 0B46     		mov	r3, r1
+ 1962 03ec 5046     		mov	r0, r10
+ 1963 03ee 5946     		mov	r1, fp
+ 1964 03f0 FFF7FEFF 		bl	__aeabi_dadd
+ 1965              	.LVL226:
+ 1966 03f4 FFF7FEFF 		bl	__aeabi_d2f
+ 1967              	.LVL227:
+ 1968 03f8 8046     		mov	r8, r0
+ 1969              	.L124:
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 1970              		.loc 1 488 17 discriminator 8 view .LVU484
+ 1971 03fa 8C4B     		ldr	r3, .L150+20
+ 1972 03fc C3F80080 		str	r8, [r3]	@ float
+ 489:Application/MENU.c **** 
+ 1973              		.loc 1 489 5 is_stmt 1 discriminator 8 view .LVU485
+ 489:Application/MENU.c **** 
+ 1974              		.loc 1 489 19 is_stmt 0 discriminator 8 view .LVU486
+ 1975 0400 8B4B     		ldr	r3, .L150+24
+ 1976 0402 D3F800A0 		ldr	r10, [r3]	@ float
+ 1977 0406 2146     		mov	r1, r4
+ 1978 0408 5046     		mov	r0, r10
+ 1979 040a FFF7FEFF 		bl	__aeabi_fsub
+ 1980              	.LVL228:
+ 1981 040e 0746     		mov	r7, r0
+ 1982 0410 4FF07651 		mov	r1, #1031798784
+ 1983 0414 FFF7FEFF 		bl	__aeabi_fcmpgt
+ 1984              	.LVL229:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 53
+
+
+ 1985 0418 0028     		cmp	r0, #0
+ 1986 041a 00F0D880 		beq	.L145
+ 489:Application/MENU.c **** 
+ 1987              		.loc 1 489 19 discriminator 1 view .LVU487
+ 1988 041e 2046     		mov	r0, r4
+ 1989 0420 FFF7FEFF 		bl	__aeabi_f2d
+ 1990              	.LVL230:
+ 1991 0424 0022     		movs	r2, #0
+ 1992 0426 7E4B     		ldr	r3, .L150+8
+ 1993 0428 FFF7FEFF 		bl	__aeabi_dadd
+ 1994              	.LVL231:
+ 1995 042c 0446     		mov	r4, r0
+ 1996 042e 0D46     		mov	r5, r1
+ 1997 0430 3846     		mov	r0, r7
+ 1998 0432 FFF7FEFF 		bl	__aeabi_f2d
+ 1999              	.LVL232:
+ 2000 0436 78A3     		adr	r3, .L150
+ 2001 0438 D3E90023 		ldrd	r2, [r3]
+ 2002 043c FFF7FEFF 		bl	__aeabi_dmul
+ 2003              	.LVL233:
+ 2004 0440 0246     		mov	r2, r0
+ 2005 0442 0B46     		mov	r3, r1
+ 2006 0444 2046     		mov	r0, r4
+ 2007 0446 2946     		mov	r1, r5
+ 2008 0448 FFF7FEFF 		bl	__aeabi_dadd
+ 2009              	.LVL234:
+ 2010 044c FFF7FEFF 		bl	__aeabi_d2f
+ 2011              	.LVL235:
+ 2012 0450 8246     		mov	r10, r0
+ 2013              	.L128:
+ 489:Application/MENU.c **** 
+ 2014              		.loc 1 489 17 discriminator 8 view .LVU488
+ 2015 0452 784B     		ldr	r3, .L150+28
+ 2016 0454 C3F800A0 		str	r10, [r3]	@ float
+ 500:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 2017              		.loc 1 500 5 is_stmt 1 discriminator 8 view .LVU489
+ 500:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 2018              		.loc 1 500 58 is_stmt 0 discriminator 8 view .LVU490
+ 2019 0458 4846     		mov	r0, r9
+ 2020 045a FFF7FEFF 		bl	__aeabi_f2d
+ 2021              	.LVL236:
+ 2022 045e 0022     		movs	r2, #0
+ 2023 0460 754B     		ldr	r3, .L150+32
+ 2024 0462 FFF7FEFF 		bl	__aeabi_dadd
+ 2025              	.LVL237:
+ 2026 0466 0446     		mov	r4, r0
+ 2027 0468 0D46     		mov	r5, r1
+ 500:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 2028              		.loc 1 500 84 discriminator 8 view .LVU491
+ 2029 046a 3046     		mov	r0, r6
+ 2030 046c FFF7FEFF 		bl	__aeabi_f2d
+ 2031              	.LVL238:
+ 2032 0470 0022     		movs	r2, #0
+ 2033 0472 714B     		ldr	r3, .L150+32
+ 2034 0474 FFF7FEFF 		bl	__aeabi_dadd
+ 2035              	.LVL239:
+ 2036 0478 0646     		mov	r6, r0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 54
+
+
+ 2037 047a 0F46     		mov	r7, r1
+ 500:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 2038              		.loc 1 500 110 discriminator 8 view .LVU492
+ 2039 047c 4046     		mov	r0, r8
+ 2040 047e FFF7FEFF 		bl	__aeabi_f2d
+ 2041              	.LVL240:
+ 2042 0482 0022     		movs	r2, #0
+ 2043 0484 6C4B     		ldr	r3, .L150+32
+ 2044 0486 FFF7FEFF 		bl	__aeabi_dadd
+ 2045              	.LVL241:
+ 2046 048a 8046     		mov	r8, r0
+ 2047 048c 8946     		mov	r9, r1
+ 501:Application/MENU.c **** }
+ 2048              		.loc 1 501 45 discriminator 8 view .LVU493
+ 2049 048e 5046     		mov	r0, r10
+ 2050 0490 FFF7FEFF 		bl	__aeabi_f2d
+ 2051              	.LVL242:
+ 2052 0494 0022     		movs	r2, #0
+ 2053 0496 684B     		ldr	r3, .L150+32
+ 2054 0498 FFF7FEFF 		bl	__aeabi_dadd
+ 2055              	.LVL243:
+ 2056 049c 8246     		mov	r10, r0
+ 2057 049e 8B46     		mov	fp, r1
+ 500:Application/MENU.c ****                           (int)(actual_yend + 0.5));
+ 2058              		.loc 1 500 5 discriminator 8 view .LVU494
+ 2059 04a0 4046     		mov	r0, r8
+ 2060 04a2 4946     		mov	r1, r9
+ 2061 04a4 FFF7FEFF 		bl	__aeabi_d2iz
+ 2062              	.LVL244:
+ 2063 04a8 8046     		mov	r8, r0
+ 2064 04aa 3046     		mov	r0, r6
+ 2065 04ac 3946     		mov	r1, r7
+ 2066 04ae FFF7FEFF 		bl	__aeabi_d2iz
+ 2067              	.LVL245:
+ 2068 04b2 0646     		mov	r6, r0
+ 2069 04b4 2046     		mov	r0, r4
+ 2070 04b6 2946     		mov	r1, r5
+ 2071 04b8 FFF7FEFF 		bl	__aeabi_d2iz
+ 2072              	.LVL246:
+ 2073 04bc 0446     		mov	r4, r0
+ 2074 04be 5046     		mov	r0, r10
+ 2075 04c0 5946     		mov	r1, fp
+ 2076 04c2 FFF7FEFF 		bl	__aeabi_d2iz
+ 2077              	.LVL247:
+ 2078 04c6 0090     		str	r0, [sp]
+ 2079 04c8 4346     		mov	r3, r8
+ 2080 04ca 3246     		mov	r2, r6
+ 2081 04cc 2146     		mov	r1, r4
+ 2082 04ce 0320     		movs	r0, #3
+ 2083 04d0 FFF7FEFF 		bl	menu_command_callback
+ 2084              	.LVL248:
+ 502:Application/MENU.c **** 
+ 2085              		.loc 1 502 1 discriminator 8 view .LVU495
+ 2086 04d4 03B0     		add	sp, sp, #12
+ 2087              	.LCFI17:
+ 2088              		.cfi_remember_state
+ 2089              		.cfi_def_cfa_offset 36
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 55
+
+
+ 2090              		@ sp needed
+ 2091 04d6 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 2092              	.L104:
+ 2093              	.LCFI18:
+ 2094              		.cfi_restore_state
+ 462:Application/MENU.c ****     }
+ 2095              		.loc 1 462 13 is_stmt 1 view .LVU496
+ 462:Application/MENU.c ****     }
+ 2096              		.loc 1 462 25 is_stmt 0 view .LVU497
+ 2097 04da 584B     		ldr	r3, .L150+36
+ 2098 04dc 1A68     		ldr	r2, [r3]	@ float
+ 2099 04de 584B     		ldr	r3, .L150+40
+ 2100 04e0 1A60     		str	r2, [r3]	@ float
+ 2101 04e2 61E6     		b	.L102
+ 2102              	.L107:
+ 469:Application/MENU.c ****     }
+ 2103              		.loc 1 469 13 is_stmt 1 view .LVU498
+ 469:Application/MENU.c ****     }
+ 2104              		.loc 1 469 25 is_stmt 0 view .LVU499
+ 2105 04e4 574B     		ldr	r3, .L150+44
+ 2106 04e6 1A68     		ldr	r2, [r3]	@ float
+ 2107 04e8 574B     		ldr	r3, .L150+48
+ 2108 04ea 1A60     		str	r2, [r3]	@ float
+ 2109 04ec 85E6     		b	.L105
+ 2110              	.L110:
+ 476:Application/MENU.c ****     }
+ 2111              		.loc 1 476 13 is_stmt 1 view .LVU500
+ 476:Application/MENU.c ****     }
+ 2112              		.loc 1 476 25 is_stmt 0 view .LVU501
+ 2113 04ee 574B     		ldr	r3, .L150+52
+ 2114 04f0 1A68     		ldr	r2, [r3]	@ float
+ 2115 04f2 4D4B     		ldr	r3, .L150+16
+ 2116 04f4 1A60     		str	r2, [r3]	@ float
+ 2117 04f6 A9E6     		b	.L108
+ 2118              	.L113:
+ 483:Application/MENU.c ****     }
+ 2119              		.loc 1 483 13 is_stmt 1 view .LVU502
+ 483:Application/MENU.c ****     }
+ 2120              		.loc 1 483 25 is_stmt 0 view .LVU503
+ 2121 04f8 554B     		ldr	r3, .L150+56
+ 2122 04fa 1A68     		ldr	r2, [r3]	@ float
+ 2123 04fc 4C4B     		ldr	r3, .L150+24
+ 2124 04fe 1A60     		str	r2, [r3]	@ float
+ 2125 0500 CDE6     		b	.L111
+ 2126              	.L142:
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 2127              		.loc 1 486 19 discriminator 2 view .LVU504
+ 2128 0502 5449     		ldr	r1, .L150+60
+ 2129 0504 3046     		mov	r0, r6
+ 2130 0506 FFF7FEFF 		bl	__aeabi_fcmplt
+ 2131              	.LVL249:
+ 2132 050a 0028     		cmp	r0, #0
+ 2133 050c 3FF4F0AE 		beq	.L116
+ 486:Application/MENU.c ****     actual_ysta = STEPWISE_TO_TARGET(actual_ysta, bounce_ysta, ANIMATION_SPEED);
+ 2134              		.loc 1 486 19 discriminator 4 view .LVU505
+ 2135 0510 5046     		mov	r0, r10
+ 2136 0512 FFF7FEFF 		bl	__aeabi_f2d
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 56
+
+
+ 2137              	.LVL250:
+ 2138 0516 0022     		movs	r2, #0
+ 2139 0518 414B     		ldr	r3, .L150+8
+ 2140 051a FFF7FEFF 		bl	__aeabi_dsub
+ 2141              	.LVL251:
+ 2142 051e 8046     		mov	r8, r0
+ 2143 0520 8946     		mov	r9, r1
+ 2144 0522 3046     		mov	r0, r6
+ 2145 0524 FFF7FEFF 		bl	__aeabi_f2d
+ 2146              	.LVL252:
+ 2147 0528 3BA3     		adr	r3, .L150
+ 2148 052a D3E90023 		ldrd	r2, [r3]
+ 2149 052e FFF7FEFF 		bl	__aeabi_dmul
+ 2150              	.LVL253:
+ 2151 0532 0246     		mov	r2, r0
+ 2152 0534 0B46     		mov	r3, r1
+ 2153 0536 4046     		mov	r0, r8
+ 2154 0538 4946     		mov	r1, r9
+ 2155 053a FFF7FEFF 		bl	__aeabi_dadd
+ 2156              	.LVL254:
+ 2157 053e FFF7FEFF 		bl	__aeabi_d2f
+ 2158              	.LVL255:
+ 2159 0542 8146     		mov	r9, r0
+ 2160 0544 D4E6     		b	.L116
+ 2161              	.L143:
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 2162              		.loc 1 487 19 discriminator 2 view .LVU506
+ 2163 0546 4349     		ldr	r1, .L150+60
+ 2164 0548 4046     		mov	r0, r8
+ 2165 054a FFF7FEFF 		bl	__aeabi_fcmplt
+ 2166              	.LVL256:
+ 2167 054e 0028     		cmp	r0, #0
+ 2168 0550 3FF428AF 		beq	.L120
+ 487:Application/MENU.c ****     actual_xend = STEPWISE_TO_TARGET(actual_xend, bounce_xend, ANIMATION_SPEED);
+ 2169              		.loc 1 487 19 discriminator 4 view .LVU507
+ 2170 0554 3846     		mov	r0, r7
+ 2171 0556 FFF7FEFF 		bl	__aeabi_f2d
+ 2172              	.LVL257:
+ 2173 055a 0022     		movs	r2, #0
+ 2174 055c 304B     		ldr	r3, .L150+8
+ 2175 055e FFF7FEFF 		bl	__aeabi_dsub
+ 2176              	.LVL258:
+ 2177 0562 0646     		mov	r6, r0
+ 2178 0564 0F46     		mov	r7, r1
+ 2179 0566 4046     		mov	r0, r8
+ 2180 0568 FFF7FEFF 		bl	__aeabi_f2d
+ 2181              	.LVL259:
+ 2182 056c 2AA3     		adr	r3, .L150
+ 2183 056e D3E90023 		ldrd	r2, [r3]
+ 2184 0572 FFF7FEFF 		bl	__aeabi_dmul
+ 2185              	.LVL260:
+ 2186 0576 0246     		mov	r2, r0
+ 2187 0578 0B46     		mov	r3, r1
+ 2188 057a 3046     		mov	r0, r6
+ 2189 057c 3946     		mov	r1, r7
+ 2190 057e FFF7FEFF 		bl	__aeabi_dadd
+ 2191              	.LVL261:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 57
+
+
+ 2192 0582 FFF7FEFF 		bl	__aeabi_d2f
+ 2193              	.LVL262:
+ 2194 0586 0646     		mov	r6, r0
+ 2195 0588 0CE7     		b	.L120
+ 2196              	.L144:
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 2197              		.loc 1 488 19 discriminator 2 view .LVU508
+ 2198 058a 3249     		ldr	r1, .L150+60
+ 2199 058c 3846     		mov	r0, r7
+ 2200 058e FFF7FEFF 		bl	__aeabi_fcmplt
+ 2201              	.LVL263:
+ 2202 0592 0028     		cmp	r0, #0
+ 2203 0594 3FF431AF 		beq	.L124
+ 488:Application/MENU.c ****     actual_yend = STEPWISE_TO_TARGET(actual_yend, bounce_yend, ANIMATION_SPEED);
+ 2204              		.loc 1 488 19 discriminator 4 view .LVU509
+ 2205 0598 2846     		mov	r0, r5
+ 2206 059a FFF7FEFF 		bl	__aeabi_f2d
+ 2207              	.LVL264:
+ 2208 059e 0022     		movs	r2, #0
+ 2209 05a0 1F4B     		ldr	r3, .L150+8
+ 2210 05a2 FFF7FEFF 		bl	__aeabi_dsub
+ 2211              	.LVL265:
+ 2212 05a6 8246     		mov	r10, r0
+ 2213 05a8 8B46     		mov	fp, r1
+ 2214 05aa 3846     		mov	r0, r7
+ 2215 05ac FFF7FEFF 		bl	__aeabi_f2d
+ 2216              	.LVL266:
+ 2217 05b0 19A3     		adr	r3, .L150
+ 2218 05b2 D3E90023 		ldrd	r2, [r3]
+ 2219 05b6 FFF7FEFF 		bl	__aeabi_dmul
+ 2220              	.LVL267:
+ 2221 05ba 0246     		mov	r2, r0
+ 2222 05bc 0B46     		mov	r3, r1
+ 2223 05be 5046     		mov	r0, r10
+ 2224 05c0 5946     		mov	r1, fp
+ 2225 05c2 FFF7FEFF 		bl	__aeabi_dadd
+ 2226              	.LVL268:
+ 2227 05c6 FFF7FEFF 		bl	__aeabi_d2f
+ 2228              	.LVL269:
+ 2229 05ca 8046     		mov	r8, r0
+ 2230 05cc 15E7     		b	.L124
+ 2231              	.L145:
+ 489:Application/MENU.c **** 
+ 2232              		.loc 1 489 19 discriminator 2 view .LVU510
+ 2233 05ce 2149     		ldr	r1, .L150+60
+ 2234 05d0 3846     		mov	r0, r7
+ 2235 05d2 FFF7FEFF 		bl	__aeabi_fcmplt
+ 2236              	.LVL270:
+ 2237 05d6 0028     		cmp	r0, #0
+ 2238 05d8 3FF43BAF 		beq	.L128
+ 489:Application/MENU.c **** 
+ 2239              		.loc 1 489 19 discriminator 4 view .LVU511
+ 2240 05dc 2046     		mov	r0, r4
+ 2241 05de FFF7FEFF 		bl	__aeabi_f2d
+ 2242              	.LVL271:
+ 2243 05e2 0022     		movs	r2, #0
+ 2244 05e4 0E4B     		ldr	r3, .L150+8
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 58
+
+
+ 2245 05e6 FFF7FEFF 		bl	__aeabi_dsub
+ 2246              	.LVL272:
+ 2247 05ea 0446     		mov	r4, r0
+ 2248 05ec 0D46     		mov	r5, r1
+ 2249 05ee 3846     		mov	r0, r7
+ 2250 05f0 FFF7FEFF 		bl	__aeabi_f2d
+ 2251              	.LVL273:
+ 2252 05f4 08A3     		adr	r3, .L150
+ 2253 05f6 D3E90023 		ldrd	r2, [r3]
+ 2254 05fa FFF7FEFF 		bl	__aeabi_dmul
+ 2255              	.LVL274:
+ 2256 05fe 0246     		mov	r2, r0
+ 2257 0600 0B46     		mov	r3, r1
+ 2258 0602 2046     		mov	r0, r4
+ 2259 0604 2946     		mov	r1, r5
+ 2260 0606 FFF7FEFF 		bl	__aeabi_dadd
+ 2261              	.LVL275:
+ 2262 060a FFF7FEFF 		bl	__aeabi_d2f
+ 2263              	.LVL276:
+ 2264 060e 8246     		mov	r10, r0
+ 2265 0610 1FE7     		b	.L128
+ 2266              	.L151:
+ 2267 0612 00BFAFF3 		.align	3
+ 2267      0080
+ 2268              	.L150:
+ 2269 0618 66666666 		.word	1717986918
+ 2270 061c 6666D63F 		.word	1071015526
+ 2271 0620 0000B03F 		.word	1068498944
+ 2272 0624 00000000 		.word	.LANCHOR8
+ 2273 0628 00000000 		.word	.LANCHOR11
+ 2274 062c 00000000 		.word	.LANCHOR10
+ 2275 0630 00000000 		.word	.LANCHOR13
+ 2276 0634 00000000 		.word	.LANCHOR12
+ 2277 0638 0000E03F 		.word	1071644672
+ 2278 063c 00000000 		.word	.LANCHOR2
+ 2279 0640 00000000 		.word	.LANCHOR7
+ 2280 0644 00000000 		.word	.LANCHOR3
+ 2281 0648 00000000 		.word	.LANCHOR9
+ 2282 064c 00000000 		.word	.LANCHOR4
+ 2283 0650 00000000 		.word	.LANCHOR5
+ 2284 0654 000080BD 		.word	-1115684864
+ 2285              		.cfi_endproc
+ 2286              	.LFE80:
+ 2288              		.section	.text.MENU_RunMenu,"ax",%progbits
+ 2289              		.align	1
+ 2290              		.global	MENU_RunMenu
+ 2291              		.syntax unified
+ 2292              		.thumb
+ 2293              		.thumb_func
+ 2295              	MENU_RunMenu:
+ 2296              	.LVL277:
+ 2297              	.LFB74:
+ 233:Application/MENU.c ****     MENU_HandleInit(hMENU); // 初始化
+ 2298              		.loc 1 233 1 is_stmt 1 view -0
+ 2299              		.cfi_startproc
+ 2300              		@ args = 0, pretend = 0, frame = 0
+ 2301              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 59
+
+
+ 233:Application/MENU.c ****     MENU_HandleInit(hMENU); // 初始化
+ 2302              		.loc 1 233 1 is_stmt 0 view .LVU513
+ 2303 0000 10B5     		push	{r4, lr}
+ 2304              	.LCFI19:
+ 2305              		.cfi_def_cfa_offset 8
+ 2306              		.cfi_offset 4, -8
+ 2307              		.cfi_offset 14, -4
+ 2308 0002 0446     		mov	r4, r0
+ 234:Application/MENU.c **** 
+ 2309              		.loc 1 234 5 is_stmt 1 view .LVU514
+ 2310 0004 FFF7FEFF 		bl	MENU_HandleInit
+ 2311              	.LVL278:
+ 236:Application/MENU.c ****     {
+ 2312              		.loc 1 236 5 view .LVU515
+ 236:Application/MENU.c ****     {
+ 2313              		.loc 1 236 11 is_stmt 0 view .LVU516
+ 2314 0008 0EE0     		b	.L153
+ 2315              	.L154:
+ 238:Application/MENU.c ****         MENU_ShowOptionList(hMENU);          /* 显示选项列表 */
+ 2316              		.loc 1 238 9 is_stmt 1 view .LVU517
+ 2317 000a 0120     		movs	r0, #1
+ 2318 000c FFF7FEFF 		bl	menu_command_callback
+ 2319              	.LVL279:
+ 239:Application/MENU.c ****         MENU_ShowCursor(hMENU);              /* 显示光标 */
+ 2320              		.loc 1 239 9 view .LVU518
+ 2321 0010 2046     		mov	r0, r4
+ 2322 0012 FFF7FEFF 		bl	MENU_ShowOptionList
+ 2323              	.LVL280:
+ 240:Application/MENU.c ****         MENU_ShowBorder(hMENU);              // 显示边框
+ 2324              		.loc 1 240 9 view .LVU519
+ 2325 0016 2046     		mov	r0, r4
+ 2326 0018 FFF7FEFF 		bl	MENU_ShowCursor
+ 2327              	.LVL281:
+ 241:Application/MENU.c **** 
+ 2328              		.loc 1 241 9 view .LVU520
+ 243:Application/MENU.c ****         MENU_Event_and_Action(hMENU);          // 检查事件及作相应操作
+ 2329              		.loc 1 243 9 view .LVU521
+ 2330 001c 0020     		movs	r0, #0
+ 2331 001e FFF7FEFF 		bl	menu_command_callback
+ 2332              	.LVL282:
+ 244:Application/MENU.c ****     }
+ 2333              		.loc 1 244 9 view .LVU522
+ 2334 0022 2046     		mov	r0, r4
+ 2335 0024 FFF7FEFF 		bl	MENU_Event_and_Action
+ 2336              	.LVL283:
+ 2337              	.L153:
+ 236:Application/MENU.c ****     {
+ 2338              		.loc 1 236 11 view .LVU523
+ 236:Application/MENU.c ****     {
+ 2339              		.loc 1 236 17 is_stmt 0 view .LVU524
+ 2340 0028 637C     		ldrb	r3, [r4, #17]	@ zero_extendqisi2
+ 236:Application/MENU.c ****     {
+ 2341              		.loc 1 236 11 view .LVU525
+ 2342 002a 002B     		cmp	r3, #0
+ 2343 002c EDD1     		bne	.L154
+ 246:Application/MENU.c **** 
+ 2344              		.loc 1 246 1 view .LVU526
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 60
+
+
+ 2345 002e 10BD     		pop	{r4, pc}
+ 246:Application/MENU.c **** 
+ 2346              		.loc 1 246 1 view .LVU527
+ 2347              		.cfi_endproc
+ 2348              	.LFE74:
+ 2350              		.section	.text.MENU_RunToolsMenu,"ax",%progbits
+ 2351              		.align	1
+ 2352              		.global	MENU_RunToolsMenu
+ 2353              		.syntax unified
+ 2354              		.thumb
+ 2355              		.thumb_func
+ 2357              	MENU_RunToolsMenu:
+ 2358              	.LFB83:
+ 532:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 2359              		.loc 1 532 1 is_stmt 1 view -0
+ 2360              		.cfi_startproc
+ 2361              		@ args = 0, pretend = 0, frame = 0
+ 2362              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2363 0000 08B5     		push	{r3, lr}
+ 2364              	.LCFI20:
+ 2365              		.cfi_def_cfa_offset 8
+ 2366              		.cfi_offset 3, -8
+ 2367              		.cfi_offset 14, -4
+ 533:Application/MENU.c ****                                                    {"Seria", NULL},        // 串口
+ 2368              		.loc 1 533 5 view .LVU529
+ 541:Application/MENU.c **** 
+ 2369              		.loc 1 541 5 view .LVU530
+ 543:Application/MENU.c **** }
+ 2370              		.loc 1 543 5 view .LVU531
+ 2371 0002 0248     		ldr	r0, .L158
+ 2372 0004 FFF7FEFF 		bl	MENU_RunMenu
+ 2373              	.LVL284:
+ 544:Application/MENU.c **** 
+ 2374              		.loc 1 544 1 is_stmt 0 view .LVU532
+ 2375 0008 08BD     		pop	{r3, pc}
+ 2376              	.L159:
+ 2377 000a 00BF     		.align	2
+ 2378              	.L158:
+ 2379 000c 00000000 		.word	.LANCHOR18
+ 2380              		.cfi_endproc
+ 2381              	.LFE83:
+ 2383              		.section	.text.MENU_RunGamesMenu,"ax",%progbits
+ 2384              		.align	1
+ 2385              		.global	MENU_RunGamesMenu
+ 2386              		.syntax unified
+ 2387              		.thumb
+ 2388              		.thumb_func
+ 2390              	MENU_RunGamesMenu:
+ 2391              	.LFB84:
+ 547:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 2392              		.loc 1 547 1 is_stmt 1 view -0
+ 2393              		.cfi_startproc
+ 2394              		@ args = 0, pretend = 0, frame = 0
+ 2395              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2396 0000 08B5     		push	{r3, lr}
+ 2397              	.LCFI21:
+ 2398              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 61
+
+
+ 2399              		.cfi_offset 3, -8
+ 2400              		.cfi_offset 14, -4
+ 548:Application/MENU.c ****                                                    {"Snake", NULL},        // 贪吃蛇
+ 2401              		.loc 1 548 5 view .LVU534
+ 555:Application/MENU.c **** 
+ 2402              		.loc 1 555 5 view .LVU535
+ 557:Application/MENU.c **** }
+ 2403              		.loc 1 557 5 view .LVU536
+ 2404 0002 0248     		ldr	r0, .L162
+ 2405 0004 FFF7FEFF 		bl	MENU_RunMenu
+ 2406              	.LVL285:
+ 558:Application/MENU.c **** 
+ 2407              		.loc 1 558 1 is_stmt 0 view .LVU537
+ 2408 0008 08BD     		pop	{r3, pc}
+ 2409              	.L163:
+ 2410 000a 00BF     		.align	2
+ 2411              	.L162:
+ 2412 000c 00000000 		.word	.LANCHOR19
+ 2413              		.cfi_endproc
+ 2414              	.LFE84:
+ 2416              		.section	.text.MENU_ShowBorder,"ax",%progbits
+ 2417              		.align	1
+ 2418              		.global	MENU_ShowBorder
+ 2419              		.syntax unified
+ 2420              		.thumb
+ 2421              		.thumb_func
+ 2423              	MENU_ShowBorder:
+ 2424              	.LVL286:
+ 2425              	.LFB81:
+ 505:Application/MENU.c ****     for (int16_t i = 0; i < MENU_BORDER; i++)
+ 2426              		.loc 1 505 1 is_stmt 1 view -0
+ 2427              		.cfi_startproc
+ 2428              		@ args = 0, pretend = 0, frame = 0
+ 2429              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2430              		@ link register save eliminated.
+ 506:Application/MENU.c ****     {
+ 2431              		.loc 1 506 5 view .LVU539
+ 506:Application/MENU.c ****     {
+ 2432              		.loc 1 506 10 view .LVU540
+ 506:Application/MENU.c ****     {
+ 2433              		.loc 1 506 25 view .LVU541
+ 510:Application/MENU.c **** 
+ 2434              		.loc 1 510 1 is_stmt 0 view .LVU542
+ 2435 0000 7047     		bx	lr
+ 2436              		.cfi_endproc
+ 2437              	.LFE81:
+ 2439              		.section	.text.MENU_RunMainMenu,"ax",%progbits
+ 2440              		.align	1
+ 2441              		.global	MENU_RunMainMenu
+ 2442              		.syntax unified
+ 2443              		.thumb
+ 2444              		.thumb_func
+ 2446              	MENU_RunMainMenu:
+ 2447              	.LFB82:
+ 518:Application/MENU.c ****     static MENU_OptionTypeDef MENU_OptionList[] = {{"<<<"},
+ 2448              		.loc 1 518 1 is_stmt 1 view -0
+ 2449              		.cfi_startproc
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 62
+
+
+ 2450              		@ args = 0, pretend = 0, frame = 0
+ 2451              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2452 0000 08B5     		push	{r3, lr}
+ 2453              	.LCFI22:
+ 2454              		.cfi_def_cfa_offset 8
+ 2455              		.cfi_offset 3, -8
+ 2456              		.cfi_offset 14, -4
+ 519:Application/MENU.c ****                                                    {"Tools", MENU_RunToolsMenu},      // 工具
+ 2457              		.loc 1 519 5 view .LVU544
+ 526:Application/MENU.c **** 
+ 2458              		.loc 1 526 5 view .LVU545
+ 528:Application/MENU.c **** }
+ 2459              		.loc 1 528 5 view .LVU546
+ 2460 0002 0248     		ldr	r0, .L167
+ 2461 0004 FFF7FEFF 		bl	MENU_RunMenu
+ 2462              	.LVL287:
+ 529:Application/MENU.c **** 
+ 2463              		.loc 1 529 1 is_stmt 0 view .LVU547
+ 2464 0008 08BD     		pop	{r3, pc}
+ 2465              	.L168:
+ 2466 000a 00BF     		.align	2
+ 2467              	.L167:
+ 2468 000c 00000000 		.word	.LANCHOR20
+ 2469              		.cfi_endproc
+ 2470              	.LFE82:
+ 2472              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 2473              		.align	2
+ 2474              	.LC3:
+ 2475 0000 3C3C3C00 		.ascii	"<<<\000"
+ 2476              		.align	2
+ 2477              	.LC4:
+ 2478 0004 536E616B 		.ascii	"Snake\000"
+ 2478      6500
+ 2479 000a 0000     		.align	2
+ 2480              	.LC5:
+ 2481 000c 536E616B 		.ascii	"Snake II\000"
+ 2481      65204949 
+ 2481      00
+ 2482 0015 000000   		.align	2
+ 2483              	.LC6:
+ 2484 0018 536E616B 		.ascii	"Snake III\000"
+ 2484      65204949 
+ 2484      4900
+ 2485 0022 0000     		.align	2
+ 2486              	.LC7:
+ 2487 0024 47616D65 		.ascii	"Game of Life\000"
+ 2487      206F6620 
+ 2487      4C696665 
+ 2487      00
+ 2488 0031 000000   		.align	2
+ 2489              	.LC8:
+ 2490 0034 2E2E00   		.ascii	"..\000"
+ 2491 0037 00       		.align	2
+ 2492              	.LC9:
+ 2493 0038 53657269 		.ascii	"Seria\000"
+ 2493      6100
+ 2494 003e 0000     		.align	2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 63
+
+
+ 2495              	.LC10:
+ 2496 0040 4F736369 		.ascii	"Oscilloscope\000"
+ 2496      6C6C6F73 
+ 2496      636F7065 
+ 2496      00
+ 2497 004d 000000   		.align	2
+ 2498              	.LC11:
+ 2499 0050 50574D20 		.ascii	"PWM Output\000"
+ 2499      4F757470 
+ 2499      757400
+ 2500 005b 00       		.align	2
+ 2501              	.LC12:
+ 2502 005c 50574D20 		.ascii	"PWM Input\000"
+ 2502      496E7075 
+ 2502      7400
+ 2503 0066 0000     		.align	2
+ 2504              	.LC13:
+ 2505 0068 41444320 		.ascii	"ADC Input\000"
+ 2505      496E7075 
+ 2505      7400
+ 2506 0072 0000     		.align	2
+ 2507              	.LC14:
+ 2508 0074 546F6F6C 		.ascii	"Tools\000"
+ 2508      7300
+ 2509 007a 0000     		.align	2
+ 2510              	.LC15:
+ 2511 007c 47616D65 		.ascii	"Games\000"
+ 2511      7300
+ 2512 0082 0000     		.align	2
+ 2513              	.LC16:
+ 2514 0084 53657474 		.ascii	"Setting\000"
+ 2514      696E6700 
+ 2515              		.align	2
+ 2516              	.LC17:
+ 2517 008c 496E666F 		.ascii	"Information\000"
+ 2517      726D6174 
+ 2517      696F6E00 
+ 2518              		.global	key
+ 2519              		.section	.bss.VerticalOffsetBuffer.22,"aw",%nobits
+ 2520              		.align	2
+ 2521              		.set	.LANCHOR1,. + 0
+ 2524              	VerticalOffsetBuffer.22:
+ 2525 0000 00000000 		.space	4
+ 2526              		.section	.bss.actual_xend.13,"aw",%nobits
+ 2527              		.align	2
+ 2528              		.set	.LANCHOR10,. + 0
+ 2531              	actual_xend.13:
+ 2532 0000 00000000 		.space	4
+ 2533              		.section	.bss.actual_xsta.17,"aw",%nobits
+ 2534              		.align	2
+ 2535              		.set	.LANCHOR6,. + 0
+ 2538              	actual_xsta.17:
+ 2539 0000 00000000 		.space	4
+ 2540              		.section	.bss.actual_yend.11,"aw",%nobits
+ 2541              		.align	2
+ 2542              		.set	.LANCHOR12,. + 0
+ 2545              	actual_yend.11:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 64
+
+
+ 2546 0000 00000000 		.space	4
+ 2547              		.section	.bss.actual_ysta.15,"aw",%nobits
+ 2548              		.align	2
+ 2549              		.set	.LANCHOR8,. + 0
+ 2552              	actual_ysta.15:
+ 2553 0000 00000000 		.space	4
+ 2554              		.section	.bss.bounce_cnt_xend.7,"aw",%nobits
+ 2555              		.set	.LANCHOR16,. + 0
+ 2558              	bounce_cnt_xend.7:
+ 2559 0000 00       		.space	1
+ 2560              		.section	.bss.bounce_cnt_xsta.9,"aw",%nobits
+ 2561              		.set	.LANCHOR14,. + 0
+ 2564              	bounce_cnt_xsta.9:
+ 2565 0000 00       		.space	1
+ 2566              		.section	.bss.bounce_cnt_yend.6,"aw",%nobits
+ 2567              		.set	.LANCHOR17,. + 0
+ 2570              	bounce_cnt_yend.6:
+ 2571 0000 00       		.space	1
+ 2572              		.section	.bss.bounce_cnt_ysta.8,"aw",%nobits
+ 2573              		.set	.LANCHOR15,. + 0
+ 2576              	bounce_cnt_ysta.8:
+ 2577 0000 00       		.space	1
+ 2578              		.section	.bss.bounce_xend.12,"aw",%nobits
+ 2579              		.align	2
+ 2580              		.set	.LANCHOR11,. + 0
+ 2583              	bounce_xend.12:
+ 2584 0000 00000000 		.space	4
+ 2585              		.section	.bss.bounce_xsta.16,"aw",%nobits
+ 2586              		.align	2
+ 2587              		.set	.LANCHOR7,. + 0
+ 2590              	bounce_xsta.16:
+ 2591 0000 00000000 		.space	4
+ 2592              		.section	.bss.bounce_yend.10,"aw",%nobits
+ 2593              		.align	2
+ 2594              		.set	.LANCHOR13,. + 0
+ 2597              	bounce_yend.10:
+ 2598 0000 00000000 		.space	4
+ 2599              		.section	.bss.bounce_ysta.14,"aw",%nobits
+ 2600              		.align	2
+ 2601              		.set	.LANCHOR9,. + 0
+ 2604              	bounce_ysta.14:
+ 2605 0000 00000000 		.space	4
+ 2606              		.section	.bss.key,"aw",%nobits
+ 2607              		.align	2
+ 2608              		.set	.LANCHOR0,. + 0
+ 2611              	key:
+ 2612 0000 00       		.space	1
+ 2613              		.section	.bss.target_xend.19,"aw",%nobits
+ 2614              		.align	2
+ 2615              		.set	.LANCHOR4,. + 0
+ 2618              	target_xend.19:
+ 2619 0000 00000000 		.space	4
+ 2620              		.section	.bss.target_xsta.21,"aw",%nobits
+ 2621              		.align	2
+ 2622              		.set	.LANCHOR2,. + 0
+ 2625              	target_xsta.21:
+ 2626 0000 00000000 		.space	4
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 65
+
+
+ 2627              		.section	.bss.target_yend.18,"aw",%nobits
+ 2628              		.align	2
+ 2629              		.set	.LANCHOR5,. + 0
+ 2632              	target_yend.18:
+ 2633 0000 00000000 		.space	4
+ 2634              		.section	.bss.target_ysta.20,"aw",%nobits
+ 2635              		.align	2
+ 2636              		.set	.LANCHOR3,. + 0
+ 2639              	target_ysta.20:
+ 2640 0000 00000000 		.space	4
+ 2641              		.section	.data.MENU.1,"aw"
+ 2642              		.align	2
+ 2643              		.set	.LANCHOR19,. + 0
+ 2646              	MENU.1:
+ 2647 0000 00000000 		.word	MENU_OptionList.0
+ 2648 0004 00000000 		.space	16
+ 2648      00000000 
+ 2648      00000000 
+ 2648      00000000 
+ 2649              		.section	.data.MENU.3,"aw"
+ 2650              		.align	2
+ 2651              		.set	.LANCHOR18,. + 0
+ 2654              	MENU.3:
+ 2655 0000 00000000 		.word	MENU_OptionList.2
+ 2656 0004 00000000 		.space	16
+ 2656      00000000 
+ 2656      00000000 
+ 2656      00000000 
+ 2657              		.section	.data.MENU.5,"aw"
+ 2658              		.align	2
+ 2659              		.set	.LANCHOR20,. + 0
+ 2662              	MENU.5:
+ 2663 0000 00000000 		.word	MENU_OptionList.4
+ 2664 0004 00000000 		.space	16
+ 2664      00000000 
+ 2664      00000000 
+ 2664      00000000 
+ 2665              		.section	.data.MENU_OptionList.0,"aw"
+ 2666              		.align	2
+ 2669              	MENU_OptionList.0:
+ 2670 0000 00000000 		.word	.LC3
+ 2671 0004 00000000 		.space	12
+ 2671      00000000 
+ 2671      00000000 
+ 2672 0010 04000000 		.word	.LC4
+ 2673 0014 00000000 		.word	0
+ 2674 0018 00000000 		.space	8
+ 2674      00000000 
+ 2675 0020 0C000000 		.word	.LC5
+ 2676 0024 00000000 		.word	0
+ 2677 0028 00000000 		.space	8
+ 2677      00000000 
+ 2678 0030 18000000 		.word	.LC6
+ 2679 0034 00000000 		.word	0
+ 2680 0038 00000000 		.space	8
+ 2680      00000000 
+ 2681 0040 24000000 		.word	.LC7
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 66
+
+
+ 2682 0044 00000000 		.word	0
+ 2683 0048 00000000 		.space	8
+ 2683      00000000 
+ 2684 0050 34000000 		.word	.LC8
+ 2685 0054 00000000 		.space	12
+ 2685      00000000 
+ 2685      00000000 
+ 2686              		.section	.data.MENU_OptionList.2,"aw"
+ 2687              		.align	2
+ 2690              	MENU_OptionList.2:
+ 2691 0000 00000000 		.word	.LC3
+ 2692 0004 00000000 		.space	12
+ 2692      00000000 
+ 2692      00000000 
+ 2693 0010 38000000 		.word	.LC9
+ 2694 0014 00000000 		.word	0
+ 2695 0018 00000000 		.space	8
+ 2695      00000000 
+ 2696 0020 40000000 		.word	.LC10
+ 2697 0024 00000000 		.word	0
+ 2698 0028 00000000 		.space	8
+ 2698      00000000 
+ 2699 0030 50000000 		.word	.LC11
+ 2700 0034 00000000 		.word	0
+ 2701 0038 00000000 		.space	8
+ 2701      00000000 
+ 2702 0040 5C000000 		.word	.LC12
+ 2703 0044 00000000 		.word	0
+ 2704 0048 00000000 		.space	8
+ 2704      00000000 
+ 2705 0050 68000000 		.word	.LC13
+ 2706 0054 00000000 		.word	0
+ 2707 0058 00000000 		.space	8
+ 2707      00000000 
+ 2708 0060 34000000 		.word	.LC8
+ 2709 0064 00000000 		.space	12
+ 2709      00000000 
+ 2709      00000000 
+ 2710              		.section	.data.MENU_OptionList.4,"aw"
+ 2711              		.align	2
+ 2714              	MENU_OptionList.4:
+ 2715 0000 00000000 		.word	.LC3
+ 2716 0004 00000000 		.space	12
+ 2716      00000000 
+ 2716      00000000 
+ 2717 0010 74000000 		.word	.LC14
+ 2718 0014 00000000 		.word	MENU_RunToolsMenu
+ 2719 0018 00000000 		.space	8
+ 2719      00000000 
+ 2720 0020 7C000000 		.word	.LC15
+ 2721 0024 00000000 		.word	MENU_RunGamesMenu
+ 2722 0028 00000000 		.space	8
+ 2722      00000000 
+ 2723 0030 84000000 		.word	.LC16
+ 2724 0034 00000000 		.word	0
+ 2725 0038 00000000 		.space	8
+ 2725      00000000 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 67
+
+
+ 2726 0040 8C000000 		.word	.LC17
+ 2727 0044 00000000 		.word	MENU_Information
+ 2728 0048 00000000 		.space	8
+ 2728      00000000 
+ 2729 0050 34000000 		.word	.LC8
+ 2730 0054 00000000 		.space	12
+ 2730      00000000 
+ 2730      00000000 
+ 2731              		.text
+ 2732              	.Letext0:
+ 2733              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 2734              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 2735              		.file 4 "Application/MENU.h"
+ 2736              		.file 5 "Modules/font.h"
+ 2737              		.file 6 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 2738              		.file 7 "Modules/oled.h"
+ 2739              		.file 8 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 68
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 MENU.c
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:18     .text.Key_GetEvent_Back:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:24     .text.Key_GetEvent_Back:00000000 Key_GetEvent_Back
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:58     .text.Key_GetEvent_Back:00000018 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:63     .text.Key_GetEvent_Up:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:69     .text.Key_GetEvent_Up:00000000 Key_GetEvent_Up
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:102    .text.Key_GetEvent_Up:00000018 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:107    .text.Key_GetEvent_Down:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:113    .text.Key_GetEvent_Down:00000000 Key_GetEvent_Down
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:146    .text.Key_GetEvent_Down:00000018 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:151    .text.Key_GetEvent_Enter:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:157    .text.Key_GetEvent_Enter:00000000 Key_GetEvent_Enter
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:190    .text.Key_GetEvent_Enter:00000018 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:195    .text.Key_GetEvent_Right:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:201    .text.Key_GetEvent_Right:00000000 Key_GetEvent_Right
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:216    .text.menu_command_callback:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:222    .text.menu_command_callback:00000000 menu_command_callback
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:253    .text.menu_command_callback:00000012 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:261    .text.menu_command_callback:0000001a $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:499    .text.menu_command_callback:000000cc $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:504    .rodata.MENU_Information.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:514    .text.MENU_Information:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:520    .text.MENU_Information:00000000 MENU_Information
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:583    .text.MENU_Information:00000048 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:590    .text.MENU_UpdateIndex:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:596    .text.MENU_UpdateIndex:00000000 MENU_UpdateIndex
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:692    .text.MENU_Event_and_Action:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:698    .text.MENU_Event_and_Action:00000000 MENU_Event_and_Action
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:792    .text.MENU_ShowOption:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:798    .text.MENU_ShowOption:00000000 MENU_ShowOption
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:830    .text.MENU_ShowOption:00000014 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1012   .text.MENU_HandleInit:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1018   .text.MENU_HandleInit:00000000 MENU_HandleInit
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1113   .text.MENU_ShowOptionList:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1119   .text.MENU_ShowOptionList:00000000 MENU_ShowOptionList
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1343   .text.MENU_ShowOptionList:00000118 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1354   .text.MENU_ShowCursor:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1360   .text.MENU_ShowCursor:00000000 MENU_ShowCursor
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1870   .text.MENU_ShowCursor:00000308 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:1893   .text.MENU_ShowCursor:00000360 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2269   .text.MENU_ShowCursor:00000618 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2289   .text.MENU_RunMenu:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2295   .text.MENU_RunMenu:00000000 MENU_RunMenu
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2351   .text.MENU_RunToolsMenu:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2357   .text.MENU_RunToolsMenu:00000000 MENU_RunToolsMenu
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2379   .text.MENU_RunToolsMenu:0000000c $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2384   .text.MENU_RunGamesMenu:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2390   .text.MENU_RunGamesMenu:00000000 MENU_RunGamesMenu
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2412   .text.MENU_RunGamesMenu:0000000c $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2417   .text.MENU_ShowBorder:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2423   .text.MENU_ShowBorder:00000000 MENU_ShowBorder
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2440   .text.MENU_RunMainMenu:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2446   .text.MENU_RunMainMenu:00000000 MENU_RunMainMenu
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2468   .text.MENU_RunMainMenu:0000000c $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2473   .rodata.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2611   .bss.key:00000000 key
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 69
+
+
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2520   .bss.VerticalOffsetBuffer.22:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2524   .bss.VerticalOffsetBuffer.22:00000000 VerticalOffsetBuffer.22
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2527   .bss.actual_xend.13:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2531   .bss.actual_xend.13:00000000 actual_xend.13
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2534   .bss.actual_xsta.17:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2538   .bss.actual_xsta.17:00000000 actual_xsta.17
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2541   .bss.actual_yend.11:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2545   .bss.actual_yend.11:00000000 actual_yend.11
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2548   .bss.actual_ysta.15:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2552   .bss.actual_ysta.15:00000000 actual_ysta.15
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2558   .bss.bounce_cnt_xend.7:00000000 bounce_cnt_xend.7
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2559   .bss.bounce_cnt_xend.7:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2564   .bss.bounce_cnt_xsta.9:00000000 bounce_cnt_xsta.9
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2565   .bss.bounce_cnt_xsta.9:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2570   .bss.bounce_cnt_yend.6:00000000 bounce_cnt_yend.6
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2571   .bss.bounce_cnt_yend.6:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2576   .bss.bounce_cnt_ysta.8:00000000 bounce_cnt_ysta.8
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2577   .bss.bounce_cnt_ysta.8:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2579   .bss.bounce_xend.12:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2583   .bss.bounce_xend.12:00000000 bounce_xend.12
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2586   .bss.bounce_xsta.16:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2590   .bss.bounce_xsta.16:00000000 bounce_xsta.16
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2593   .bss.bounce_yend.10:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2597   .bss.bounce_yend.10:00000000 bounce_yend.10
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2600   .bss.bounce_ysta.14:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2604   .bss.bounce_ysta.14:00000000 bounce_ysta.14
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2607   .bss.key:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2614   .bss.target_xend.19:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2618   .bss.target_xend.19:00000000 target_xend.19
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2621   .bss.target_xsta.21:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2625   .bss.target_xsta.21:00000000 target_xsta.21
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2628   .bss.target_yend.18:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2632   .bss.target_yend.18:00000000 target_yend.18
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2635   .bss.target_ysta.20:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2639   .bss.target_ysta.20:00000000 target_ysta.20
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2642   .data.MENU.1:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2646   .data.MENU.1:00000000 MENU.1
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2669   .data.MENU_OptionList.0:00000000 MENU_OptionList.0
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2650   .data.MENU.3:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2654   .data.MENU.3:00000000 MENU.3
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2690   .data.MENU_OptionList.2:00000000 MENU_OptionList.2
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2658   .data.MENU.5:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2662   .data.MENU.5:00000000 MENU.5
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2714   .data.MENU_OptionList.4:00000000 MENU_OptionList.4
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2666   .data.MENU_OptionList.0:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2687   .data.MENU_OptionList.2:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:2711   .data.MENU_OptionList.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:839    .text.MENU_ShowOption:0000001d $d
+C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s:839    .text.MENU_ShowOption:0000001e $t
+
+UNDEFINED SYMBOLS
+OLED_ShowFrame
+OLED_NewFrame
+OLED_PrintASCIIString
+strlen
+OLED_DrawRectangle
+afont16x8
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccMVk0iA.s 			page 70
+
+
+__aeabi_f2d
+sprintf
+__aeabi_i2f
+__aeabi_fcmpeq
+__aeabi_fsub
+__aeabi_fcmpgt
+__aeabi_dadd
+__aeabi_dmul
+__aeabi_d2f
+__aeabi_fcmplt
+__aeabi_dsub
+__aeabi_f2iz
+__aeabi_fadd
+__aeabi_d2iz

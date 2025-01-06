@@ -1,0 +1,1184 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"nrf24l01.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.NRF24L01_SPI_Send_Byte,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  23              	NRF24L01_SPI_Send_Byte:
+  24              	.LVL0:
+  25              	.LFB66:
+  26              		.file 1 "Modules/nrf24l01.c"
+   1:Modules/nrf24l01.c **** #include "nrf24l01.h"
+   2:Modules/nrf24l01.c **** 
+   3:Modules/nrf24l01.c **** uint8_t INIT_ADDR[5] = {0x00, 0x1A, 0xB1, 0xB1, 0x01}; // 节点地址
+   4:Modules/nrf24l01.c **** 
+   5:Modules/nrf24l01.c **** void NRF24L01_Init(void)
+   6:Modules/nrf24l01.c **** {
+   7:Modules/nrf24l01.c ****     DWT_Init(72);
+   8:Modules/nrf24l01.c ****     Clr_NRF24L01_CE;
+   9:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+  10:Modules/nrf24l01.c ****     DWT_Delay(100 * 1e-6);
+  11:Modules/nrf24l01.c **** }
+  12:Modules/nrf24l01.c **** 
+  13:Modules/nrf24l01.c **** // spi单字节读写函数
+  14:Modules/nrf24l01.c **** static uint8_t NRF24L01_SPI_Send_Byte(uint8_t txdata)
+  15:Modules/nrf24l01.c **** {
+  27              		.loc 1 15 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 16
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		.loc 1 15 1 is_stmt 0 view .LVU1
+  32 0000 00B5     		push	{lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 87B0     		sub	sp, sp, #28
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 32
+  39 0004 8DF80F00 		strb	r0, [sp, #15]
+  16:Modules/nrf24l01.c ****     uint8_t rxdata;
+  40              		.loc 1 16 5 is_stmt 1 view .LVU2
+  17:Modules/nrf24l01.c ****     HAL_SPI_TransmitReceive(&hspi1, &txdata, &rxdata, 1, 0x10);
+  41              		.loc 1 17 5 view .LVU3
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 2
+
+
+  42 0008 1023     		movs	r3, #16
+  43 000a 0093     		str	r3, [sp]
+  44 000c 0123     		movs	r3, #1
+  45 000e 0DF11702 		add	r2, sp, #23
+  46 0012 0DF10F01 		add	r1, sp, #15
+  47 0016 0448     		ldr	r0, .L3
+  48              	.LVL1:
+  49              		.loc 1 17 5 is_stmt 0 view .LVU4
+  50 0018 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+  51              	.LVL2:
+  18:Modules/nrf24l01.c ****     return rxdata;
+  52              		.loc 1 18 5 is_stmt 1 view .LVU5
+  19:Modules/nrf24l01.c **** }
+  53              		.loc 1 19 1 is_stmt 0 view .LVU6
+  54 001c 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
+  55 0020 07B0     		add	sp, sp, #28
+  56              	.LCFI2:
+  57              		.cfi_def_cfa_offset 4
+  58              		@ sp needed
+  59 0022 5DF804FB 		ldr	pc, [sp], #4
+  60              	.L4:
+  61 0026 00BF     		.align	2
+  62              	.L3:
+  63 0028 00000000 		.word	hspi1
+  64              		.cfi_endproc
+  65              	.LFE66:
+  67              		.section	.text.NRF24L01_Write_Buf,"ax",%progbits
+  68              		.align	1
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  73              	NRF24L01_Write_Buf:
+  74              	.LVL3:
+  75              	.LFB67:
+  20:Modules/nrf24l01.c **** 
+  21:Modules/nrf24l01.c **** /**
+  22:Modules/nrf24l01.c ****  * @brief 在指定地址写入指定数据SPI封装函数
+  23:Modules/nrf24l01.c ****  *
+  24:Modules/nrf24l01.c ****  * @param regaddr 地址
+  25:Modules/nrf24l01.c ****  * @param pBuf 数据
+  26:Modules/nrf24l01.c ****  * @param datalen 长度
+  27:Modules/nrf24l01.c ****  * @return uint8_t  此次地址读到的状态寄存器值
+  28:Modules/nrf24l01.c ****  */
+  29:Modules/nrf24l01.c **** static uint8_t NRF24L01_Write_Buf(uint8_t regaddr, uint8_t *pBuf, uint8_t datalen)
+  30:Modules/nrf24l01.c **** {
+  76              		.loc 1 30 1 is_stmt 1 view -0
+  77              		.cfi_startproc
+  78              		@ args = 0, pretend = 0, frame = 0
+  79              		@ frame_needed = 0, uses_anonymous_args = 0
+  80              		.loc 1 30 1 is_stmt 0 view .LVU8
+  81 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  82              	.LCFI3:
+  83              		.cfi_def_cfa_offset 24
+  84              		.cfi_offset 3, -24
+  85              		.cfi_offset 4, -20
+  86              		.cfi_offset 5, -16
+  87              		.cfi_offset 6, -12
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 3
+
+
+  88              		.cfi_offset 7, -8
+  89              		.cfi_offset 14, -4
+  90 0002 0446     		mov	r4, r0
+  91 0004 0D46     		mov	r5, r1
+  92 0006 1646     		mov	r6, r2
+  31:Modules/nrf24l01.c ****     uint8_t status;
+  93              		.loc 1 31 5 is_stmt 1 view .LVU9
+  32:Modules/nrf24l01.c ****     Clr_NRF24L01_CSN;                              // 片选NRF24L01 SPI
+  94              		.loc 1 32 5 view .LVU10
+  95 0008 0C4F     		ldr	r7, .L7
+  96 000a 0022     		movs	r2, #0
+  97              	.LVL4:
+  98              		.loc 1 32 5 is_stmt 0 view .LVU11
+  99 000c 4FF48061 		mov	r1, #1024
+ 100              	.LVL5:
+ 101              		.loc 1 32 5 view .LVU12
+ 102 0010 3846     		mov	r0, r7
+ 103              	.LVL6:
+ 104              		.loc 1 32 5 view .LVU13
+ 105 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 106              	.LVL7:
+  33:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);      // 指定地址
+ 107              		.loc 1 33 5 is_stmt 1 view .LVU14
+ 108              		.loc 1 33 14 is_stmt 0 view .LVU15
+ 109 0016 2046     		mov	r0, r4
+ 110 0018 FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 111              	.LVL8:
+ 112 001c 0446     		mov	r4, r0
+ 113              	.LVL9:
+  34:Modules/nrf24l01.c ****     HAL_SPI_Transmit(&hspi1, pBuf, datalen, 0x10); // 指定数据
+ 114              		.loc 1 34 5 is_stmt 1 view .LVU16
+ 115 001e 1023     		movs	r3, #16
+ 116 0020 3246     		mov	r2, r6
+ 117 0022 2946     		mov	r1, r5
+ 118 0024 0648     		ldr	r0, .L7+4
+ 119 0026 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 120              	.LVL10:
+  35:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+ 121              		.loc 1 35 5 view .LVU17
+ 122 002a 0122     		movs	r2, #1
+ 123 002c 4FF48061 		mov	r1, #1024
+ 124 0030 3846     		mov	r0, r7
+ 125 0032 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 126              	.LVL11:
+  36:Modules/nrf24l01.c ****     return status;
+ 127              		.loc 1 36 5 view .LVU18
+  37:Modules/nrf24l01.c **** }
+ 128              		.loc 1 37 1 is_stmt 0 view .LVU19
+ 129 0036 2046     		mov	r0, r4
+ 130 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 131              	.LVL12:
+ 132              	.L8:
+ 133              		.loc 1 37 1 view .LVU20
+ 134 003a 00BF     		.align	2
+ 135              	.L7:
+ 136 003c 00080140 		.word	1073809408
+ 137 0040 00000000 		.word	hspi1
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 4
+
+
+ 138              		.cfi_endproc
+ 139              	.LFE67:
+ 141              		.section	.text.NRF24L01_Write_Reg,"ax",%progbits
+ 142              		.align	1
+ 143              		.syntax unified
+ 144              		.thumb
+ 145              		.thumb_func
+ 147              	NRF24L01_Write_Reg:
+ 148              	.LVL13:
+ 149              	.LFB70:
+  38:Modules/nrf24l01.c **** 
+  39:Modules/nrf24l01.c **** /**
+  40:Modules/nrf24l01.c ****  * @brief 在指定地址读出指定长度数据SPI封装函数
+  41:Modules/nrf24l01.c ****  *
+  42:Modules/nrf24l01.c ****  * @param regaddr 地址
+  43:Modules/nrf24l01.c ****  * @param pBuf 数据
+  44:Modules/nrf24l01.c ****  * @param datalen 长度
+  45:Modules/nrf24l01.c ****  * @return uint8_t  此次地址读到的状态寄存器值
+  46:Modules/nrf24l01.c ****  */
+  47:Modules/nrf24l01.c **** static uint8_t NRF24L01_Read_Buf(uint8_t regaddr, uint8_t *pBuf, uint8_t datalen)
+  48:Modules/nrf24l01.c **** {
+  49:Modules/nrf24l01.c ****     uint8_t status;
+  50:Modules/nrf24l01.c ****     Clr_NRF24L01_CSN;                             // 片选NRF24L01 SPI
+  51:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);     // 指定地址
+  52:Modules/nrf24l01.c ****     HAL_SPI_Receive(&hspi1, pBuf, datalen, 0x10); // 指定数据
+  53:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+  54:Modules/nrf24l01.c ****     return status;
+  55:Modules/nrf24l01.c **** }
+  56:Modules/nrf24l01.c **** 
+  57:Modules/nrf24l01.c **** /**
+  58:Modules/nrf24l01.c ****  * @brief 检测NRF24L01通讯是否正常
+  59:Modules/nrf24l01.c ****  *
+  60:Modules/nrf24l01.c ****  * @return uint8_t 1：通信正常；0通信异常
+  61:Modules/nrf24l01.c ****  */
+  62:Modules/nrf24l01.c **** uint8_t NRF24L01_Check(void)
+  63:Modules/nrf24l01.c **** {
+  64:Modules/nrf24l01.c ****     uint8_t buf[5] = {0xA5, 0xA5, 0xA5, 0xA5, 0xA5};
+  65:Modules/nrf24l01.c ****     uint8_t buf_back[5];
+  66:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(SPI_WRITE_REG + TX_ADDR, buf, 5);
+  67:Modules/nrf24l01.c ****     NRF24L01_Read_Buf(TX_ADDR, buf_back, 5);
+  68:Modules/nrf24l01.c ****     for (int i = 0; i < 5; i++)
+  69:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+  70:Modules/nrf24l01.c ****             return 0; // 检测24L01读写错误
+  71:Modules/nrf24l01.c ****     return 1;
+  72:Modules/nrf24l01.c **** }
+  73:Modules/nrf24l01.c **** 
+  74:Modules/nrf24l01.c **** /**
+  75:Modules/nrf24l01.c ****  * @brief 对NRF24L01的寄存器写入数据
+  76:Modules/nrf24l01.c ****  *
+  77:Modules/nrf24l01.c ****  * @param regaddr
+  78:Modules/nrf24l01.c ****  * @param data
+  79:Modules/nrf24l01.c ****  * @return uint8_t
+  80:Modules/nrf24l01.c ****  */
+  81:Modules/nrf24l01.c **** static uint8_t NRF24L01_Write_Reg(uint8_t regaddr, uint8_t data)
+  82:Modules/nrf24l01.c **** {
+ 150              		.loc 1 82 1 is_stmt 1 view -0
+ 151              		.cfi_startproc
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 5
+
+
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		.loc 1 82 1 is_stmt 0 view .LVU22
+ 155 0000 70B5     		push	{r4, r5, r6, lr}
+ 156              	.LCFI4:
+ 157              		.cfi_def_cfa_offset 16
+ 158              		.cfi_offset 4, -16
+ 159              		.cfi_offset 5, -12
+ 160              		.cfi_offset 6, -8
+ 161              		.cfi_offset 14, -4
+ 162 0002 0446     		mov	r4, r0
+ 163 0004 0D46     		mov	r5, r1
+  83:Modules/nrf24l01.c ****     uint8_t status;
+ 164              		.loc 1 83 5 is_stmt 1 view .LVU23
+  84:Modules/nrf24l01.c ****     Clr_NRF24L01_CSN;
+ 165              		.loc 1 84 5 view .LVU24
+ 166 0006 0B4E     		ldr	r6, .L11
+ 167 0008 0022     		movs	r2, #0
+ 168 000a 4FF48061 		mov	r1, #1024
+ 169              	.LVL14:
+ 170              		.loc 1 84 5 is_stmt 0 view .LVU25
+ 171 000e 3046     		mov	r0, r6
+ 172              	.LVL15:
+ 173              		.loc 1 84 5 view .LVU26
+ 174 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 175              	.LVL16:
+  85:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr); // 目标地址
+ 176              		.loc 1 85 5 is_stmt 1 view .LVU27
+ 177              		.loc 1 85 14 is_stmt 0 view .LVU28
+ 178 0014 2046     		mov	r0, r4
+ 179 0016 FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 180              	.LVL17:
+ 181 001a 0446     		mov	r4, r0
+ 182              	.LVL18:
+  86:Modules/nrf24l01.c ****     NRF24L01_SPI_Send_Byte(data);             // 写入数据
+ 183              		.loc 1 86 5 is_stmt 1 view .LVU29
+ 184 001c 2846     		mov	r0, r5
+ 185 001e FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 186              	.LVL19:
+  87:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+ 187              		.loc 1 87 5 view .LVU30
+ 188 0022 0122     		movs	r2, #1
+ 189 0024 4FF48061 		mov	r1, #1024
+ 190 0028 3046     		mov	r0, r6
+ 191 002a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 192              	.LVL20:
+  88:Modules/nrf24l01.c ****     return status;
+ 193              		.loc 1 88 5 view .LVU31
+  89:Modules/nrf24l01.c **** }
+ 194              		.loc 1 89 1 is_stmt 0 view .LVU32
+ 195 002e 2046     		mov	r0, r4
+ 196 0030 70BD     		pop	{r4, r5, r6, pc}
+ 197              	.LVL21:
+ 198              	.L12:
+ 199              		.loc 1 89 1 view .LVU33
+ 200 0032 00BF     		.align	2
+ 201              	.L11:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 6
+
+
+ 202 0034 00080140 		.word	1073809408
+ 203              		.cfi_endproc
+ 204              	.LFE70:
+ 206              		.section	.text.NRF24L01_Read_Reg,"ax",%progbits
+ 207              		.align	1
+ 208              		.syntax unified
+ 209              		.thumb
+ 210              		.thumb_func
+ 212              	NRF24L01_Read_Reg:
+ 213              	.LVL22:
+ 214              	.LFB71:
+  90:Modules/nrf24l01.c **** 
+  91:Modules/nrf24l01.c **** /**
+  92:Modules/nrf24l01.c ****  * @brief 返回NRF24L01对应寄存器的值
+  93:Modules/nrf24l01.c ****  *
+  94:Modules/nrf24l01.c ****  * @param regaddr 需要读取的寄存器地址
+  95:Modules/nrf24l01.c ****  * @return uint8_t
+  96:Modules/nrf24l01.c ****  */
+  97:Modules/nrf24l01.c **** static uint8_t NRF24L01_Read_Reg(uint8_t regaddr)
+  98:Modules/nrf24l01.c **** {
+ 215              		.loc 1 98 1 is_stmt 1 view -0
+ 216              		.cfi_startproc
+ 217              		@ args = 0, pretend = 0, frame = 0
+ 218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 219              		.loc 1 98 1 is_stmt 0 view .LVU35
+ 220 0000 38B5     		push	{r3, r4, r5, lr}
+ 221              	.LCFI5:
+ 222              		.cfi_def_cfa_offset 16
+ 223              		.cfi_offset 3, -16
+ 224              		.cfi_offset 4, -12
+ 225              		.cfi_offset 5, -8
+ 226              		.cfi_offset 14, -4
+ 227 0002 0446     		mov	r4, r0
+  99:Modules/nrf24l01.c ****     uint8_t reg_val;
+ 228              		.loc 1 99 5 is_stmt 1 view .LVU36
+ 100:Modules/nrf24l01.c ****     Clr_NRF24L01_CSN;
+ 229              		.loc 1 100 5 view .LVU37
+ 230 0004 0A4D     		ldr	r5, .L15
+ 231 0006 0022     		movs	r2, #0
+ 232 0008 4FF48061 		mov	r1, #1024
+ 233 000c 2846     		mov	r0, r5
+ 234              	.LVL23:
+ 235              		.loc 1 100 5 is_stmt 0 view .LVU38
+ 236 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 237              	.LVL24:
+ 101:Modules/nrf24l01.c ****     NRF24L01_SPI_Send_Byte(regaddr);
+ 238              		.loc 1 101 5 is_stmt 1 view .LVU39
+ 239 0012 2046     		mov	r0, r4
+ 240 0014 FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 241              	.LVL25:
+ 102:Modules/nrf24l01.c ****     reg_val = NRF24L01_SPI_Send_Byte(0xFF);
+ 242              		.loc 1 102 5 view .LVU40
+ 243              		.loc 1 102 15 is_stmt 0 view .LVU41
+ 244 0018 FF20     		movs	r0, #255
+ 245 001a FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 246              	.LVL26:
+ 247 001e 0446     		mov	r4, r0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 7
+
+
+ 248              	.LVL27:
+ 103:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+ 249              		.loc 1 103 5 is_stmt 1 view .LVU42
+ 250 0020 0122     		movs	r2, #1
+ 251 0022 4FF48061 		mov	r1, #1024
+ 252 0026 2846     		mov	r0, r5
+ 253 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 254              	.LVL28:
+ 104:Modules/nrf24l01.c ****     return reg_val;
+ 255              		.loc 1 104 5 view .LVU43
+ 105:Modules/nrf24l01.c **** }
+ 256              		.loc 1 105 1 is_stmt 0 view .LVU44
+ 257 002c 2046     		mov	r0, r4
+ 258 002e 38BD     		pop	{r3, r4, r5, pc}
+ 259              	.LVL29:
+ 260              	.L16:
+ 261              		.loc 1 105 1 view .LVU45
+ 262              		.align	2
+ 263              	.L15:
+ 264 0030 00080140 		.word	1073809408
+ 265              		.cfi_endproc
+ 266              	.LFE71:
+ 268              		.section	.text.NRF24L01_Read_Buf,"ax",%progbits
+ 269              		.align	1
+ 270              		.syntax unified
+ 271              		.thumb
+ 272              		.thumb_func
+ 274              	NRF24L01_Read_Buf:
+ 275              	.LVL30:
+ 276              	.LFB68:
+  48:Modules/nrf24l01.c ****     uint8_t status;
+ 277              		.loc 1 48 1 is_stmt 1 view -0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+  48:Modules/nrf24l01.c ****     uint8_t status;
+ 281              		.loc 1 48 1 is_stmt 0 view .LVU47
+ 282 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 283              	.LCFI6:
+ 284              		.cfi_def_cfa_offset 24
+ 285              		.cfi_offset 3, -24
+ 286              		.cfi_offset 4, -20
+ 287              		.cfi_offset 5, -16
+ 288              		.cfi_offset 6, -12
+ 289              		.cfi_offset 7, -8
+ 290              		.cfi_offset 14, -4
+ 291 0002 0446     		mov	r4, r0
+ 292 0004 0D46     		mov	r5, r1
+ 293 0006 1646     		mov	r6, r2
+  49:Modules/nrf24l01.c ****     Clr_NRF24L01_CSN;                             // 片选NRF24L01 SPI
+ 294              		.loc 1 49 5 is_stmt 1 view .LVU48
+  50:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);     // 指定地址
+ 295              		.loc 1 50 5 view .LVU49
+ 296 0008 0C4F     		ldr	r7, .L19
+ 297 000a 0022     		movs	r2, #0
+ 298              	.LVL31:
+  50:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);     // 指定地址
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 8
+
+
+ 299              		.loc 1 50 5 is_stmt 0 view .LVU50
+ 300 000c 4FF48061 		mov	r1, #1024
+ 301              	.LVL32:
+  50:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);     // 指定地址
+ 302              		.loc 1 50 5 view .LVU51
+ 303 0010 3846     		mov	r0, r7
+ 304              	.LVL33:
+  50:Modules/nrf24l01.c ****     status = NRF24L01_SPI_Send_Byte(regaddr);     // 指定地址
+ 305              		.loc 1 50 5 view .LVU52
+ 306 0012 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 307              	.LVL34:
+  51:Modules/nrf24l01.c ****     HAL_SPI_Receive(&hspi1, pBuf, datalen, 0x10); // 指定数据
+ 308              		.loc 1 51 5 is_stmt 1 view .LVU53
+  51:Modules/nrf24l01.c ****     HAL_SPI_Receive(&hspi1, pBuf, datalen, 0x10); // 指定数据
+ 309              		.loc 1 51 14 is_stmt 0 view .LVU54
+ 310 0016 2046     		mov	r0, r4
+ 311 0018 FFF7FEFF 		bl	NRF24L01_SPI_Send_Byte
+ 312              	.LVL35:
+ 313 001c 0446     		mov	r4, r0
+ 314              	.LVL36:
+  52:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+ 315              		.loc 1 52 5 is_stmt 1 view .LVU55
+ 316 001e 1023     		movs	r3, #16
+ 317 0020 3246     		mov	r2, r6
+ 318 0022 2946     		mov	r1, r5
+ 319 0024 0648     		ldr	r0, .L19+4
+ 320 0026 FFF7FEFF 		bl	HAL_SPI_Receive
+ 321              	.LVL37:
+  53:Modules/nrf24l01.c ****     return status;
+ 322              		.loc 1 53 5 view .LVU56
+ 323 002a 0122     		movs	r2, #1
+ 324 002c 4FF48061 		mov	r1, #1024
+ 325 0030 3846     		mov	r0, r7
+ 326 0032 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 327              	.LVL38:
+  54:Modules/nrf24l01.c **** }
+ 328              		.loc 1 54 5 view .LVU57
+  55:Modules/nrf24l01.c **** 
+ 329              		.loc 1 55 1 is_stmt 0 view .LVU58
+ 330 0036 2046     		mov	r0, r4
+ 331 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 332              	.LVL39:
+ 333              	.L20:
+  55:Modules/nrf24l01.c **** 
+ 334              		.loc 1 55 1 view .LVU59
+ 335 003a 00BF     		.align	2
+ 336              	.L19:
+ 337 003c 00080140 		.word	1073809408
+ 338 0040 00000000 		.word	hspi1
+ 339              		.cfi_endproc
+ 340              	.LFE68:
+ 342              		.section	.text.NRF24L01_Init,"ax",%progbits
+ 343              		.align	1
+ 344              		.global	NRF24L01_Init
+ 345              		.syntax unified
+ 346              		.thumb
+ 347              		.thumb_func
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 9
+
+
+ 349              	NRF24L01_Init:
+ 350              	.LFB65:
+   6:Modules/nrf24l01.c ****     DWT_Init(72);
+ 351              		.loc 1 6 1 is_stmt 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355 0000 10B5     		push	{r4, lr}
+ 356              	.LCFI7:
+ 357              		.cfi_def_cfa_offset 8
+ 358              		.cfi_offset 4, -8
+ 359              		.cfi_offset 14, -4
+   7:Modules/nrf24l01.c ****     Clr_NRF24L01_CE;
+ 360              		.loc 1 7 5 view .LVU61
+ 361 0002 4820     		movs	r0, #72
+ 362 0004 FFF7FEFF 		bl	DWT_Init
+ 363              	.LVL40:
+   8:Modules/nrf24l01.c ****     Set_NRF24L01_CSN;
+ 364              		.loc 1 8 5 view .LVU62
+ 365 0008 074C     		ldr	r4, .L23
+ 366 000a 0022     		movs	r2, #0
+ 367 000c 1021     		movs	r1, #16
+ 368 000e 2046     		mov	r0, r4
+ 369 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 370              	.LVL41:
+   9:Modules/nrf24l01.c ****     DWT_Delay(100 * 1e-6);
+ 371              		.loc 1 9 5 view .LVU63
+ 372 0014 0122     		movs	r2, #1
+ 373 0016 4FF48061 		mov	r1, #1024
+ 374 001a 2046     		mov	r0, r4
+ 375 001c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 376              	.LVL42:
+  10:Modules/nrf24l01.c **** }
+ 377              		.loc 1 10 5 view .LVU64
+ 378 0020 0248     		ldr	r0, .L23+4
+ 379 0022 FFF7FEFF 		bl	DWT_Delay
+ 380              	.LVL43:
+  11:Modules/nrf24l01.c **** 
+ 381              		.loc 1 11 1 is_stmt 0 view .LVU65
+ 382 0026 10BD     		pop	{r4, pc}
+ 383              	.L24:
+ 384              		.align	2
+ 385              	.L23:
+ 386 0028 00080140 		.word	1073809408
+ 387 002c 17B7D138 		.word	953267991
+ 388              		.cfi_endproc
+ 389              	.LFE65:
+ 391              		.section	.rodata.NRF24L01_Check.str1.4,"aMS",%progbits,1
+ 392              		.align	2
+ 393              	.LC0:
+ 394 0000 A5A5A5A5 		.ascii	"\245\245\245\245\245\000"
+ 394      A500
+ 395              		.section	.text.NRF24L01_Check,"ax",%progbits
+ 396              		.align	1
+ 397              		.global	NRF24L01_Check
+ 398              		.syntax unified
+ 399              		.thumb
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 10
+
+
+ 400              		.thumb_func
+ 402              	NRF24L01_Check:
+ 403              	.LFB69:
+  63:Modules/nrf24l01.c ****     uint8_t buf[5] = {0xA5, 0xA5, 0xA5, 0xA5, 0xA5};
+ 404              		.loc 1 63 1 is_stmt 1 view -0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 16
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408 0000 00B5     		push	{lr}
+ 409              	.LCFI8:
+ 410              		.cfi_def_cfa_offset 4
+ 411              		.cfi_offset 14, -4
+ 412 0002 85B0     		sub	sp, sp, #20
+ 413              	.LCFI9:
+ 414              		.cfi_def_cfa_offset 24
+  64:Modules/nrf24l01.c ****     uint8_t buf_back[5];
+ 415              		.loc 1 64 5 view .LVU67
+  64:Modules/nrf24l01.c ****     uint8_t buf_back[5];
+ 416              		.loc 1 64 13 is_stmt 0 view .LVU68
+ 417 0004 104B     		ldr	r3, .L32
+ 418 0006 93E80300 		ldm	r3, {r0, r1}
+ 419 000a 0290     		str	r0, [sp, #8]
+ 420 000c 8DF80C10 		strb	r1, [sp, #12]
+  65:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(SPI_WRITE_REG + TX_ADDR, buf, 5);
+ 421              		.loc 1 65 5 is_stmt 1 view .LVU69
+  66:Modules/nrf24l01.c ****     NRF24L01_Read_Buf(TX_ADDR, buf_back, 5);
+ 422              		.loc 1 66 5 view .LVU70
+ 423 0010 0522     		movs	r2, #5
+ 424 0012 02A9     		add	r1, sp, #8
+ 425 0014 3020     		movs	r0, #48
+ 426 0016 FFF7FEFF 		bl	NRF24L01_Write_Buf
+ 427              	.LVL44:
+  67:Modules/nrf24l01.c ****     for (int i = 0; i < 5; i++)
+ 428              		.loc 1 67 5 view .LVU71
+ 429 001a 0522     		movs	r2, #5
+ 430 001c 6946     		mov	r1, sp
+ 431 001e 1020     		movs	r0, #16
+ 432 0020 FFF7FEFF 		bl	NRF24L01_Read_Buf
+ 433              	.LVL45:
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 434              		.loc 1 68 5 view .LVU72
+ 435              	.LBB2:
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 436              		.loc 1 68 10 view .LVU73
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 437              		.loc 1 68 14 is_stmt 0 view .LVU74
+ 438 0024 0023     		movs	r3, #0
+ 439              	.LVL46:
+ 440              	.L26:
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 441              		.loc 1 68 21 is_stmt 1 discriminator 1 view .LVU75
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 442              		.loc 1 68 5 is_stmt 0 discriminator 1 view .LVU76
+ 443 0026 042B     		cmp	r3, #4
+ 444 0028 08DC     		bgt	.L31
+  69:Modules/nrf24l01.c ****             return 0; // 检测24L01读写错误
+ 445              		.loc 1 69 9 is_stmt 1 view .LVU77
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 11
+
+
+  69:Modules/nrf24l01.c ****             return 0; // 检测24L01读写错误
+ 446              		.loc 1 69 21 is_stmt 0 view .LVU78
+ 447 002a 03F11002 		add	r2, r3, #16
+ 448 002e 6A44     		add	r2, sp, r2
+ 449 0030 12F8102C 		ldrb	r2, [r2, #-16]	@ zero_extendqisi2
+  69:Modules/nrf24l01.c ****             return 0; // 检测24L01读写错误
+ 450              		.loc 1 69 12 view .LVU79
+ 451 0034 A52A     		cmp	r2, #165
+ 452 0036 05D1     		bne	.L29
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 453              		.loc 1 68 28 is_stmt 1 discriminator 2 view .LVU80
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 454              		.loc 1 68 29 is_stmt 0 discriminator 2 view .LVU81
+ 455 0038 0133     		adds	r3, r3, #1
+ 456              	.LVL47:
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 457              		.loc 1 68 29 discriminator 2 view .LVU82
+ 458 003a F4E7     		b	.L26
+ 459              	.L31:
+  68:Modules/nrf24l01.c ****         if (buf_back[i] != 0xA5)
+ 460              		.loc 1 68 29 discriminator 2 view .LVU83
+ 461              	.LBE2:
+  71:Modules/nrf24l01.c **** }
+ 462              		.loc 1 71 12 view .LVU84
+ 463 003c 0120     		movs	r0, #1
+ 464              	.L27:
+  72:Modules/nrf24l01.c **** 
+ 465              		.loc 1 72 1 view .LVU85
+ 466 003e 05B0     		add	sp, sp, #20
+ 467              	.LCFI10:
+ 468              		.cfi_remember_state
+ 469              		.cfi_def_cfa_offset 4
+ 470              		@ sp needed
+ 471 0040 5DF804FB 		ldr	pc, [sp], #4
+ 472              	.L29:
+ 473              	.LCFI11:
+ 474              		.cfi_restore_state
+ 475              	.LBB3:
+  70:Modules/nrf24l01.c ****     return 1;
+ 476              		.loc 1 70 20 view .LVU86
+ 477 0044 0020     		movs	r0, #0
+ 478 0046 FAE7     		b	.L27
+ 479              	.L33:
+ 480              		.align	2
+ 481              	.L32:
+ 482 0048 00000000 		.word	.LC0
+ 483              	.LBE3:
+ 484              		.cfi_endproc
+ 485              	.LFE69:
+ 487              		.section	.text.TX_Mode,"ax",%progbits
+ 488              		.align	1
+ 489              		.global	TX_Mode
+ 490              		.syntax unified
+ 491              		.thumb
+ 492              		.thumb_func
+ 494              	TX_Mode:
+ 495              	.LVL48:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 12
+
+
+ 496              	.LFB72:
+ 106:Modules/nrf24l01.c **** 
+ 107:Modules/nrf24l01.c **** /**
+ 108:Modules/nrf24l01.c ****  * @brief 配置NRF24L01发送工作模式
+ 109:Modules/nrf24l01.c ****  *
+ 110:Modules/nrf24l01.c ****  * @param numoslave
+ 111:Modules/nrf24l01.c ****  */
+ 112:Modules/nrf24l01.c **** void TX_Mode(uint8_t numoslave)
+ 113:Modules/nrf24l01.c **** {
+ 497              		.loc 1 113 1 is_stmt 1 view -0
+ 498              		.cfi_startproc
+ 499              		@ args = 0, pretend = 0, frame = 0
+ 500              		@ frame_needed = 0, uses_anonymous_args = 0
+ 501              		.loc 1 113 1 is_stmt 0 view .LVU88
+ 502 0000 38B5     		push	{r3, r4, r5, lr}
+ 503              	.LCFI12:
+ 504              		.cfi_def_cfa_offset 16
+ 505              		.cfi_offset 3, -16
+ 506              		.cfi_offset 4, -12
+ 507              		.cfi_offset 5, -8
+ 508              		.cfi_offset 14, -4
+ 114:Modules/nrf24l01.c ****     INIT_ADDR[0] = numoslave;
+ 509              		.loc 1 114 5 is_stmt 1 view .LVU89
+ 510              		.loc 1 114 18 is_stmt 0 view .LVU90
+ 511 0002 184C     		ldr	r4, .L36
+ 512 0004 2070     		strb	r0, [r4]
+ 115:Modules/nrf24l01.c ****     Clr_NRF24L01_CE;                                                                    // 将NRF24
+ 513              		.loc 1 115 5 is_stmt 1 view .LVU91
+ 514 0006 184D     		ldr	r5, .L36+4
+ 515 0008 0022     		movs	r2, #0
+ 516 000a 1021     		movs	r1, #16
+ 517 000c 2846     		mov	r0, r5
+ 518              	.LVL49:
+ 519              		.loc 1 115 5 is_stmt 0 view .LVU92
+ 520 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 521              	.LVL50:
+ 116:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(SPI_WRITE_REG + TX_ADDR, (uint8_t *)INIT_ADDR, TX_ADR_WIDTH);    // 配置�
+ 522              		.loc 1 116 5 is_stmt 1 view .LVU93
+ 523 0012 0522     		movs	r2, #5
+ 524 0014 2146     		mov	r1, r4
+ 525 0016 3020     		movs	r0, #48
+ 526 0018 FFF7FEFF 		bl	NRF24L01_Write_Buf
+ 527              	.LVL51:
+ 117:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(SPI_WRITE_REG + RX_ADDR_P0, (uint8_t *)INIT_ADDR, RX_ADR_WIDTH); // 配置�
+ 528              		.loc 1 117 5 view .LVU94
+ 529 001c 0522     		movs	r2, #5
+ 530 001e 2146     		mov	r1, r4
+ 531 0020 2A20     		movs	r0, #42
+ 532 0022 FFF7FEFF 		bl	NRF24L01_Write_Buf
+ 533              	.LVL52:
+ 118:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + EN_AA, 0x01);                                    // 开启�
+ 534              		.loc 1 118 5 view .LVU95
+ 535 0026 0121     		movs	r1, #1
+ 536 0028 2120     		movs	r0, #33
+ 537 002a FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 538              	.LVL53:
+ 119:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + EN_RXADDR, 0X01);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 13
+
+
+ 539              		.loc 1 119 5 view .LVU96
+ 540 002e 0121     		movs	r1, #1
+ 541 0030 2220     		movs	r0, #34
+ 542 0032 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 543              	.LVL54:
+ 120:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + SETUP_RETR, 0x1a);
+ 544              		.loc 1 120 5 view .LVU97
+ 545 0036 1A21     		movs	r1, #26
+ 546 0038 2420     		movs	r0, #36
+ 547 003a FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 548              	.LVL55:
+ 121:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + RF_CH, 40); // 设定通讯频率
+ 549              		.loc 1 121 5 view .LVU98
+ 550 003e 2821     		movs	r1, #40
+ 551 0040 2520     		movs	r0, #37
+ 552 0042 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 553              	.LVL56:
+ 122:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + RF_SETUP, 0x0f);
+ 554              		.loc 1 122 5 view .LVU99
+ 555 0046 0F21     		movs	r1, #15
+ 556 0048 2620     		movs	r0, #38
+ 557 004a FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 558              	.LVL57:
+ 123:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + CONFIG, 0x0e); // 配置基本工作模式为发送
+ 559              		.loc 1 123 5 view .LVU100
+ 560 004e 0E21     		movs	r1, #14
+ 561 0050 2020     		movs	r0, #32
+ 562 0052 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 563              	.LVL58:
+ 124:Modules/nrf24l01.c ****     Set_NRF24L01_CE;                                  // 退出待机模式，关闭配置
+ 564              		.loc 1 124 5 view .LVU101
+ 565 0056 0122     		movs	r2, #1
+ 566 0058 1021     		movs	r1, #16
+ 567 005a 2846     		mov	r0, r5
+ 568 005c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 569              	.LVL59:
+ 125:Modules/nrf24l01.c **** }
+ 570              		.loc 1 125 1 is_stmt 0 view .LVU102
+ 571 0060 38BD     		pop	{r3, r4, r5, pc}
+ 572              	.L37:
+ 573 0062 00BF     		.align	2
+ 574              	.L36:
+ 575 0064 00000000 		.word	.LANCHOR0
+ 576 0068 00080140 		.word	1073809408
+ 577              		.cfi_endproc
+ 578              	.LFE72:
+ 580              		.section	.text.NRF24L01_TxPacket,"ax",%progbits
+ 581              		.align	1
+ 582              		.global	NRF24L01_TxPacket
+ 583              		.syntax unified
+ 584              		.thumb
+ 585              		.thumb_func
+ 587              	NRF24L01_TxPacket:
+ 588              	.LVL60:
+ 589              	.LFB73:
+ 126:Modules/nrf24l01.c **** 
+ 127:Modules/nrf24l01.c **** /**
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 14
+
+
+ 128:Modules/nrf24l01.c ****  * @brief 发送数据
+ 129:Modules/nrf24l01.c ****  *
+ 130:Modules/nrf24l01.c ****  * @param txbuf 需要发送数据的首地址
+ 131:Modules/nrf24l01.c ****  * @return uint8_t
+ 132:Modules/nrf24l01.c ****  */
+ 133:Modules/nrf24l01.c **** uint8_t NRF24L01_TxPacket(uint8_t *txbuf)
+ 134:Modules/nrf24l01.c **** {
+ 590              		.loc 1 134 1 is_stmt 1 view -0
+ 591              		.cfi_startproc
+ 592              		@ args = 0, pretend = 0, frame = 0
+ 593              		@ frame_needed = 0, uses_anonymous_args = 0
+ 594              		.loc 1 134 1 is_stmt 0 view .LVU104
+ 595 0000 38B5     		push	{r3, r4, r5, lr}
+ 596              	.LCFI13:
+ 597              		.cfi_def_cfa_offset 16
+ 598              		.cfi_offset 3, -16
+ 599              		.cfi_offset 4, -12
+ 600              		.cfi_offset 5, -8
+ 601              		.cfi_offset 14, -4
+ 602 0002 0446     		mov	r4, r0
+ 135:Modules/nrf24l01.c ****     uint8_t state;
+ 603              		.loc 1 135 5 is_stmt 1 view .LVU105
+ 136:Modules/nrf24l01.c ****     Clr_NRF24L01_CE;                                        // 更改为待机模式，进入配置
+ 604              		.loc 1 136 5 view .LVU106
+ 605 0004 174D     		ldr	r5, .L45
+ 606 0006 0022     		movs	r2, #0
+ 607 0008 1021     		movs	r1, #16
+ 608 000a 2846     		mov	r0, r5
+ 609              	.LVL61:
+ 610              		.loc 1 136 5 is_stmt 0 view .LVU107
+ 611 000c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 612              	.LVL62:
+ 137:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(WR_TX_PLOAD, txbuf, TX_PLOAD_WIDTH); // 将发送数据写入NRF24L01缓存
+ 613              		.loc 1 137 5 is_stmt 1 view .LVU108
+ 614 0010 0822     		movs	r2, #8
+ 615 0012 2146     		mov	r1, r4
+ 616 0014 A020     		movs	r0, #160
+ 617 0016 FFF7FEFF 		bl	NRF24L01_Write_Buf
+ 618              	.LVL63:
+ 138:Modules/nrf24l01.c ****     Set_NRF24L01_CE;                                        // 退出配置
+ 619              		.loc 1 138 5 view .LVU109
+ 620 001a 0122     		movs	r2, #1
+ 621 001c 1021     		movs	r1, #16
+ 622 001e 2846     		mov	r0, r5
+ 623 0020 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 624              	.LVL64:
+ 139:Modules/nrf24l01.c ****     while (READ_NRF24L01_IRQ)
+ 625              		.loc 1 139 5 view .LVU110
+ 626              	.L39:
+ 140:Modules/nrf24l01.c ****         ;                                              // 等待发送完成
+ 627              		.loc 1 140 9 discriminator 1 view .LVU111
+ 139:Modules/nrf24l01.c ****     while (READ_NRF24L01_IRQ)
+ 628              		.loc 1 139 11 discriminator 1 view .LVU112
+ 139:Modules/nrf24l01.c ****     while (READ_NRF24L01_IRQ)
+ 629              		.loc 1 139 12 is_stmt 0 discriminator 1 view .LVU113
+ 630 0024 4FF40071 		mov	r1, #512
+ 631 0028 0E48     		ldr	r0, .L45
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 15
+
+
+ 632 002a FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 633              	.LVL65:
+ 139:Modules/nrf24l01.c ****     while (READ_NRF24L01_IRQ)
+ 634              		.loc 1 139 11 discriminator 1 view .LVU114
+ 635 002e 0028     		cmp	r0, #0
+ 636 0030 F8D1     		bne	.L39
+ 141:Modules/nrf24l01.c ****     state = NRF24L01_Read_Reg(STATUS);                 // 读取发送状态
+ 637              		.loc 1 141 5 is_stmt 1 view .LVU115
+ 638              		.loc 1 141 13 is_stmt 0 view .LVU116
+ 639 0032 0720     		movs	r0, #7
+ 640 0034 FFF7FEFF 		bl	NRF24L01_Read_Reg
+ 641              	.LVL66:
+ 642 0038 0446     		mov	r4, r0
+ 643              	.LVL67:
+ 142:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + STATUS, state); // 清除中断标志
+ 644              		.loc 1 142 5 is_stmt 1 view .LVU117
+ 645 003a 0146     		mov	r1, r0
+ 646 003c 2720     		movs	r0, #39
+ 647              	.LVL68:
+ 648              		.loc 1 142 5 is_stmt 0 view .LVU118
+ 649 003e FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 650              	.LVL69:
+ 143:Modules/nrf24l01.c ****     if (state & MAX_TX)
+ 651              		.loc 1 143 5 is_stmt 1 view .LVU119
+ 652              		.loc 1 143 8 is_stmt 0 view .LVU120
+ 653 0042 14F0100F 		tst	r4, #16
+ 654 0046 04D1     		bne	.L44
+ 144:Modules/nrf24l01.c ****     {
+ 145:Modules/nrf24l01.c ****         NRF24L01_Write_Reg(FLUSH_TX, 0xff); // 达到最大发送次数，清空发送邮箱
+ 146:Modules/nrf24l01.c ****         return MAX_TX;
+ 147:Modules/nrf24l01.c ****     }
+ 148:Modules/nrf24l01.c ****     if (state & TX_OK)
+ 655              		.loc 1 148 5 is_stmt 1 view .LVU121
+ 656              		.loc 1 148 8 is_stmt 0 view .LVU122
+ 657 0048 14F0200F 		tst	r4, #32
+ 658 004c 07D1     		bne	.L42
+ 149:Modules/nrf24l01.c ****         return TX_OK; // 发送成功
+ 150:Modules/nrf24l01.c ****     return 0xff;
+ 659              		.loc 1 150 12 view .LVU123
+ 660 004e FF20     		movs	r0, #255
+ 661              	.L41:
+ 151:Modules/nrf24l01.c **** }
+ 662              		.loc 1 151 1 view .LVU124
+ 663 0050 38BD     		pop	{r3, r4, r5, pc}
+ 664              	.L44:
+ 145:Modules/nrf24l01.c ****         return MAX_TX;
+ 665              		.loc 1 145 9 is_stmt 1 view .LVU125
+ 666 0052 FF21     		movs	r1, #255
+ 667 0054 E120     		movs	r0, #225
+ 668 0056 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 669              	.LVL70:
+ 146:Modules/nrf24l01.c ****     }
+ 670              		.loc 1 146 9 view .LVU126
+ 146:Modules/nrf24l01.c ****     }
+ 671              		.loc 1 146 16 is_stmt 0 view .LVU127
+ 672 005a 1020     		movs	r0, #16
+ 673 005c F8E7     		b	.L41
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 16
+
+
+ 674              	.L42:
+ 149:Modules/nrf24l01.c ****     return 0xff;
+ 675              		.loc 1 149 16 view .LVU128
+ 676 005e 2020     		movs	r0, #32
+ 677 0060 F6E7     		b	.L41
+ 678              	.L46:
+ 679 0062 00BF     		.align	2
+ 680              	.L45:
+ 681 0064 00080140 		.word	1073809408
+ 682              		.cfi_endproc
+ 683              	.LFE73:
+ 685              		.section	.text.RX_Mode,"ax",%progbits
+ 686              		.align	1
+ 687              		.global	RX_Mode
+ 688              		.syntax unified
+ 689              		.thumb
+ 690              		.thumb_func
+ 692              	RX_Mode:
+ 693              	.LVL71:
+ 694              	.LFB74:
+ 152:Modules/nrf24l01.c **** 
+ 153:Modules/nrf24l01.c **** /**
+ 154:Modules/nrf24l01.c ****  * @brief 配置NRF24L01工作模式为接收模式
+ 155:Modules/nrf24l01.c ****  *
+ 156:Modules/nrf24l01.c ****  * @param numoslave
+ 157:Modules/nrf24l01.c ****  */
+ 158:Modules/nrf24l01.c **** void RX_Mode(uint8_t numoslave)
+ 159:Modules/nrf24l01.c **** {
+ 695              		.loc 1 159 1 is_stmt 1 view -0
+ 696              		.cfi_startproc
+ 697              		@ args = 0, pretend = 0, frame = 0
+ 698              		@ frame_needed = 0, uses_anonymous_args = 0
+ 699              		.loc 1 159 1 is_stmt 0 view .LVU130
+ 700 0000 38B5     		push	{r3, r4, r5, lr}
+ 701              	.LCFI14:
+ 702              		.cfi_def_cfa_offset 16
+ 703              		.cfi_offset 3, -16
+ 704              		.cfi_offset 4, -12
+ 705              		.cfi_offset 5, -8
+ 706              		.cfi_offset 14, -4
+ 160:Modules/nrf24l01.c ****     INIT_ADDR[0] = numoslave;
+ 707              		.loc 1 160 5 is_stmt 1 view .LVU131
+ 708              		.loc 1 160 18 is_stmt 0 view .LVU132
+ 709 0002 154D     		ldr	r5, .L49
+ 710 0004 2870     		strb	r0, [r5]
+ 161:Modules/nrf24l01.c ****     Clr_NRF24L01_CE;
+ 711              		.loc 1 161 5 is_stmt 1 view .LVU133
+ 712 0006 154C     		ldr	r4, .L49+4
+ 713 0008 0022     		movs	r2, #0
+ 714 000a 1021     		movs	r1, #16
+ 715 000c 2046     		mov	r0, r4
+ 716              	.LVL72:
+ 717              		.loc 1 161 5 is_stmt 0 view .LVU134
+ 718 000e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 719              	.LVL73:
+ 162:Modules/nrf24l01.c ****     NRF24L01_Write_Buf(SPI_WRITE_REG + RX_ADDR_P0, (uint8_t *)INIT_ADDR, RX_ADR_WIDTH);
+ 720              		.loc 1 162 5 is_stmt 1 view .LVU135
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 17
+
+
+ 721 0012 0522     		movs	r2, #5
+ 722 0014 2946     		mov	r1, r5
+ 723 0016 2A20     		movs	r0, #42
+ 724 0018 FFF7FEFF 		bl	NRF24L01_Write_Buf
+ 725              	.LVL74:
+ 163:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + EN_AA, 0x01);
+ 726              		.loc 1 163 5 view .LVU136
+ 727 001c 0121     		movs	r1, #1
+ 728 001e 2120     		movs	r0, #33
+ 729 0020 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 730              	.LVL75:
+ 164:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + EN_RXADDR, 0x01);
+ 731              		.loc 1 164 5 view .LVU137
+ 732 0024 0121     		movs	r1, #1
+ 733 0026 2220     		movs	r0, #34
+ 734 0028 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 735              	.LVL76:
+ 165:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + RF_CH, 40);
+ 736              		.loc 1 165 5 view .LVU138
+ 737 002c 2821     		movs	r1, #40
+ 738 002e 2520     		movs	r0, #37
+ 739 0030 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 740              	.LVL77:
+ 166:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + RX_PW_P0, RX_PLOAD_WIDTH);
+ 741              		.loc 1 166 5 view .LVU139
+ 742 0034 0821     		movs	r1, #8
+ 743 0036 3120     		movs	r0, #49
+ 744 0038 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 745              	.LVL78:
+ 167:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + RF_SETUP, 0x0f);
+ 746              		.loc 1 167 5 view .LVU140
+ 747 003c 0F21     		movs	r1, #15
+ 748 003e 2620     		movs	r0, #38
+ 749 0040 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 750              	.LVL79:
+ 168:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + CONFIG, 0x0f);
+ 751              		.loc 1 168 5 view .LVU141
+ 752 0044 0F21     		movs	r1, #15
+ 753 0046 2020     		movs	r0, #32
+ 754 0048 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 755              	.LVL80:
+ 169:Modules/nrf24l01.c ****     Set_NRF24L01_CE;
+ 756              		.loc 1 169 5 view .LVU142
+ 757 004c 0122     		movs	r2, #1
+ 758 004e 1021     		movs	r1, #16
+ 759 0050 2046     		mov	r0, r4
+ 760 0052 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 761              	.LVL81:
+ 170:Modules/nrf24l01.c **** }
+ 762              		.loc 1 170 1 is_stmt 0 view .LVU143
+ 763 0056 38BD     		pop	{r3, r4, r5, pc}
+ 764              	.L50:
+ 765              		.align	2
+ 766              	.L49:
+ 767 0058 00000000 		.word	.LANCHOR0
+ 768 005c 00080140 		.word	1073809408
+ 769              		.cfi_endproc
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 18
+
+
+ 770              	.LFE74:
+ 772              		.section	.text.NRF24L01_RxPacket,"ax",%progbits
+ 773              		.align	1
+ 774              		.global	NRF24L01_RxPacket
+ 775              		.syntax unified
+ 776              		.thumb
+ 777              		.thumb_func
+ 779              	NRF24L01_RxPacket:
+ 780              	.LVL82:
+ 781              	.LFB75:
+ 171:Modules/nrf24l01.c **** 
+ 172:Modules/nrf24l01.c **** /**
+ 173:Modules/nrf24l01.c ****  * @brief 读取数据
+ 174:Modules/nrf24l01.c ****  *
+ 175:Modules/nrf24l01.c ****  * @param rxbuf 数据存储地址
+ 176:Modules/nrf24l01.c ****  * @return uint8_t 1为读取成功，0为读取失败
+ 177:Modules/nrf24l01.c ****  */
+ 178:Modules/nrf24l01.c **** uint8_t NRF24L01_RxPacket(uint8_t *rxbuf)
+ 179:Modules/nrf24l01.c **** {
+ 782              		.loc 1 179 1 is_stmt 1 view -0
+ 783              		.cfi_startproc
+ 784              		@ args = 0, pretend = 0, frame = 0
+ 785              		@ frame_needed = 0, uses_anonymous_args = 0
+ 786              		.loc 1 179 1 is_stmt 0 view .LVU145
+ 787 0000 38B5     		push	{r3, r4, r5, lr}
+ 788              	.LCFI15:
+ 789              		.cfi_def_cfa_offset 16
+ 790              		.cfi_offset 3, -16
+ 791              		.cfi_offset 4, -12
+ 792              		.cfi_offset 5, -8
+ 793              		.cfi_offset 14, -4
+ 794 0002 0546     		mov	r5, r0
+ 180:Modules/nrf24l01.c ****     uint8_t state;
+ 795              		.loc 1 180 5 is_stmt 1 view .LVU146
+ 181:Modules/nrf24l01.c ****     state = NRF24L01_Read_Reg(STATUS);
+ 796              		.loc 1 181 5 view .LVU147
+ 797              		.loc 1 181 13 is_stmt 0 view .LVU148
+ 798 0004 0720     		movs	r0, #7
+ 799              	.LVL83:
+ 800              		.loc 1 181 13 view .LVU149
+ 801 0006 FFF7FEFF 		bl	NRF24L01_Read_Reg
+ 802              	.LVL84:
+ 803 000a 0446     		mov	r4, r0
+ 804              	.LVL85:
+ 182:Modules/nrf24l01.c ****     NRF24L01_Write_Reg(SPI_WRITE_REG + STATUS, state);
+ 805              		.loc 1 182 5 is_stmt 1 view .LVU150
+ 806 000c 0146     		mov	r1, r0
+ 807 000e 2720     		movs	r0, #39
+ 808              	.LVL86:
+ 809              		.loc 1 182 5 is_stmt 0 view .LVU151
+ 810 0010 FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 811              	.LVL87:
+ 183:Modules/nrf24l01.c ****     if (state & RX_OK)
+ 812              		.loc 1 183 5 is_stmt 1 view .LVU152
+ 813              		.loc 1 183 8 is_stmt 0 view .LVU153
+ 814 0014 14F04000 		ands	r0, r4, #64
+ 815 0018 00D1     		bne	.L54
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 19
+
+
+ 816              	.L52:
+ 184:Modules/nrf24l01.c ****     {
+ 185:Modules/nrf24l01.c ****         NRF24L01_Read_Buf(RD_RX_PLOAD, rxbuf, RX_PLOAD_WIDTH);
+ 186:Modules/nrf24l01.c ****         NRF24L01_Write_Reg(FLUSH_RX, 0xff);
+ 187:Modules/nrf24l01.c ****         return 1;
+ 188:Modules/nrf24l01.c ****     }
+ 189:Modules/nrf24l01.c ****     return 0;
+ 190:Modules/nrf24l01.c **** }...
+ 817              		.loc 1 190 1 view .LVU154
+ 818 001a 38BD     		pop	{r3, r4, r5, pc}
+ 819              	.LVL88:
+ 820              	.L54:
+ 185:Modules/nrf24l01.c ****         NRF24L01_Read_Buf(RD_RX_PLOAD, rxbuf, RX_PLOAD_WIDTH);
+ 821              		.loc 1 185 9 is_stmt 1 view .LVU155
+ 822 001c 0822     		movs	r2, #8
+ 823 001e 2946     		mov	r1, r5
+ 824 0020 6120     		movs	r0, #97
+ 825 0022 FFF7FEFF 		bl	NRF24L01_Read_Buf
+ 826              	.LVL89:
+ 186:Modules/nrf24l01.c ****         NRF24L01_Write_Reg(FLUSH_RX, 0xff);
+ 827              		.loc 1 186 9 view .LVU156
+ 828 0026 FF21     		movs	r1, #255
+ 829 0028 E220     		movs	r0, #226
+ 830 002a FFF7FEFF 		bl	NRF24L01_Write_Reg
+ 831              	.LVL90:
+ 187:Modules/nrf24l01.c ****         return 1;
+ 832              		.loc 1 187 9 view .LVU157
+ 187:Modules/nrf24l01.c ****         return 1;
+ 833              		.loc 1 187 16 is_stmt 0 view .LVU158
+ 834 002e 0120     		movs	r0, #1
+ 835 0030 F3E7     		b	.L52
+ 836              		.cfi_endproc
+ 837              	.LFE75:
+ 839              		.global	INIT_ADDR
+ 840              		.section	.data.INIT_ADDR,"aw"
+ 841              		.align	2
+ 842              		.set	.LANCHOR0,. + 0
+ 845              	INIT_ADDR:
+ 846 0000 001AB1B1 		.ascii	"\000\032\261\261\001"
+ 846      01
+ 847              		.text
+ 848              	.Letext0:
+ 849              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 850              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 851              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 852              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 853              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 854              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 855              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h"
+ 856              		.file 9 "Core/Inc/spi.h"
+ 857              		.file 10 "Bsp/bsp_dwt.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 nrf24l01.c
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:18     .text.NRF24L01_SPI_Send_Byte:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:23     .text.NRF24L01_SPI_Send_Byte:00000000 NRF24L01_SPI_Send_Byte
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:63     .text.NRF24L01_SPI_Send_Byte:00000028 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:68     .text.NRF24L01_Write_Buf:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:73     .text.NRF24L01_Write_Buf:00000000 NRF24L01_Write_Buf
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:136    .text.NRF24L01_Write_Buf:0000003c $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:142    .text.NRF24L01_Write_Reg:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:147    .text.NRF24L01_Write_Reg:00000000 NRF24L01_Write_Reg
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:202    .text.NRF24L01_Write_Reg:00000034 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:207    .text.NRF24L01_Read_Reg:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:212    .text.NRF24L01_Read_Reg:00000000 NRF24L01_Read_Reg
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:264    .text.NRF24L01_Read_Reg:00000030 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:269    .text.NRF24L01_Read_Buf:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:274    .text.NRF24L01_Read_Buf:00000000 NRF24L01_Read_Buf
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:337    .text.NRF24L01_Read_Buf:0000003c $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:343    .text.NRF24L01_Init:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:349    .text.NRF24L01_Init:00000000 NRF24L01_Init
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:386    .text.NRF24L01_Init:00000028 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:392    .rodata.NRF24L01_Check.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:396    .text.NRF24L01_Check:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:402    .text.NRF24L01_Check:00000000 NRF24L01_Check
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:482    .text.NRF24L01_Check:00000048 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:488    .text.TX_Mode:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:494    .text.TX_Mode:00000000 TX_Mode
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:575    .text.TX_Mode:00000064 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:581    .text.NRF24L01_TxPacket:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:587    .text.NRF24L01_TxPacket:00000000 NRF24L01_TxPacket
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:681    .text.NRF24L01_TxPacket:00000064 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:686    .text.RX_Mode:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:692    .text.RX_Mode:00000000 RX_Mode
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:767    .text.RX_Mode:00000058 $d
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:773    .text.NRF24L01_RxPacket:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:779    .text.NRF24L01_RxPacket:00000000 NRF24L01_RxPacket
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:845    .data.INIT_ADDR:00000000 INIT_ADDR
+C:\Users\20398\AppData\Local\Temp\ccRbbP6s.s:841    .data.INIT_ADDR:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_SPI_TransmitReceive
+hspi1
+HAL_GPIO_WritePin
+HAL_SPI_Transmit
+HAL_SPI_Receive
+DWT_Init
+DWT_Delay
+HAL_GPIO_ReadPin

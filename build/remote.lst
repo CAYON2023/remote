@@ -1,0 +1,1244 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"remote.c"
+  14              		.section	.rodata.str1.4,"aMS",%progbits,1
+  15              		.align	2
+  16              	.LC0:
+  17 0000 7363616E 		.ascii	"scaninfotask\000"
+  17      696E666F 
+  17      7461736B 
+  17      00
+  18 000d 000000   		.align	2
+  19              	.LC2:
+  20 0010 6D656E75 		.ascii	"menutask\000"
+  20      7461736B 
+  20      00
+  21 0019 000000   		.align	2
+  22              	.LC4:
+  23 001c 73656E64 		.ascii	"sendtask\000"
+  23      7461736B 
+  23      00
+  24              		.text
+  25              	.Ltext0:
+  26              		.cfi_sections	.debug_frame
+  27              		.section	.text.RemoteHardware_Init,"ax",%progbits
+  28              		.align	1
+  29              		.syntax unified
+  30              		.thumb
+  31              		.thumb_func
+  33              	RemoteHardware_Init:
+  34              	.LFB70:
+  35              		.file 1 "Application/remote.c"
+   1:Application/remote.c **** #include "remote.h"
+   2:Application/remote.c **** #include "oled.h"
+   3:Application/remote.c **** #include "nrf24l01.h"
+   4:Application/remote.c **** #include "adc.h"
+   5:Application/remote.c **** #include "MENU.h"
+   6:Application/remote.c **** #include "menu_task.h"
+   7:Application/remote.c **** uint16_t adc_val[8] = {0};
+   8:Application/remote.c **** uint8_t tx_buf[8] = {0};
+   9:Application/remote.c **** RC_Info_t remote_info;
+  10:Application/remote.c **** RC_t remote;
+  11:Application/remote.c **** osThreadId scaninfoTaskHandle;
+  12:Application/remote.c **** osThreadId menuTaskHandle;
+  13:Application/remote.c **** osThreadId sendTaskHandle;
+  14:Application/remote.c **** 
+  15:Application/remote.c **** static void RemoteHardware_Init(void)
+  16:Application/remote.c **** {
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 2
+
+
+  36              		.loc 1 16 1 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 0
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40 0000 10B5     		push	{r4, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 8
+  43              		.cfi_offset 4, -8
+  44              		.cfi_offset 14, -4
+  17:Application/remote.c ****     HAL_Delay(100); // 等待其他外设上电
+  45              		.loc 1 17 5 view .LVU1
+  46 0002 6420     		movs	r0, #100
+  47 0004 FFF7FEFF 		bl	HAL_Delay
+  48              	.LVL0:
+  18:Application/remote.c ****     __disable_irq();
+  49              		.loc 1 18 5 view .LVU2
+  50              	.LBB6:
+  51              	.LBI6:
+  52              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V5.0.4
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     09. April 2018
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /*
+   8:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  24:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  25:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  28:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
+  36:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 3
+
+
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  41:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  44:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  47:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  49:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE                 
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
+  51:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif                                           
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  53:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN                            __attribute__((__noreturn__))
+  54:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  55:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
+  57:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+  59:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
+  60:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  62:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                               __attribute__((packed, aligned(1)))
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+  66:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  67:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32        /* deprecated */
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  72:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  73:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  74:Drivers/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  75:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
+  77:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  78:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_WRITE
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  80:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  81:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  83:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
+  85:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_READ
+  87:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  88:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  89:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
+  93:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
+  95:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 4
+
+
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  97:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  98:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  99:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_READ
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)                           __attribute__((aligned(x)))
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __enable_irq(void)
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Disable IRQ Interrupts
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __disable_irq(void)
+  53              		.loc 2 140 27 view .LVU3
+  54              	.LBB7:
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("cpsid i" : : : "memory");
+  55              		.loc 2 142 3 view .LVU4
+  56              		.syntax unified
+  57              	@ 142 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  58 0008 72B6     		cpsid i
+  59              	@ 0 "" 2
+  60              		.thumb
+  61              		.syntax unified
+  62              	.LBE7:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 5
+
+
+  63              	.LBE6:
+  19:Application/remote.c ****     OLED_Init();
+  64              		.loc 1 19 5 view .LVU5
+  65 000a FFF7FEFF 		bl	OLED_Init
+  66              	.LVL1:
+  20:Application/remote.c ****     NRF24L01_Init();
+  67              		.loc 1 20 5 view .LVU6
+  68 000e FFF7FEFF 		bl	NRF24L01_Init
+  69              	.LVL2:
+  21:Application/remote.c ****     HAL_ADCEx_Calibration_Start(&hadc1); // ADC校准
+  70              		.loc 1 21 5 view .LVU7
+  71 0012 094C     		ldr	r4, .L4
+  72 0014 2046     		mov	r0, r4
+  73 0016 FFF7FEFF 		bl	HAL_ADCEx_Calibration_Start
+  74              	.LVL3:
+  22:Application/remote.c ****     HAL_ADC_Start_DMA(&hadc1, (uint32_t *)adc_val, sizeof(adc_val) / sizeof(uint16_t));
+  75              		.loc 1 22 5 view .LVU8
+  76 001a 0822     		movs	r2, #8
+  77 001c 0749     		ldr	r1, .L4+4
+  78 001e 2046     		mov	r0, r4
+  79 0020 FFF7FEFF 		bl	HAL_ADC_Start_DMA
+  80              	.LVL4:
+  23:Application/remote.c ****     while (!NRF24L01_Check())
+  81              		.loc 1 23 5 view .LVU9
+  82              	.L2:
+  24:Application/remote.c ****         ;
+  83              		.loc 1 24 9 discriminator 1 view .LVU10
+  23:Application/remote.c ****     while (!NRF24L01_Check())
+  84              		.loc 1 23 11 discriminator 1 view .LVU11
+  23:Application/remote.c ****     while (!NRF24L01_Check())
+  85              		.loc 1 23 13 is_stmt 0 discriminator 1 view .LVU12
+  86 0024 FFF7FEFF 		bl	NRF24L01_Check
+  87              	.LVL5:
+  23:Application/remote.c ****     while (!NRF24L01_Check())
+  88              		.loc 1 23 11 discriminator 1 view .LVU13
+  89 0028 0028     		cmp	r0, #0
+  90 002a FBD0     		beq	.L2
+  25:Application/remote.c ****     TX_Mode(0);
+  91              		.loc 1 25 5 is_stmt 1 view .LVU14
+  92 002c 0020     		movs	r0, #0
+  93 002e FFF7FEFF 		bl	TX_Mode
+  94              	.LVL6:
+  26:Application/remote.c ****     __enable_irq();
+  95              		.loc 1 26 5 view .LVU15
+  96              	.LBB8:
+  97              	.LBI8:
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+  98              		.loc 2 129 27 view .LVU16
+  99              	.LBB9:
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 100              		.loc 2 131 3 view .LVU17
+ 101              		.syntax unified
+ 102              	@ 131 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+ 103 0032 62B6     		cpsie i
+ 104              	@ 0 "" 2
+ 105              		.thumb
+ 106              		.syntax unified
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 6
+
+
+ 107              	.LBE9:
+ 108              	.LBE8:
+  27:Application/remote.c **** }
+ 109              		.loc 1 27 1 is_stmt 0 view .LVU18
+ 110 0034 10BD     		pop	{r4, pc}
+ 111              	.L5:
+ 112 0036 00BF     		.align	2
+ 113              	.L4:
+ 114 0038 00000000 		.word	hadc1
+ 115 003c 00000000 		.word	.LANCHOR0
+ 116              		.cfi_endproc
+ 117              	.LFE70:
+ 119              		.section	.text.ScanRemoteInfo,"ax",%progbits
+ 120              		.align	1
+ 121              		.syntax unified
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	ScanRemoteInfo:
+ 126              	.LFB72:
+  28:Application/remote.c **** 
+  29:Application/remote.c **** void Remote_Init(void)
+  30:Application/remote.c **** {
+  31:Application/remote.c ****     RemoteHardware_Init();
+  32:Application/remote.c ****     memset(&remote_info, 0x00, sizeof(RC_Info_t));
+  33:Application/remote.c ****     memset(&remote, 0x00, sizeof(RC_t));
+  34:Application/remote.c ****     remote.info = &remote_info;
+  35:Application/remote.c **** }
+  36:Application/remote.c **** 
+  37:Application/remote.c **** static void ScanRemoteInfo(void)
+  38:Application/remote.c **** {
+ 127              		.loc 1 38 1 is_stmt 1 view -0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 0
+ 130              		@ frame_needed = 0, uses_anonymous_args = 0
+ 131 0000 38B5     		push	{r3, r4, r5, lr}
+ 132              	.LCFI1:
+ 133              		.cfi_def_cfa_offset 16
+ 134              		.cfi_offset 3, -16
+ 135              		.cfi_offset 4, -12
+ 136              		.cfi_offset 5, -8
+ 137              		.cfi_offset 14, -4
+  39:Application/remote.c ****     remote_info.key.bits.sw1 = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_SET ? 1 : 0);
+ 138              		.loc 1 39 5 view .LVU20
+ 139              		.loc 1 39 33 is_stmt 0 view .LVU21
+ 140 0002 2D4D     		ldr	r5, .L8
+ 141 0004 4FF48051 		mov	r1, #4096
+ 142 0008 2846     		mov	r0, r5
+ 143 000a FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 144              	.LVL7:
+ 145              		.loc 1 39 90 view .LVU22
+ 146 000e 0128     		cmp	r0, #1
+ 147 0010 14BF     		ite	ne
+ 148 0012 0020     		movne	r0, #0
+ 149 0014 0120     		moveq	r0, #1
+ 150              		.loc 1 39 30 view .LVU23
+ 151 0016 294C     		ldr	r4, .L8+4
+ 152 0018 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 7
+
+
+ 153 001a 60F30003 		bfi	r3, r0, #0, #1
+ 154 001e 2370     		strb	r3, [r4]
+  40:Application/remote.c ****     remote_info.key.bits.sw2 = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_11) == GPIO_PIN_SET ? 1 : 0);
+ 155              		.loc 1 40 5 is_stmt 1 view .LVU24
+ 156              		.loc 1 40 33 is_stmt 0 view .LVU25
+ 157 0020 4FF40061 		mov	r1, #2048
+ 158 0024 2846     		mov	r0, r5
+ 159 0026 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 160              	.LVL8:
+ 161              		.loc 1 40 90 view .LVU26
+ 162 002a 0128     		cmp	r0, #1
+ 163 002c 14BF     		ite	ne
+ 164 002e 0020     		movne	r0, #0
+ 165 0030 0120     		moveq	r0, #1
+ 166              		.loc 1 40 30 view .LVU27
+ 167 0032 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 168 0034 60F34103 		bfi	r3, r0, #1, #1
+ 169 0038 2370     		strb	r3, [r4]
+  41:Application/remote.c ****     remote_info.key.bits.key0 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4) == GPIO_PIN_RESET ? 1 : 0);
+ 170              		.loc 1 41 5 is_stmt 1 view .LVU28
+ 171              		.loc 1 41 34 is_stmt 0 view .LVU29
+ 172 003a 05F58065 		add	r5, r5, #1024
+ 173 003e 1021     		movs	r1, #16
+ 174 0040 2846     		mov	r0, r5
+ 175 0042 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 176              	.LVL9:
+ 177              		.loc 1 41 92 view .LVU30
+ 178 0046 B0FA80F0 		clz	r0, r0
+ 179 004a 4009     		lsrs	r0, r0, #5
+ 180              		.loc 1 41 31 view .LVU31
+ 181 004c 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 182 004e 60F38203 		bfi	r3, r0, #2, #1
+ 183 0052 2370     		strb	r3, [r4]
+  42:Application/remote.c ****     remote_info.key.bits.key1 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3) == GPIO_PIN_RESET ? 1 : 0);
+ 184              		.loc 1 42 5 is_stmt 1 view .LVU32
+ 185              		.loc 1 42 34 is_stmt 0 view .LVU33
+ 186 0054 0821     		movs	r1, #8
+ 187 0056 2846     		mov	r0, r5
+ 188 0058 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 189              	.LVL10:
+ 190              		.loc 1 42 92 view .LVU34
+ 191 005c B0FA80F0 		clz	r0, r0
+ 192 0060 4009     		lsrs	r0, r0, #5
+ 193              		.loc 1 42 31 view .LVU35
+ 194 0062 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 195 0064 60F3C303 		bfi	r3, r0, #3, #1
+ 196 0068 2370     		strb	r3, [r4]
+  43:Application/remote.c ****     remote_info.key.bits.key2 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) == GPIO_PIN_RESET ? 1 : 0);
+ 197              		.loc 1 43 5 is_stmt 1 view .LVU36
+ 198              		.loc 1 43 34 is_stmt 0 view .LVU37
+ 199 006a 4FF40051 		mov	r1, #8192
+ 200 006e 2846     		mov	r0, r5
+ 201 0070 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 202              	.LVL11:
+ 203              		.loc 1 43 93 view .LVU38
+ 204 0074 B0FA80F0 		clz	r0, r0
+ 205 0078 4009     		lsrs	r0, r0, #5
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 8
+
+
+ 206              		.loc 1 43 31 view .LVU39
+ 207 007a 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 208 007c 60F30413 		bfi	r3, r0, #4, #1
+ 209 0080 2370     		strb	r3, [r4]
+  44:Application/remote.c ****     remote_info.key.bits.key3 = (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) == GPIO_PIN_RESET ? 1 : 0);
+ 210              		.loc 1 44 5 is_stmt 1 view .LVU40
+ 211              		.loc 1 44 34 is_stmt 0 view .LVU41
+ 212 0082 4FF48051 		mov	r1, #4096
+ 213 0086 2846     		mov	r0, r5
+ 214 0088 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 215              	.LVL12:
+ 216              		.loc 1 44 93 view .LVU42
+ 217 008c B0FA80F0 		clz	r0, r0
+ 218 0090 4009     		lsrs	r0, r0, #5
+ 219              		.loc 1 44 31 view .LVU43
+ 220 0092 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 221 0094 60F34513 		bfi	r3, r0, #5, #1
+ 222 0098 2370     		strb	r3, [r4]
+  45:Application/remote.c ****     memcpy(remote_info.pVal, &adc_val[4], 2 * sizeof(uint16_t));  // 两个电位器值
+ 223              		.loc 1 45 5 is_stmt 1 view .LVU44
+ 224 009a 094A     		ldr	r2, .L8+8
+ 225 009c 9368     		ldr	r3, [r2, #8]
+ 226 009e C4F80230 		str	r3, [r4, #2]	@ unaligned
+  46:Application/remote.c ****     memcpy(remote_info.rockerVal, adc_val, 4 * sizeof(uint16_t)); // 两个摇杆值
+ 227              		.loc 1 46 5 view .LVU45
+ 228 00a2 1346     		mov	r3, r2
+ 229 00a4 03CB     		ldmia	r3!, {r0, r1}
+ 230 00a6 C4F80600 		str	r0, [r4, #6]	@ unaligned
+ 231 00aa C4F80A10 		str	r1, [r4, #10]	@ unaligned
+  47:Application/remote.c ****     memcpy(&remote.Vref, &adc_val[6], 2 * sizeof(uint16_t));      // 基准电压与温度值
+ 232              		.loc 1 47 5 view .LVU46
+ 233 00ae D268     		ldr	r2, [r2, #12]
+ 234 00b0 044B     		ldr	r3, .L8+12
+ 235 00b2 5A60     		str	r2, [r3, #4]
+  48:Application/remote.c **** }
+ 236              		.loc 1 48 1 is_stmt 0 view .LVU47
+ 237 00b4 38BD     		pop	{r3, r4, r5, pc}
+ 238              	.L9:
+ 239 00b6 00BF     		.align	2
+ 240              	.L8:
+ 241 00b8 00080140 		.word	1073809408
+ 242 00bc 00000000 		.word	.LANCHOR1
+ 243 00c0 00000000 		.word	.LANCHOR0
+ 244 00c4 00000000 		.word	.LANCHOR2
+ 245              		.cfi_endproc
+ 246              	.LFE72:
+ 248              		.section	.text.ScanInfoTASK,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	ScanInfoTASK
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 255              	ScanInfoTASK:
+ 256              	.LFB74:
+  49:Application/remote.c **** 
+  50:Application/remote.c **** static void SendBuff(void)
+  51:Application/remote.c **** {
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 9
+
+
+  52:Application/remote.c ****     tx_buf[0] = remote_info.key.kb;
+  53:Application/remote.c ****     // 将16位转回8位整包发送
+  54:Application/remote.c ****     for (int i = 0; i < 2; i++)
+  55:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+  56:Application/remote.c ****     for (int i = 0; i < 4; i++)
+  57:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+  58:Application/remote.c ****     tx_buf[7] = 0xFE; // 校验位
+  59:Application/remote.c ****     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
+  60:Application/remote.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+  61:Application/remote.c **** }
+  62:Application/remote.c **** 
+  63:Application/remote.c **** __attribute__((noreturn)) void ScanInfoTASK(void const *argument)
+  64:Application/remote.c **** {
+ 257              		.loc 1 64 1 is_stmt 1 view -0
+ 258              		.cfi_startproc
+ 259              		@ Volatile: function does not return.
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              	.LVL13:
+ 263              		.loc 1 64 1 is_stmt 0 view .LVU49
+ 264 0000 08B5     		push	{r3, lr}
+ 265              	.LCFI2:
+ 266              		.cfi_def_cfa_offset 8
+ 267              		.cfi_offset 3, -8
+ 268              		.cfi_offset 14, -4
+ 269              	.LVL14:
+ 270              	.L11:
+  65:Application/remote.c ****     for (;;)
+ 271              		.loc 1 65 5 is_stmt 1 discriminator 1 view .LVU50
+  66:Application/remote.c ****     {
+  67:Application/remote.c ****         ScanRemoteInfo();
+ 272              		.loc 1 67 9 discriminator 1 view .LVU51
+ 273 0002 FFF7FEFF 		bl	ScanRemoteInfo
+ 274              	.LVL15:
+  68:Application/remote.c ****         osDelay(10);
+ 275              		.loc 1 68 9 discriminator 1 view .LVU52
+ 276 0006 0A20     		movs	r0, #10
+ 277 0008 FFF7FEFF 		bl	osDelay
+ 278              	.LVL16:
+  65:Application/remote.c ****     for (;;)
+ 279              		.loc 1 65 11 discriminator 1 view .LVU53
+ 280 000c F9E7     		b	.L11
+ 281              		.cfi_endproc
+ 282              	.LFE74:
+ 284              		.section	.text.SendBuff,"ax",%progbits
+ 285              		.align	1
+ 286              		.syntax unified
+ 287              		.thumb
+ 288              		.thumb_func
+ 290              	SendBuff:
+ 291              	.LFB73:
+  51:Application/remote.c ****     tx_buf[0] = remote_info.key.kb;
+ 292              		.loc 1 51 1 view -0
+ 293              		.cfi_startproc
+ 294              		@ args = 0, pretend = 0, frame = 0
+ 295              		@ frame_needed = 0, uses_anonymous_args = 0
+ 296 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 10
+
+
+ 297              	.LCFI3:
+ 298              		.cfi_def_cfa_offset 8
+ 299              		.cfi_offset 3, -8
+ 300              		.cfi_offset 14, -4
+  52:Application/remote.c ****     // 将16位转回8位整包发送
+ 301              		.loc 1 52 5 view .LVU55
+  52:Application/remote.c ****     // 将16位转回8位整包发送
+ 302              		.loc 1 52 32 is_stmt 0 view .LVU56
+ 303 0002 114B     		ldr	r3, .L22
+ 304 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  52:Application/remote.c ****     // 将16位转回8位整包发送
+ 305              		.loc 1 52 15 view .LVU57
+ 306 0006 114B     		ldr	r3, .L22+4
+ 307 0008 1A70     		strb	r2, [r3]
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 308              		.loc 1 54 5 is_stmt 1 view .LVU58
+ 309              	.LBB10:
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 310              		.loc 1 54 10 view .LVU59
+ 311              	.LVL17:
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 312              		.loc 1 54 14 is_stmt 0 view .LVU60
+ 313 000a 0023     		movs	r3, #0
+ 314              	.LVL18:
+ 315              	.L14:
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 316              		.loc 1 54 21 is_stmt 1 discriminator 1 view .LVU61
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 317              		.loc 1 54 5 is_stmt 0 discriminator 1 view .LVU62
+ 318 000c 012B     		cmp	r3, #1
+ 319 000e 04DC     		bgt	.L20
+  55:Application/remote.c ****     for (int i = 0; i < 4; i++)
+ 320              		.loc 1 55 9 is_stmt 1 discriminator 3 view .LVU63
+  55:Application/remote.c ****     for (int i = 0; i < 4; i++)
+ 321              		.loc 1 55 18 is_stmt 0 discriminator 3 view .LVU64
+ 322 0010 0133     		adds	r3, r3, #1
+ 323              	.LVL19:
+  55:Application/remote.c ****     for (int i = 0; i < 4; i++)
+ 324              		.loc 1 55 23 discriminator 3 view .LVU65
+ 325 0012 0E4A     		ldr	r2, .L22+4
+ 326 0014 0021     		movs	r1, #0
+ 327 0016 D154     		strb	r1, [r2, r3]
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 328              		.loc 1 54 28 is_stmt 1 discriminator 3 view .LVU66
+ 329              	.LVL20:
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 330              		.loc 1 54 28 is_stmt 0 discriminator 3 view .LVU67
+ 331 0018 F8E7     		b	.L14
+ 332              	.L20:
+  54:Application/remote.c ****         tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+ 333              		.loc 1 54 28 discriminator 3 view .LVU68
+ 334              	.LBE10:
+ 335              	.LBB11:
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 336              		.loc 1 56 14 view .LVU69
+ 337 001a 0023     		movs	r3, #0
+ 338              	.LVL21:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 11
+
+
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 339              		.loc 1 56 14 view .LVU70
+ 340 001c 04E0     		b	.L16
+ 341              	.LVL22:
+ 342              	.L17:
+  57:Application/remote.c ****     tx_buf[7] = 0xFE; // 校验位
+ 343              		.loc 1 57 9 is_stmt 1 discriminator 3 view .LVU71
+  57:Application/remote.c ****     tx_buf[7] = 0xFE; // 校验位
+ 344              		.loc 1 57 18 is_stmt 0 discriminator 3 view .LVU72
+ 345 001e DA1C     		adds	r2, r3, #3
+  57:Application/remote.c ****     tx_buf[7] = 0xFE; // 校验位
+ 346              		.loc 1 57 23 discriminator 3 view .LVU73
+ 347 0020 0A49     		ldr	r1, .L22+4
+ 348 0022 0020     		movs	r0, #0
+ 349 0024 8854     		strb	r0, [r1, r2]
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 350              		.loc 1 56 28 is_stmt 1 discriminator 3 view .LVU74
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 351              		.loc 1 56 29 is_stmt 0 discriminator 3 view .LVU75
+ 352 0026 0133     		adds	r3, r3, #1
+ 353              	.LVL23:
+ 354              	.L16:
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 355              		.loc 1 56 21 is_stmt 1 discriminator 1 view .LVU76
+  56:Application/remote.c ****         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
+ 356              		.loc 1 56 5 is_stmt 0 discriminator 1 view .LVU77
+ 357 0028 032B     		cmp	r3, #3
+ 358 002a F8DD     		ble	.L17
+ 359              	.LBE11:
+  58:Application/remote.c ****     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
+ 360              		.loc 1 58 5 is_stmt 1 view .LVU78
+  58:Application/remote.c ****     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
+ 361              		.loc 1 58 15 is_stmt 0 view .LVU79
+ 362 002c 0748     		ldr	r0, .L22+4
+ 363 002e FE23     		movs	r3, #254
+ 364              	.LVL24:
+  58:Application/remote.c ****     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
+ 365              		.loc 1 58 15 view .LVU80
+ 366 0030 C371     		strb	r3, [r0, #7]
+  59:Application/remote.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 367              		.loc 1 59 5 is_stmt 1 view .LVU81
+  59:Application/remote.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 368              		.loc 1 59 9 is_stmt 0 view .LVU82
+ 369 0032 FFF7FEFF 		bl	NRF24L01_TxPacket
+ 370              	.LVL25:
+  59:Application/remote.c ****         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+ 371              		.loc 1 59 8 view .LVU83
+ 372 0036 2028     		cmp	r0, #32
+ 373 0038 00D0     		beq	.L21
+ 374              	.L13:
+  61:Application/remote.c **** 
+ 375              		.loc 1 61 1 view .LVU84
+ 376 003a 08BD     		pop	{r3, pc}
+ 377              	.L21:
+  60:Application/remote.c **** }
+ 378              		.loc 1 60 9 is_stmt 1 view .LVU85
+ 379 003c 4FF40051 		mov	r1, #8192
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 12
+
+
+ 380 0040 0348     		ldr	r0, .L22+8
+ 381 0042 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 382              	.LVL26:
+  61:Application/remote.c **** 
+ 383              		.loc 1 61 1 is_stmt 0 view .LVU86
+ 384 0046 F8E7     		b	.L13
+ 385              	.L23:
+ 386              		.align	2
+ 387              	.L22:
+ 388 0048 00000000 		.word	.LANCHOR1
+ 389 004c 00000000 		.word	.LANCHOR3
+ 390 0050 00100140 		.word	1073811456
+ 391              		.cfi_endproc
+ 392              	.LFE73:
+ 394              		.section	.text.SendTASK,"ax",%progbits
+ 395              		.align	1
+ 396              		.global	SendTASK
+ 397              		.syntax unified
+ 398              		.thumb
+ 399              		.thumb_func
+ 401              	SendTASK:
+ 402              	.LFB75:
+  69:Application/remote.c ****     }
+  70:Application/remote.c **** }
+  71:Application/remote.c **** 
+  72:Application/remote.c **** __attribute__((noreturn)) void SendTASK(void const *argument)
+  73:Application/remote.c **** {
+ 403              		.loc 1 73 1 is_stmt 1 view -0
+ 404              		.cfi_startproc
+ 405              		@ Volatile: function does not return.
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408              	.LVL27:
+ 409              		.loc 1 73 1 is_stmt 0 view .LVU88
+ 410 0000 08B5     		push	{r3, lr}
+ 411              	.LCFI4:
+ 412              		.cfi_def_cfa_offset 8
+ 413              		.cfi_offset 3, -8
+ 414              		.cfi_offset 14, -4
+ 415              	.LVL28:
+ 416              	.L25:
+  74:Application/remote.c ****     for (;;)
+ 417              		.loc 1 74 5 is_stmt 1 discriminator 1 view .LVU89
+  75:Application/remote.c ****     {
+  76:Application/remote.c ****         SendBuff();
+ 418              		.loc 1 76 9 discriminator 1 view .LVU90
+ 419 0002 FFF7FEFF 		bl	SendBuff
+ 420              	.LVL29:
+  77:Application/remote.c ****         osDelay(30);
+ 421              		.loc 1 77 9 discriminator 1 view .LVU91
+ 422 0006 1E20     		movs	r0, #30
+ 423 0008 FFF7FEFF 		bl	osDelay
+ 424              	.LVL30:
+  74:Application/remote.c ****     for (;;)
+ 425              		.loc 1 74 11 discriminator 1 view .LVU92
+ 426 000c F9E7     		b	.L25
+ 427              		.cfi_endproc
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 13
+
+
+ 428              	.LFE75:
+ 430              		.section	.text.MenuTASK,"ax",%progbits
+ 431              		.align	1
+ 432              		.global	MenuTASK
+ 433              		.syntax unified
+ 434              		.thumb
+ 435              		.thumb_func
+ 437              	MenuTASK:
+ 438              	.LVL31:
+ 439              	.LFB76:
+  78:Application/remote.c ****     }
+  79:Application/remote.c **** }
+  80:Application/remote.c **** 
+  81:Application/remote.c **** static MENU_OptionTypeDef MENU_OptionList[] = {
+  82:Application/remote.c ****     {"<<<", NULL},                        // 固定格式, 用于退出
+  83:Application/remote.c ****     {"RockerInfo", MENU_RockerInfo},      // 工具
+  84:Application/remote.c ****     {"Calibration", MENU_Calibration},    // 游戏
+  85:Application/remote.c ****     {"Iamge", MENU_ShowImage},            // 设置
+  86:Application/remote.c ****     {"Information", MENU_ShowInfomation}, // 信息
+  87:Application/remote.c ****     {"..", NULL},                         // 固定格式, 用于计算选项列表长度和退出
+  88:Application/remote.c **** };
+  89:Application/remote.c **** static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
+  90:Application/remote.c **** 
+  91:Application/remote.c **** __attribute__((noreturn)) void MenuTASK(void const *argument)
+  92:Application/remote.c **** {
+ 440              		.loc 1 92 1 view -0
+ 441              		.cfi_startproc
+ 442              		@ Volatile: function does not return.
+ 443              		@ args = 0, pretend = 0, frame = 0
+ 444              		@ frame_needed = 0, uses_anonymous_args = 0
+ 445              		.loc 1 92 1 is_stmt 0 view .LVU94
+ 446 0000 08B5     		push	{r3, lr}
+ 447              	.LCFI5:
+ 448              		.cfi_def_cfa_offset 8
+ 449              		.cfi_offset 3, -8
+ 450              		.cfi_offset 14, -4
+  93:Application/remote.c ****     MENU_HandleInit(&MENU);
+ 451              		.loc 1 93 5 is_stmt 1 view .LVU95
+ 452 0002 1148     		ldr	r0, .L32
+ 453              	.LVL32:
+ 454              		.loc 1 93 5 is_stmt 0 view .LVU96
+ 455 0004 FFF7FEFF 		bl	MENU_HandleInit
+ 456              	.LVL33:
+ 457 0008 15E0     		b	.L28
+ 458              	.L29:
+  94:Application/remote.c ****     for (;;)
+  95:Application/remote.c ****     {
+  96:Application/remote.c ****         while (MENU.isRun)
+  97:Application/remote.c ****         {
+  98:Application/remote.c ****             menu_command_callback(BUFFER_CLEAR); // 擦除缓冲区
+ 459              		.loc 1 98 13 is_stmt 1 view .LVU97
+ 460 000a 0120     		movs	r0, #1
+ 461 000c FFF7FEFF 		bl	menu_command_callback
+ 462              	.LVL34:
+  99:Application/remote.c ****             MENU_ShowOptionList(&MENU);          /* 显示选项列表 */
+ 463              		.loc 1 99 13 view .LVU98
+ 464 0010 0D4C     		ldr	r4, .L32
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 14
+
+
+ 465 0012 2046     		mov	r0, r4
+ 466 0014 FFF7FEFF 		bl	MENU_ShowOptionList
+ 467              	.LVL35:
+ 100:Application/remote.c ****             MENU_ShowCursor(&MENU);              /* 显示光标 */
+ 468              		.loc 1 100 13 view .LVU99
+ 469 0018 2046     		mov	r0, r4
+ 470 001a FFF7FEFF 		bl	MENU_ShowCursor
+ 471              	.LVL36:
+ 101:Application/remote.c ****             MENU_ShowBorder(&MENU);              // 显示边框
+ 472              		.loc 1 101 13 view .LVU100
+ 473 001e 2046     		mov	r0, r4
+ 474 0020 FFF7FEFF 		bl	MENU_ShowBorder
+ 475              	.LVL37:
+ 102:Application/remote.c **** 
+ 103:Application/remote.c ****             menu_command_callback(BUFFER_DISPLAY); // 缓冲区更新至显示器
+ 476              		.loc 1 103 13 view .LVU101
+ 477 0024 0020     		movs	r0, #0
+ 478 0026 FFF7FEFF 		bl	menu_command_callback
+ 479              	.LVL38:
+ 104:Application/remote.c ****             MENU_Event_and_Action(&MENU);          // 检查事件及作相应操作
+ 480              		.loc 1 104 13 view .LVU102
+ 481 002a 2046     		mov	r0, r4
+ 482 002c FFF7FEFF 		bl	MENU_Event_and_Action
+ 483              	.LVL39:
+ 105:Application/remote.c ****             osDelay(1);
+ 484              		.loc 1 105 13 view .LVU103
+ 485 0030 0120     		movs	r0, #1
+ 486 0032 FFF7FEFF 		bl	osDelay
+ 487              	.LVL40:
+ 488              	.L28:
+  96:Application/remote.c ****         {
+ 489              		.loc 1 96 15 view .LVU104
+  96:Application/remote.c ****         {
+ 490              		.loc 1 96 20 is_stmt 0 view .LVU105
+ 491 0036 044B     		ldr	r3, .L32
+ 492 0038 5B7C     		ldrb	r3, [r3, #17]	@ zero_extendqisi2
+  96:Application/remote.c ****         {
+ 493              		.loc 1 96 15 view .LVU106
+ 494 003a 002B     		cmp	r3, #0
+ 495 003c E5D1     		bne	.L29
+ 106:Application/remote.c ****         }
+ 107:Application/remote.c ****         osDelay(10);
+ 496              		.loc 1 107 9 is_stmt 1 view .LVU107
+ 497 003e 0A20     		movs	r0, #10
+ 498 0040 FFF7FEFF 		bl	osDelay
+ 499              	.LVL41:
+  94:Application/remote.c ****     {
+ 500              		.loc 1 94 11 view .LVU108
+  96:Application/remote.c ****         {
+ 501              		.loc 1 96 15 is_stmt 0 view .LVU109
+ 502 0044 F7E7     		b	.L28
+ 503              	.L33:
+ 504 0046 00BF     		.align	2
+ 505              	.L32:
+ 506 0048 00000000 		.word	.LANCHOR4
+ 507              		.cfi_endproc
+ 508              	.LFE76:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 15
+
+
+ 510              		.section	.text.Remote_Init,"ax",%progbits
+ 511              		.align	1
+ 512              		.global	Remote_Init
+ 513              		.syntax unified
+ 514              		.thumb
+ 515              		.thumb_func
+ 517              	Remote_Init:
+ 518              	.LFB71:
+  30:Application/remote.c ****     RemoteHardware_Init();
+ 519              		.loc 1 30 1 is_stmt 1 view -0
+ 520              		.cfi_startproc
+ 521              		@ args = 0, pretend = 0, frame = 0
+ 522              		@ frame_needed = 0, uses_anonymous_args = 0
+ 523 0000 08B5     		push	{r3, lr}
+ 524              	.LCFI6:
+ 525              		.cfi_def_cfa_offset 8
+ 526              		.cfi_offset 3, -8
+ 527              		.cfi_offset 14, -4
+  31:Application/remote.c ****     memset(&remote_info, 0x00, sizeof(RC_Info_t));
+ 528              		.loc 1 31 5 view .LVU111
+ 529 0002 FFF7FEFF 		bl	RemoteHardware_Init
+ 530              	.LVL42:
+  32:Application/remote.c ****     memset(&remote, 0x00, sizeof(RC_t));
+ 531              		.loc 1 32 5 view .LVU112
+ 532 0006 054A     		ldr	r2, .L36
+ 533 0008 0023     		movs	r3, #0
+ 534 000a 1360     		str	r3, [r2]
+ 535 000c 5360     		str	r3, [r2, #4]
+ 536 000e 9360     		str	r3, [r2, #8]
+ 537 0010 9381     		strh	r3, [r2, #12]	@ movhi
+  33:Application/remote.c ****     remote.info = &remote_info;
+ 538              		.loc 1 33 5 view .LVU113
+ 539 0012 0349     		ldr	r1, .L36+4
+ 540 0014 0B60     		str	r3, [r1]
+ 541 0016 4B60     		str	r3, [r1, #4]
+  34:Application/remote.c **** }
+ 542              		.loc 1 34 5 view .LVU114
+  34:Application/remote.c **** }
+ 543              		.loc 1 34 17 is_stmt 0 view .LVU115
+ 544 0018 0A60     		str	r2, [r1]
+  35:Application/remote.c **** 
+ 545              		.loc 1 35 1 view .LVU116
+ 546 001a 08BD     		pop	{r3, pc}
+ 547              	.L37:
+ 548              		.align	2
+ 549              	.L36:
+ 550 001c 00000000 		.word	.LANCHOR1
+ 551 0020 00000000 		.word	.LANCHOR2
+ 552              		.cfi_endproc
+ 553              	.LFE71:
+ 555              		.section	.text.RemoteTask_Init,"ax",%progbits
+ 556              		.align	1
+ 557              		.global	RemoteTask_Init
+ 558              		.syntax unified
+ 559              		.thumb
+ 560              		.thumb_func
+ 562              	RemoteTask_Init:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 16
+
+
+ 563              	.LFB77:
+ 108:Application/remote.c ****     }
+ 109:Application/remote.c **** }
+ 110:Application/remote.c **** 
+ 111:Application/remote.c **** void RemoteTask_Init(void)
+ 112:Application/remote.c **** {
+ 564              		.loc 1 112 1 is_stmt 1 view -0
+ 565              		.cfi_startproc
+ 566              		@ args = 0, pretend = 0, frame = 88
+ 567              		@ frame_needed = 0, uses_anonymous_args = 0
+ 568 0000 10B5     		push	{r4, lr}
+ 569              	.LCFI7:
+ 570              		.cfi_def_cfa_offset 8
+ 571              		.cfi_offset 4, -8
+ 572              		.cfi_offset 14, -4
+ 573 0002 96B0     		sub	sp, sp, #88
+ 574              	.LCFI8:
+ 575              		.cfi_def_cfa_offset 96
+ 113:Application/remote.c ****     osThreadDef(scaninfotask, ScanInfoTASK, osPriorityNormal, 0, 128);
+ 576              		.loc 1 113 5 view .LVU118
+ 577 0004 1B4C     		ldr	r4, .L40
+ 578 0006 0DF13C0C 		add	ip, sp, #60
+ 579 000a A646     		mov	lr, r4
+ 580 000c BEE80F00 		ldmia	lr!, {r0, r1, r2, r3}
+ 581 0010 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 582 0014 9EE80700 		ldm	lr, {r0, r1, r2}
+ 583 0018 8CE80700 		stm	ip, {r0, r1, r2}
+ 114:Application/remote.c ****     scaninfoTaskHandle = osThreadCreate(osThread(scaninfotask), NULL); //
+ 584              		.loc 1 114 5 view .LVU119
+ 585              		.loc 1 114 26 is_stmt 0 view .LVU120
+ 586 001c 0021     		movs	r1, #0
+ 587 001e 0FA8     		add	r0, sp, #60
+ 588 0020 FFF7FEFF 		bl	osThreadCreate
+ 589              	.LVL43:
+ 590              		.loc 1 114 24 view .LVU121
+ 591 0024 144B     		ldr	r3, .L40+4
+ 592 0026 1860     		str	r0, [r3]
+ 115:Application/remote.c **** 
+ 116:Application/remote.c ****     osThreadDef(menutask, MenuTASK, osPriorityNormal, 0, 256);
+ 593              		.loc 1 116 5 is_stmt 1 view .LVU122
+ 594 0028 0DF1200C 		add	ip, sp, #32
+ 595 002c 04F11C0E 		add	lr, r4, #28
+ 596 0030 BEE80F00 		ldmia	lr!, {r0, r1, r2, r3}
+ 597 0034 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 598 0038 9EE80700 		ldm	lr, {r0, r1, r2}
+ 599 003c 8CE80700 		stm	ip, {r0, r1, r2}
+ 117:Application/remote.c ****     menuTaskHandle = osThreadCreate(osThread(menutask), NULL);
+ 600              		.loc 1 117 5 view .LVU123
+ 601              		.loc 1 117 22 is_stmt 0 view .LVU124
+ 602 0040 0021     		movs	r1, #0
+ 603 0042 08A8     		add	r0, sp, #32
+ 604 0044 FFF7FEFF 		bl	osThreadCreate
+ 605              	.LVL44:
+ 606              		.loc 1 117 20 view .LVU125
+ 607 0048 0C4B     		ldr	r3, .L40+8
+ 608 004a 1860     		str	r0, [r3]
+ 118:Application/remote.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 17
+
+
+ 119:Application/remote.c ****     osThreadDef(sendtask, SendTASK, osPriorityAboveNormal, 0, 128);
+ 609              		.loc 1 119 5 is_stmt 1 view .LVU126
+ 610 004c 0DF1040E 		add	lr, sp, #4
+ 611 0050 04F1380C 		add	ip, r4, #56
+ 612 0054 BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+ 613 0058 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 614 005c 9CE80700 		ldm	ip, {r0, r1, r2}
+ 615 0060 8EE80700 		stm	lr, {r0, r1, r2}
+ 120:Application/remote.c ****     sendTaskHandle = osThreadCreate(osThread(sendtask), NULL);
+ 616              		.loc 1 120 5 view .LVU127
+ 617              		.loc 1 120 22 is_stmt 0 view .LVU128
+ 618 0064 0021     		movs	r1, #0
+ 619 0066 01A8     		add	r0, sp, #4
+ 620 0068 FFF7FEFF 		bl	osThreadCreate
+ 621              	.LVL45:
+ 622              		.loc 1 120 20 view .LVU129
+ 623 006c 044B     		ldr	r3, .L40+12
+ 624 006e 1860     		str	r0, [r3]
+ 121:Application/remote.c **** }
+ 625              		.loc 1 121 1 view .LVU130
+ 626 0070 16B0     		add	sp, sp, #88
+ 627              	.LCFI9:
+ 628              		.cfi_def_cfa_offset 8
+ 629              		@ sp needed
+ 630 0072 10BD     		pop	{r4, pc}
+ 631              	.L41:
+ 632              		.align	2
+ 633              	.L40:
+ 634 0074 00000000 		.word	.LANCHOR5
+ 635 0078 00000000 		.word	.LANCHOR6
+ 636 007c 00000000 		.word	.LANCHOR7
+ 637 0080 00000000 		.word	.LANCHOR8
+ 638              		.cfi_endproc
+ 639              	.LFE77:
+ 641              		.section	.rodata.str1.4
+ 642 0025 000000   		.align	2
+ 643              	.LC9:
+ 644 0028 3C3C3C00 		.ascii	"<<<\000"
+ 645              		.align	2
+ 646              	.LC10:
+ 647 002c 526F636B 		.ascii	"RockerInfo\000"
+ 647      6572496E 
+ 647      666F00
+ 648 0037 00       		.align	2
+ 649              	.LC11:
+ 650 0038 43616C69 		.ascii	"Calibration\000"
+ 650      62726174 
+ 650      696F6E00 
+ 651              		.align	2
+ 652              	.LC12:
+ 653 0044 49616D67 		.ascii	"Iamge\000"
+ 653      6500
+ 654 004a 0000     		.align	2
+ 655              	.LC13:
+ 656 004c 496E666F 		.ascii	"Information\000"
+ 656      726D6174 
+ 656      696F6E00 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 18
+
+
+ 657              		.align	2
+ 658              	.LC14:
+ 659 0058 2E2E00   		.ascii	"..\000"
+ 660              		.global	sendTaskHandle
+ 661              		.global	menuTaskHandle
+ 662              		.global	scaninfoTaskHandle
+ 663              		.global	remote
+ 664              		.global	remote_info
+ 665              		.global	tx_buf
+ 666              		.global	adc_val
+ 667              		.section	.rodata
+ 668              		.align	2
+ 669              		.set	.LANCHOR5,. + 0
+ 670              	.LC6:
+ 671 0000 00000000 		.word	.LC0
+ 672 0004 00000000 		.word	ScanInfoTASK
+ 673 0008 0000     		.short	0
+ 674 000a 0000     		.space	2
+ 675 000c 00000000 		.word	0
+ 676 0010 80000000 		.word	128
+ 677 0014 00000000 		.word	0
+ 678 0018 00000000 		.word	0
+ 679              	.LC7:
+ 680 001c 10000000 		.word	.LC2
+ 681 0020 00000000 		.word	MenuTASK
+ 682 0024 0000     		.short	0
+ 683 0026 0000     		.space	2
+ 684 0028 00000000 		.word	0
+ 685 002c 00010000 		.word	256
+ 686 0030 00000000 		.word	0
+ 687 0034 00000000 		.word	0
+ 688              	.LC8:
+ 689 0038 1C000000 		.word	.LC4
+ 690 003c 00000000 		.word	SendTASK
+ 691 0040 0100     		.short	1
+ 692 0042 0000     		.space	2
+ 693 0044 00000000 		.word	0
+ 694 0048 80000000 		.word	128
+ 695 004c 00000000 		.word	0
+ 696 0050 00000000 		.word	0
+ 697              		.section	.bss.adc_val,"aw",%nobits
+ 698              		.align	2
+ 699              		.set	.LANCHOR0,. + 0
+ 702              	adc_val:
+ 703 0000 00000000 		.space	16
+ 703      00000000 
+ 703      00000000 
+ 703      00000000 
+ 704              		.section	.bss.menuTaskHandle,"aw",%nobits
+ 705              		.align	2
+ 706              		.set	.LANCHOR7,. + 0
+ 709              	menuTaskHandle:
+ 710 0000 00000000 		.space	4
+ 711              		.section	.bss.remote,"aw",%nobits
+ 712              		.align	2
+ 713              		.set	.LANCHOR2,. + 0
+ 716              	remote:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 19
+
+
+ 717 0000 00000000 		.space	8
+ 717      00000000 
+ 718              		.section	.bss.remote_info,"aw",%nobits
+ 719              		.align	2
+ 720              		.set	.LANCHOR1,. + 0
+ 723              	remote_info:
+ 724 0000 00000000 		.space	14
+ 724      00000000 
+ 724      00000000 
+ 724      0000
+ 725              		.section	.bss.scaninfoTaskHandle,"aw",%nobits
+ 726              		.align	2
+ 727              		.set	.LANCHOR6,. + 0
+ 730              	scaninfoTaskHandle:
+ 731 0000 00000000 		.space	4
+ 732              		.section	.bss.sendTaskHandle,"aw",%nobits
+ 733              		.align	2
+ 734              		.set	.LANCHOR8,. + 0
+ 737              	sendTaskHandle:
+ 738 0000 00000000 		.space	4
+ 739              		.section	.bss.tx_buf,"aw",%nobits
+ 740              		.align	2
+ 741              		.set	.LANCHOR3,. + 0
+ 744              	tx_buf:
+ 745 0000 00000000 		.space	8
+ 745      00000000 
+ 746              		.section	.data.MENU,"aw"
+ 747              		.align	2
+ 748              		.set	.LANCHOR4,. + 0
+ 751              	MENU:
+ 752 0000 00000000 		.word	MENU_OptionList
+ 753 0004 00000000 		.space	16
+ 753      00000000 
+ 753      00000000 
+ 753      00000000 
+ 754              		.section	.data.MENU_OptionList,"aw"
+ 755              		.align	2
+ 758              	MENU_OptionList:
+ 759 0000 28000000 		.word	.LC9
+ 760 0004 00000000 		.word	0
+ 761 0008 00000000 		.space	8
+ 761      00000000 
+ 762 0010 2C000000 		.word	.LC10
+ 763 0014 00000000 		.word	MENU_RockerInfo
+ 764 0018 00000000 		.space	8
+ 764      00000000 
+ 765 0020 38000000 		.word	.LC11
+ 766 0024 00000000 		.word	MENU_Calibration
+ 767 0028 00000000 		.space	8
+ 767      00000000 
+ 768 0030 44000000 		.word	.LC12
+ 769 0034 00000000 		.word	MENU_ShowImage
+ 770 0038 00000000 		.space	8
+ 770      00000000 
+ 771 0040 4C000000 		.word	.LC13
+ 772 0044 00000000 		.word	MENU_ShowInfomation
+ 773 0048 00000000 		.space	8
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 20
+
+
+ 773      00000000 
+ 774 0050 58000000 		.word	.LC14
+ 775 0054 00000000 		.word	0
+ 776 0058 00000000 		.space	8
+ 776      00000000 
+ 777              		.text
+ 778              	.Letext0:
+ 779              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 780              		.file 4 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 781              		.file 5 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 782              		.file 6 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
+ 783              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 784              		.file 8 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ 785              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 786              		.file 10 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h"
+ 787              		.file 11 "Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/portmacro.h"
+ 788              		.file 12 "Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h"
+ 789              		.file 13 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 790              		.file 14 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
+ 791              		.file 15 "Application/remote.h"
+ 792              		.file 16 "Application/MENU.h"
+ 793              		.file 17 "Core/Inc/adc.h"
+ 794              		.file 18 "Modules/nrf24l01.h"
+ 795              		.file 19 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h"
+ 796              		.file 20 "Modules/oled.h"
+ 797              		.file 21 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc_ex.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 remote.c
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:15     .rodata.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:28     .text.RemoteHardware_Init:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:33     .text.RemoteHardware_Init:00000000 RemoteHardware_Init
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:114    .text.RemoteHardware_Init:00000038 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:120    .text.ScanRemoteInfo:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:125    .text.ScanRemoteInfo:00000000 ScanRemoteInfo
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:241    .text.ScanRemoteInfo:000000b8 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:249    .text.ScanInfoTASK:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:255    .text.ScanInfoTASK:00000000 ScanInfoTASK
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:285    .text.SendBuff:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:290    .text.SendBuff:00000000 SendBuff
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:388    .text.SendBuff:00000048 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:395    .text.SendTASK:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:401    .text.SendTASK:00000000 SendTASK
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:431    .text.MenuTASK:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:437    .text.MenuTASK:00000000 MenuTASK
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:506    .text.MenuTASK:00000048 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:511    .text.Remote_Init:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:517    .text.Remote_Init:00000000 Remote_Init
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:550    .text.Remote_Init:0000001c $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:556    .text.RemoteTask_Init:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:562    .text.RemoteTask_Init:00000000 RemoteTask_Init
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:634    .text.RemoteTask_Init:00000074 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:737    .bss.sendTaskHandle:00000000 sendTaskHandle
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:709    .bss.menuTaskHandle:00000000 menuTaskHandle
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:730    .bss.scaninfoTaskHandle:00000000 scaninfoTaskHandle
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:716    .bss.remote:00000000 remote
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:723    .bss.remote_info:00000000 remote_info
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:744    .bss.tx_buf:00000000 tx_buf
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:702    .bss.adc_val:00000000 adc_val
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:668    .rodata:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:698    .bss.adc_val:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:705    .bss.menuTaskHandle:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:712    .bss.remote:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:719    .bss.remote_info:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:726    .bss.scaninfoTaskHandle:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:733    .bss.sendTaskHandle:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:740    .bss.tx_buf:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:747    .data.MENU:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:751    .data.MENU:00000000 MENU
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:758    .data.MENU_OptionList:00000000 MENU_OptionList
+C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s:755    .data.MENU_OptionList:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_Delay
+OLED_Init
+NRF24L01_Init
+HAL_ADCEx_Calibration_Start
+HAL_ADC_Start_DMA
+NRF24L01_Check
+TX_Mode
+hadc1
+HAL_GPIO_ReadPin
+osDelay
+NRF24L01_TxPacket
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccVbrxmD.s 			page 22
+
+
+HAL_GPIO_TogglePin
+MENU_HandleInit
+menu_command_callback
+MENU_ShowOptionList
+MENU_ShowCursor
+MENU_ShowBorder
+MENU_Event_and_Action
+osThreadCreate
+MENU_RockerInfo
+MENU_Calibration
+MENU_ShowImage
+MENU_ShowInfomation

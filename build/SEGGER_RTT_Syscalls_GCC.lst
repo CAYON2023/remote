@@ -1,0 +1,245 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"SEGGER_RTT_Syscalls_GCC.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text._write,"ax",%progbits
+  18              		.align	1
+  19              		.global	_write
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	_write:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "systemview/SEGGER_RTT_Syscalls_GCC.c"
+   1:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+   2:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                    SEGGER Microcontroller GmbH                     *
+   3:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                        The Embedded Experts                        *
+   4:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+   5:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+   6:systemview/SEGGER_RTT_Syscalls_GCC.c **** *            (c) 1995 - 2024 SEGGER Microcontroller GmbH             *
+   7:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+   8:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       www.segger.com     Support: support@segger.com               *
+   9:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  10:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  11:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  12:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       SEGGER SystemView * Real-time application analysis           *
+  13:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  14:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  15:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  16:systemview/SEGGER_RTT_Syscalls_GCC.c **** * All rights reserved.                                               *
+  17:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  18:systemview/SEGGER_RTT_Syscalls_GCC.c **** * SEGGER strongly recommends to not make any changes                 *
+  19:systemview/SEGGER_RTT_Syscalls_GCC.c **** * to or modify the source code of this software in order to stay     *
+  20:systemview/SEGGER_RTT_Syscalls_GCC.c **** * compatible with the SystemView and RTT protocol, and J-Link.       *
+  21:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  22:systemview/SEGGER_RTT_Syscalls_GCC.c **** * Redistribution and use in source and binary forms, with or         *
+  23:systemview/SEGGER_RTT_Syscalls_GCC.c **** * without modification, are permitted provided that the following    *
+  24:systemview/SEGGER_RTT_Syscalls_GCC.c **** * condition is met:                                                  *
+  25:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  26:systemview/SEGGER_RTT_Syscalls_GCC.c **** * o Redistributions of source code must retain the above copyright   *
+  27:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   notice, this condition and the following disclaimer.             *
+  28:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  29:systemview/SEGGER_RTT_Syscalls_GCC.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND             *
+  30:systemview/SEGGER_RTT_Syscalls_GCC.c **** * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,        *
+  31:systemview/SEGGER_RTT_Syscalls_GCC.c **** * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF           *
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s 			page 2
+
+
+  32:systemview/SEGGER_RTT_Syscalls_GCC.c **** * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE           *
+  33:systemview/SEGGER_RTT_Syscalls_GCC.c **** * DISCLAIMED. IN NO EVENT SHALL SEGGER Microcontroller BE LIABLE FOR *
+  34:systemview/SEGGER_RTT_Syscalls_GCC.c **** * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR           *
+  35:systemview/SEGGER_RTT_Syscalls_GCC.c **** * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT  *
+  36:systemview/SEGGER_RTT_Syscalls_GCC.c **** * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;    *
+  37:systemview/SEGGER_RTT_Syscalls_GCC.c **** * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF      *
+  38:systemview/SEGGER_RTT_Syscalls_GCC.c **** * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT          *
+  39:systemview/SEGGER_RTT_Syscalls_GCC.c **** * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE  *
+  40:systemview/SEGGER_RTT_Syscalls_GCC.c **** * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH   *
+  41:systemview/SEGGER_RTT_Syscalls_GCC.c **** * DAMAGE.                                                            *
+  42:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  43:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  44:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  45:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       SystemView version: 3.58                                    *
+  46:systemview/SEGGER_RTT_Syscalls_GCC.c **** *                                                                    *
+  47:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  48:systemview/SEGGER_RTT_Syscalls_GCC.c **** ---------------------------END-OF-HEADER------------------------------
+  49:systemview/SEGGER_RTT_Syscalls_GCC.c **** File    : SEGGER_RTT_Syscalls_GCC.c
+  50:systemview/SEGGER_RTT_Syscalls_GCC.c **** Purpose : Low-level functions for using printf() via RTT in GCC.
+  51:systemview/SEGGER_RTT_Syscalls_GCC.c ****           To use RTT for printf output, include this file in your 
+  52:systemview/SEGGER_RTT_Syscalls_GCC.c ****           application.
+  53:systemview/SEGGER_RTT_Syscalls_GCC.c **** Revision: $Rev: 24316 $
+  54:systemview/SEGGER_RTT_Syscalls_GCC.c **** ----------------------------------------------------------------------
+  55:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+  56:systemview/SEGGER_RTT_Syscalls_GCC.c **** #if (defined __GNUC__) && !(defined __SES_ARM) && !(defined __CROSSWORKS_ARM) && !(defined __ARMCC_
+  57:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  58:systemview/SEGGER_RTT_Syscalls_GCC.c **** #include <reent.h>  // required for _write_r
+  59:systemview/SEGGER_RTT_Syscalls_GCC.c **** #include "SEGGER_RTT.h"
+  60:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  61:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  62:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+  63:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  64:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       Types
+  65:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  66:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  67:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+  68:systemview/SEGGER_RTT_Syscalls_GCC.c **** //
+  69:systemview/SEGGER_RTT_Syscalls_GCC.c **** // If necessary define the _reent struct
+  70:systemview/SEGGER_RTT_Syscalls_GCC.c **** // to match the one passed by the used standard library.
+  71:systemview/SEGGER_RTT_Syscalls_GCC.c **** //
+  72:systemview/SEGGER_RTT_Syscalls_GCC.c **** struct _reent;
+  73:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  74:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+  75:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  76:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       Function prototypes
+  77:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  78:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  79:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+  80:systemview/SEGGER_RTT_Syscalls_GCC.c **** _ssize_t _write  (int file, const void *ptr, size_t len);
+  81:systemview/SEGGER_RTT_Syscalls_GCC.c **** _ssize_t _write_r(struct _reent *r, int file, const void *ptr, size_t len);
+  82:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  83:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+  84:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  85:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       Global functions
+  86:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  87:systemview/SEGGER_RTT_Syscalls_GCC.c **** **********************************************************************
+  88:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s 			page 3
+
+
+  89:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+  90:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+  91:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  92:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       _write()
+  93:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+  94:systemview/SEGGER_RTT_Syscalls_GCC.c **** * Function description
+  95:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   Low-level write function.
+  96:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   libc subroutines will use this system routine for output to all files,
+  97:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   including stdout.
+  98:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   Write data via RTT.
+  99:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+ 100:systemview/SEGGER_RTT_Syscalls_GCC.c **** _ssize_t _write(int file, const void *ptr, size_t len) {
+  28              		.loc 1 100 56 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 100 56 is_stmt 0 view .LVU1
+  33 0000 10B5     		push	{r4, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 4, -8
+  37              		.cfi_offset 14, -4
+  38 0002 1446     		mov	r4, r2
+ 101:systemview/SEGGER_RTT_Syscalls_GCC.c ****   (void) file;  /* Not used, avoid warning */
+  39              		.loc 1 101 3 is_stmt 1 view .LVU2
+ 102:systemview/SEGGER_RTT_Syscalls_GCC.c ****   SEGGER_RTT_Write(0, ptr, len);
+  40              		.loc 1 102 3 view .LVU3
+  41 0004 0020     		movs	r0, #0
+  42              	.LVL1:
+  43              		.loc 1 102 3 is_stmt 0 view .LVU4
+  44 0006 FFF7FEFF 		bl	SEGGER_RTT_Write
+  45              	.LVL2:
+ 103:systemview/SEGGER_RTT_Syscalls_GCC.c ****   return len;
+  46              		.loc 1 103 3 is_stmt 1 view .LVU5
+ 104:systemview/SEGGER_RTT_Syscalls_GCC.c **** }
+  47              		.loc 1 104 1 is_stmt 0 view .LVU6
+  48 000a 2046     		mov	r0, r4
+  49 000c 10BD     		pop	{r4, pc}
+  50              		.loc 1 104 1 view .LVU7
+  51              		.cfi_endproc
+  52              	.LFE0:
+  54              		.section	.text._write_r,"ax",%progbits
+  55              		.align	1
+  56              		.global	_write_r
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  61              	_write_r:
+  62              	.LVL3:
+  63              	.LFB1:
+ 105:systemview/SEGGER_RTT_Syscalls_GCC.c **** 
+ 106:systemview/SEGGER_RTT_Syscalls_GCC.c **** /*********************************************************************
+ 107:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+ 108:systemview/SEGGER_RTT_Syscalls_GCC.c **** *       _write_r()
+ 109:systemview/SEGGER_RTT_Syscalls_GCC.c **** *
+ 110:systemview/SEGGER_RTT_Syscalls_GCC.c **** * Function description
+ 111:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   Low-level reentrant write function.
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s 			page 4
+
+
+ 112:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   libc subroutines will use this system routine for output to all files,
+ 113:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   including stdout.
+ 114:systemview/SEGGER_RTT_Syscalls_GCC.c **** *   Write data via RTT.
+ 115:systemview/SEGGER_RTT_Syscalls_GCC.c **** */
+ 116:systemview/SEGGER_RTT_Syscalls_GCC.c **** _ssize_t _write_r(struct _reent *r, int file, const void *ptr, size_t len) {
+  64              		.loc 1 116 76 is_stmt 1 view -0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		.loc 1 116 76 is_stmt 0 view .LVU9
+  69 0000 10B5     		push	{r4, lr}
+  70              	.LCFI1:
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 4, -8
+  73              		.cfi_offset 14, -4
+  74 0002 1146     		mov	r1, r2
+  75              	.LVL4:
+  76              		.loc 1 116 76 view .LVU10
+  77 0004 1C46     		mov	r4, r3
+ 117:systemview/SEGGER_RTT_Syscalls_GCC.c ****   (void) file;  /* Not used, avoid warning */
+  78              		.loc 1 117 3 is_stmt 1 view .LVU11
+ 118:systemview/SEGGER_RTT_Syscalls_GCC.c ****   (void) r;     /* Not used, avoid warning */
+  79              		.loc 1 118 3 view .LVU12
+ 119:systemview/SEGGER_RTT_Syscalls_GCC.c ****   SEGGER_RTT_Write(0, ptr, len);
+  80              		.loc 1 119 3 view .LVU13
+  81 0006 1A46     		mov	r2, r3
+  82              	.LVL5:
+  83              		.loc 1 119 3 is_stmt 0 view .LVU14
+  84 0008 0020     		movs	r0, #0
+  85              	.LVL6:
+  86              		.loc 1 119 3 view .LVU15
+  87 000a FFF7FEFF 		bl	SEGGER_RTT_Write
+  88              	.LVL7:
+ 120:systemview/SEGGER_RTT_Syscalls_GCC.c ****   return len;
+  89              		.loc 1 120 3 is_stmt 1 view .LVU16
+ 121:systemview/SEGGER_RTT_Syscalls_GCC.c **** }
+  90              		.loc 1 121 1 is_stmt 0 view .LVU17
+  91 000e 2046     		mov	r0, r4
+  92 0010 10BD     		pop	{r4, pc}
+  93              		.loc 1 121 1 view .LVU18
+  94              		.cfi_endproc
+  95              	.LFE1:
+  97              		.text
+  98              	.Letext0:
+  99              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\lib\\gc
+ 100              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 101              		.file 4 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 102              		.file 5 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 103              		.file 6 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 104              		.file 7 "systemview/SEGGER_RTT.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 SEGGER_RTT_Syscalls_GCC.c
+C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s:18     .text._write:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s:24     .text._write:00000000 _write
+C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s:55     .text._write_r:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccsBMrEY.s:61     .text._write_r:00000000 _write_r
+
+UNDEFINED SYMBOLS
+SEGGER_RTT_Write

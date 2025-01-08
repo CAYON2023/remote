@@ -34,6 +34,19 @@ void Remote_Init(void)
     remote.info = &remote_info;
 }
 
+static void RemoteDataProc(RC_t *data)
+{
+    memcpy(&data->res.key, &data->info->key, sizeof(data->info->key));
+    for (int i = 0; i < 2; i++)
+    {
+        data->res.potVal[i] = (int)(-((float)(data->info->pVal[i] - data->offset_rocker[i]) / 4096) * 255);
+    }
+
+    for (int i = 0; i < 4; i++)
+    {
+        data->res.rockerVal[2 + i] = (int)(((float)(data->info->rockerVal[2 + i] - data->offset_rocker[2 + i]) / 2048) * 127);
+    }
+}
 static void ScanRemoteInfo(void)
 {
     remote_info.key.bits.sw1 = (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_12) == GPIO_PIN_SET ? 1 : 0);
@@ -57,7 +70,12 @@ static void SendBuff(void)
         tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
     tx_buf[7] = 0xFE; // 校验位
     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
+    {
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        remote.online = 1;
+    }
+    else
+        remote.online = 0;
 }
 
 __attribute__((noreturn)) void ScanInfoTASK(void const *argument)
@@ -65,7 +83,8 @@ __attribute__((noreturn)) void ScanInfoTASK(void const *argument)
     for (;;)
     {
         ScanRemoteInfo();
-        osDelay(10);
+        RemoteDataProc(&remote);
+        osDelay(5);
     }
 }
 
@@ -74,7 +93,7 @@ __attribute__((noreturn)) void SendTASK(void const *argument)
     for (;;)
     {
         SendBuff();
-        osDelay(30);
+        osDelay(10);
     }
 }
 
@@ -91,9 +110,10 @@ static MENU_HandleTypeDef MENU = {.OptionList = MENU_OptionList};
 __attribute__((noreturn)) void MenuTASK(void const *argument)
 {
     MENU_HandleInit(&MENU);
+    MENU_Init();
     for (;;)
     {
-        while (MENU.isRun)
+        // while (MENU.isRun)
         {
             menu_command_callback(BUFFER_CLEAR); // 擦除缓冲区
             MENU_ShowOptionList(&MENU);          /* 显示选项列表 */
@@ -109,12 +129,14 @@ __attribute__((noreturn)) void MenuTASK(void const *argument)
 
 void RemoteTask_Init(void)
 {
-    osThreadDef(scaninfotask, ScanInfoTASK, osPriorityNormal, 0, 128);
+    osThreadDef(scaninfotask, ScanInfoTASK, osPriorityHigh, 0, 128);
     scaninfoTaskHandle = osThreadCreate(osThread(scaninfotask), NULL); //
 
     osThreadDef(menutask, MenuTASK, osPriorityNormal, 0, 256);
     menuTaskHandle = osThreadCreate(osThread(menutask), NULL);
 
-    osThreadDef(sendtask, SendTASK, osPriorityAboveNormal, 0, 128);
+    osThreadDef(sendtask, SendTASK, osPriorityRealtime, 0, 128);
     sendTaskHandle = osThreadCreate(osThread(sendtask), NULL);
 }
+
+RC_t *GetRCpointer(void) { return &remote; }

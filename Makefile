@@ -79,10 +79,20 @@ Core/Src/syscalls.c \
 Modules/font.c \
 Modules/oled.c \
 Modules/nrf24l01.c \
+Modules/flash.c \
 Bsp/bsp_dwt.c \
 Application/remote.c \
 Application/MENU.c \
-Application/menu_task.c
+Application/menu_task.c \
+systemview/SEGGER_RTT_printf.c \
+systemview/SEGGER_RTT_Syscalls_GCC.c \
+systemview/SEGGER_RTT_Syscalls_IAR.c \
+systemview/SEGGER_RTT_Syscalls_KEIL.c \
+systemview/SEGGER_RTT_Syscalls_SES.c \
+systemview/SEGGER_RTT.c \
+systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c \
+systemview/SEGGER_SYSVIEW_FreeRTOS.c \
+systemview/SEGGER_SYSVIEW.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -153,7 +163,8 @@ C_INCLUDES =  \
 -IDrivers/CMSIS/Include \
 -IModules \
 -IBsp \
--IApplication 
+-IApplication \
+-Isystemview
 
 
 # compile gcc flags

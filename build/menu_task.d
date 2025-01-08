@@ -42,7 +42,8 @@ build/menu_task.o: Application/menu_task.c Application/menu_task.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- Application/MENU.h Modules/oled.h Modules/font.h
+ Application/MENU.h Modules/oled.h Modules/font.h Application/remote.h \
+ Modules/flash.h
 Application/menu_task.h:
 Core/Inc/main.h:
 Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -93,3 +94,5 @@ Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 Application/MENU.h:
 Modules/oled.h:
 Modules/font.h:
+Application/remote.h:
+Modules/flash.h:

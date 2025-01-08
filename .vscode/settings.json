@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "menu.h": "c"
+        "menu.h": "c",
+        "menu_task.h": "c",
+        "remote.h": "c",
+        "task.h": "c",
+        "font.h": "c"
     }
 }

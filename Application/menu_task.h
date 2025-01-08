@@ -8,6 +8,8 @@
 
 #include "MENU.h"
 #include "oled.h"
+#include "remote.h"
+void MENU_Init(void);
 void MENU_RockerInfo(void);
 void MENU_Calibration(void);
 void MENU_ShowImage(void);

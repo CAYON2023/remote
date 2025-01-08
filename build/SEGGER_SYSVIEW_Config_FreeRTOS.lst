@@ -1,0 +1,242 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"SEGGER_SYSVIEW_Config_FreeRTOS.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.rodata._cbSendSystemDesc.str1.4,"aMS",%progbits,1
+  18              		.align	2
+  19              	.LC0:
+  20 0000 4E3D4672 		.ascii	"N=FreeRTOS Demo Application,D=Cortex-M4,O=FreeRTOS\000"
+  20      65655254 
+  20      4F532044 
+  20      656D6F20 
+  20      4170706C 
+  21 0033 00       		.align	2
+  22              	.LC1:
+  23 0034 49233135 		.ascii	"I#15=SysTick\000"
+  23      3D537973 
+  23      5469636B 
+  23      00
+  24              		.section	.text._cbSendSystemDesc,"ax",%progbits
+  25              		.align	1
+  26              		.syntax unified
+  27              		.thumb
+  28              		.thumb_func
+  30              	_cbSendSystemDesc:
+  31              	.LFB5:
+  32              		.file 1 "systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c"
+   1:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** /*********************************************************************
+   2:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                    SEGGER Microcontroller GmbH                     *
+   3:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                        The Embedded Experts                        *
+   4:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+   5:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+   6:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *            (c) 1995 - 2024 SEGGER Microcontroller GmbH             *
+   7:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+   8:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       www.segger.com     Support: support@segger.com               *
+   9:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  10:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  11:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  12:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       SEGGER SystemView * Real-time application analysis           *
+  13:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  14:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  15:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  16:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * All rights reserved.                                               *
+  17:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  18:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * SEGGER strongly recommends to not make any changes                 *
+  19:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * to or modify the source code of this software in order to stay     *
+ARM GAS  C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s 			page 2
+
+
+  20:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * compatible with the SystemView and RTT protocol, and J-Link.       *
+  21:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  22:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * Redistribution and use in source and binary forms, with or         *
+  23:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * without modification, are permitted provided that the following    *
+  24:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * condition is met:                                                  *
+  25:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  26:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * o Redistributions of source code must retain the above copyright   *
+  27:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *   notice, this condition and the following disclaimer.             *
+  28:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  29:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND             *
+  30:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,        *
+  31:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF           *
+  32:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE           *
+  33:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * DISCLAIMED. IN NO EVENT SHALL SEGGER Microcontroller BE LIABLE FOR *
+  34:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR           *
+  35:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT  *
+  36:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;    *
+  37:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF      *
+  38:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT          *
+  39:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE  *
+  40:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH   *
+  41:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** * DAMAGE.                                                            *
+  42:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  43:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  44:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  45:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       SystemView version: 3.58                                    *
+  46:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *                                                                    *
+  47:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  48:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** -------------------------- END-OF-HEADER -----------------------------
+  49:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  50:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** File    : SEGGER_SYSVIEW_Config_FreeRTOS.c
+  51:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** Purpose : Sample setup configuration of SystemView with FreeRTOS.
+  52:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** Revision: $Rev: 7745 $
+  53:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** */
+  54:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #include "FreeRTOS.h"
+  55:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #include "SEGGER_SYSVIEW.h"
+  56:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  57:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
+  58:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  59:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** /*********************************************************************
+  60:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  61:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       Defines, configurable
+  62:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  63:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  64:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** */
+  65:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** // The application name to be displayed in SystemViewer
+  66:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #define SYSVIEW_APP_NAME        "FreeRTOS Demo Application"
+  67:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  68:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** // The target device name
+  69:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #define SYSVIEW_DEVICE_NAME     "Cortex-M4"
+  70:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  71:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** // Frequency of the timestamp. Must match SEGGER_SYSVIEW_GET_TIMESTAMP in SEGGER_SYSVIEW_Conf.h
+  72:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #define SYSVIEW_TIMESTAMP_FREQ  (configCPU_CLOCK_HZ)
+  73:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  74:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** // System Frequency. SystemcoreClock is used in most CMSIS compatible projects.
+  75:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #define SYSVIEW_CPU_FREQ        configCPU_CLOCK_HZ
+  76:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s 			page 3
+
+
+  77:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** // The lowest RAM address used for IDs (pointers)
+  78:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** #define SYSVIEW_RAM_BASE        (0x10000000)
+  79:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  80:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** /********************************************************************* 
+  81:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  82:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       _cbSendSystemDesc()
+  83:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  84:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *  Function description
+  85:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *    Sends SystemView description strings.
+  86:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** */
+  87:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** static void _cbSendSystemDesc(void) {
+  33              		.loc 1 87 37 view -0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 0
+  36              		@ frame_needed = 0, uses_anonymous_args = 0
+  37 0000 08B5     		push	{r3, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 8
+  40              		.cfi_offset 3, -8
+  41              		.cfi_offset 14, -4
+  88:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c ****   SEGGER_SYSVIEW_SendSysDesc("N="SYSVIEW_APP_NAME",D="SYSVIEW_DEVICE_NAME",O=FreeRTOS");
+  42              		.loc 1 88 3 view .LVU1
+  43 0002 0348     		ldr	r0, .L3
+  44 0004 FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  45              	.LVL0:
+  89:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c ****   SEGGER_SYSVIEW_SendSysDesc("I#15=SysTick");
+  46              		.loc 1 89 3 view .LVU2
+  47 0008 0248     		ldr	r0, .L3+4
+  48 000a FFF7FEFF 		bl	SEGGER_SYSVIEW_SendSysDesc
+  49              	.LVL1:
+  90:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** }
+  50              		.loc 1 90 1 is_stmt 0 view .LVU3
+  51 000e 08BD     		pop	{r3, pc}
+  52              	.L4:
+  53              		.align	2
+  54              	.L3:
+  55 0010 00000000 		.word	.LC0
+  56 0014 34000000 		.word	.LC1
+  57              		.cfi_endproc
+  58              	.LFE5:
+  60              		.section	.text.SEGGER_SYSVIEW_Conf,"ax",%progbits
+  61              		.align	1
+  62              		.global	SEGGER_SYSVIEW_Conf
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  67              	SEGGER_SYSVIEW_Conf:
+  68              	.LFB6:
+  91:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** 
+  92:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** /*********************************************************************
+  93:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  94:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *       Global functions
+  95:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** *
+  96:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** **********************************************************************
+  97:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** */
+  98:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** void SEGGER_SYSVIEW_Conf(void) {
+  69              		.loc 1 98 32 is_stmt 1 view -0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s 			page 4
+
+
+  70              		.cfi_startproc
+  71              		@ args = 0, pretend = 0, frame = 0
+  72              		@ frame_needed = 0, uses_anonymous_args = 0
+  73 0000 08B5     		push	{r3, lr}
+  74              	.LCFI1:
+  75              		.cfi_def_cfa_offset 8
+  76              		.cfi_offset 3, -8
+  77              		.cfi_offset 14, -4
+  99:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c ****   SEGGER_SYSVIEW_Init(SYSVIEW_TIMESTAMP_FREQ, SYSVIEW_CPU_FREQ, 
+  78              		.loc 1 99 3 view .LVU5
+  79 0002 064B     		ldr	r3, .L7
+  80 0004 1868     		ldr	r0, [r3]
+  81 0006 064B     		ldr	r3, .L7+4
+  82 0008 064A     		ldr	r2, .L7+8
+  83 000a 0146     		mov	r1, r0
+  84 000c FFF7FEFF 		bl	SEGGER_SYSVIEW_Init
+  85              	.LVL2:
+ 100:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c ****                       &SYSVIEW_X_OS_TraceAPI, _cbSendSystemDesc);
+ 101:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c ****   SEGGER_SYSVIEW_SetRAMBase(SYSVIEW_RAM_BASE);
+  86              		.loc 1 101 3 view .LVU6
+  87 0010 4FF08050 		mov	r0, #268435456
+  88 0014 FFF7FEFF 		bl	SEGGER_SYSVIEW_SetRAMBase
+  89              	.LVL3:
+ 102:systemview/SEGGER_SYSVIEW_Config_FreeRTOS.c **** }
+  90              		.loc 1 102 1 is_stmt 0 view .LVU7
+  91 0018 08BD     		pop	{r3, pc}
+  92              	.L8:
+  93 001a 00BF     		.align	2
+  94              	.L7:
+  95 001c 00000000 		.word	SystemCoreClock
+  96 0020 00000000 		.word	_cbSendSystemDesc
+  97 0024 00000000 		.word	SYSVIEW_X_OS_TraceAPI
+  98              		.cfi_endproc
+  99              	.LFE6:
+ 101              		.text
+ 102              	.Letext0:
+ 103              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 104              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 105              		.file 4 "systemview/SEGGER_SYSVIEW.h"
+ 106              		.file 5 "Core/Inc/FreeRTOSConfig.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 SEGGER_SYSVIEW_Config_FreeRTOS.c
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:18     .rodata._cbSendSystemDesc.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:25     .text._cbSendSystemDesc:00000000 $t
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:30     .text._cbSendSystemDesc:00000000 _cbSendSystemDesc
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:55     .text._cbSendSystemDesc:00000010 $d
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:61     .text.SEGGER_SYSVIEW_Conf:00000000 $t
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:67     .text.SEGGER_SYSVIEW_Conf:00000000 SEGGER_SYSVIEW_Conf
+C:\Users\20398\AppData\Local\Temp\cc6GLBAT.s:95     .text.SEGGER_SYSVIEW_Conf:0000001c $d
+
+UNDEFINED SYMBOLS
+SEGGER_SYSVIEW_SendSysDesc
+SEGGER_SYSVIEW_Init
+SEGGER_SYSVIEW_SetRAMBase
+SystemCoreClock
+SYSVIEW_X_OS_TraceAPI

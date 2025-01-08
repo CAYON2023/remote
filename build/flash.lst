@@ -1,0 +1,624 @@
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"flash.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.FlashWriteNoCheck,"ax",%progbits
+  18              		.align	1
+  19              		.global	FlashWriteNoCheck
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	FlashWriteNoCheck:
+  25              	.LVL0:
+  26              	.LFB65:
+  27              		.file 1 "Modules/flash.c"
+   1:Modules/flash.c **** /*
+   2:Modules/flash.c ****  * flash.c
+   3:Modules/flash.c ****  *
+   4:Modules/flash.c ****  * Created: 2018-01-29
+   5:Modules/flash.c ****  * Author: zhanglifu
+   6:Modules/flash.c ****  */
+   7:Modules/flash.c **** 
+   8:Modules/flash.c **** /*********************************************************************/
+   9:Modules/flash.c **** //                        头文件
+  10:Modules/flash.c **** /*********************************************************************/
+  11:Modules/flash.c **** #include "flash.h"
+  12:Modules/flash.c **** 
+  13:Modules/flash.c **** // 不检查的写入
+  14:Modules/flash.c **** // WriteAddr:起始地址
+  15:Modules/flash.c **** // pBuffer:  数据指针
+  16:Modules/flash.c **** // NumToWrite:字节数数
+  17:Modules/flash.c **** void FlashWriteNoCheck(uint32_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite)
+  18:Modules/flash.c **** {
+  28              		.loc 1 18 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		.loc 1 18 1 is_stmt 0 view .LVU1
+  33 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 3, -24
+  37              		.cfi_offset 4, -20
+  38              		.cfi_offset 5, -16
+  39              		.cfi_offset 6, -12
+  40              		.cfi_offset 7, -8
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 2
+
+
+  41              		.cfi_offset 14, -4
+  42 0002 0646     		mov	r6, r0
+  43 0004 0D46     		mov	r5, r1
+  44 0006 1746     		mov	r7, r2
+  19:Modules/flash.c ****     uint16_t i;
+  45              		.loc 1 19 5 is_stmt 1 view .LVU2
+  20:Modules/flash.c **** 
+  21:Modules/flash.c ****     for (i = 0; i < NumToWrite; i += 4)
+  46              		.loc 1 21 5 view .LVU3
+  47              	.LVL1:
+  48              		.loc 1 21 12 is_stmt 0 view .LVU4
+  49 0008 0024     		movs	r4, #0
+  50              		.loc 1 21 5 view .LVU5
+  51 000a 09E0     		b	.L2
+  52              	.LVL2:
+  53              	.L3:
+  22:Modules/flash.c ****     {
+  23:Modules/flash.c ****         while (HAL_OK != HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, WriteAddr + i, *(uint32_t *)(pBu
+  24:Modules/flash.c ****             ;
+  54              		.loc 1 24 13 is_stmt 1 discriminator 1 view .LVU6
+  23:Modules/flash.c ****             ;
+  55              		.loc 1 23 15 discriminator 1 view .LVU7
+  23:Modules/flash.c ****             ;
+  56              		.loc 1 23 26 is_stmt 0 discriminator 1 view .LVU8
+  57 000c 2A59     		ldr	r2, [r5, r4]
+  58 000e 0023     		movs	r3, #0
+  59 0010 A119     		adds	r1, r4, r6
+  60 0012 0220     		movs	r0, #2
+  61 0014 FFF7FEFF 		bl	HAL_FLASH_Program
+  62              	.LVL3:
+  23:Modules/flash.c ****             ;
+  63              		.loc 1 23 15 discriminator 1 view .LVU9
+  64 0018 0028     		cmp	r0, #0
+  65 001a F7D1     		bne	.L3
+  21:Modules/flash.c ****     {
+  66              		.loc 1 21 33 is_stmt 1 discriminator 2 view .LVU10
+  21:Modules/flash.c ****     {
+  67              		.loc 1 21 35 is_stmt 0 discriminator 2 view .LVU11
+  68 001c 0434     		adds	r4, r4, #4
+  69              	.LVL4:
+  21:Modules/flash.c ****     {
+  70              		.loc 1 21 35 discriminator 2 view .LVU12
+  71 001e A4B2     		uxth	r4, r4
+  72              	.LVL5:
+  73              	.L2:
+  21:Modules/flash.c ****     {
+  74              		.loc 1 21 17 is_stmt 1 discriminator 1 view .LVU13
+  21:Modules/flash.c ****     {
+  75              		.loc 1 21 5 is_stmt 0 discriminator 1 view .LVU14
+  76 0020 BC42     		cmp	r4, r7
+  77 0022 F3D3     		bcc	.L3
+  25:Modules/flash.c ****     }
+  26:Modules/flash.c **** }
+  78              		.loc 1 26 1 view .LVU15
+  79 0024 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  80              		.loc 1 26 1 view .LVU16
+  81              		.cfi_endproc
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 3
+
+
+  82              	.LFE65:
+  84              		.section	.text.FlashWriteBuff,"ax",%progbits
+  85              		.align	1
+  86              		.global	FlashWriteBuff
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  91              	FlashWriteBuff:
+  92              	.LVL6:
+  93              	.LFB66:
+  27:Modules/flash.c **** 
+  28:Modules/flash.c **** extern void FLASH_PageErase(uint32_t PageAddress);
+  29:Modules/flash.c **** void FlashWriteBuff(const uint32_t destination_address, uint8_t *const buffer, uint32_t length)
+  30:Modules/flash.c **** {
+  94              		.loc 1 30 1 is_stmt 1 view -0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 1024
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              		.loc 1 30 1 is_stmt 0 view .LVU18
+  99 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 100              	.LCFI1:
+ 101              		.cfi_def_cfa_offset 28
+ 102              		.cfi_offset 4, -28
+ 103              		.cfi_offset 5, -24
+ 104              		.cfi_offset 6, -20
+ 105              		.cfi_offset 7, -16
+ 106              		.cfi_offset 8, -12
+ 107              		.cfi_offset 9, -8
+ 108              		.cfi_offset 14, -4
+ 109 0004 ADF2044D 		subw	sp, sp, #1028
+ 110              	.LCFI2:
+ 111              		.cfi_def_cfa_offset 1056
+  31:Modules/flash.c ****     uint16_t i;
+ 112              		.loc 1 31 5 is_stmt 1 view .LVU19
+  32:Modules/flash.c ****     uint8_t FlashBuff[FMC_SECTOR_SIZE];
+ 113              		.loc 1 32 5 view .LVU20
+  33:Modules/flash.c ****     uint32_t StartAddress = destination_address - destination_address % FMC_SECTOR_SIZE;
+ 114              		.loc 1 33 5 view .LVU21
+ 115              	.LVL7:
+  34:Modules/flash.c ****     uint16_t Offset = destination_address - StartAddress;
+ 116              		.loc 1 34 5 view .LVU22
+ 117              		.loc 1 34 43 is_stmt 0 view .LVU23
+ 118 0008 86B2     		uxth	r6, r0
+ 119 000a 00F47C43 		and	r3, r0, #64512
+ 120              		.loc 1 34 14 view .LVU24
+ 121 000e F61A     		subs	r6, r6, r3
+ 122              	.LVL8:
+  35:Modules/flash.c ****     uint8_t *pBuf = buffer;
+ 123              		.loc 1 35 5 is_stmt 1 view .LVU25
+  36:Modules/flash.c ****     uint32_t remaindNum = length;
+ 124              		.loc 1 36 5 view .LVU26
+  37:Modules/flash.c **** 
+  38:Modules/flash.c ****     HAL_StatusTypeDef status = HAL_ERROR;
+ 125              		.loc 1 38 5 view .LVU27
+  39:Modules/flash.c **** 
+  40:Modules/flash.c ****     // 地址检查
+  41:Modules/flash.c ****     if ((destination_address < FMC_FLASH_BASE) || (destination_address + length >= FMC_FLASH_END) |
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 4
+
+
+ 126              		.loc 1 41 5 view .LVU28
+ 127              		.loc 1 41 8 is_stmt 0 view .LVU29
+ 128 0010 B0F1006F 		cmp	r0, #134217728
+ 129 0014 0BD3     		bcc	.L5
+ 130 0016 8846     		mov	r8, r1
+ 131 0018 1746     		mov	r7, r2
+ 132 001a 20F47F74 		bic	r4, r0, #1020
+ 133              	.LVL9:
+ 134              		.loc 1 41 8 view .LVU30
+ 135 001e 24F00304 		bic	r4, r4, #3
+ 136              	.LVL10:
+ 137              		.loc 1 41 8 view .LVU31
+ 138 0022 B6B2     		uxth	r6, r6
+ 139              		.loc 1 41 72 discriminator 1 view .LVU32
+ 140 0024 1044     		add	r0, r0, r2
+ 141              	.LVL11:
+ 142              		.loc 1 41 48 discriminator 1 view .LVU33
+ 143 0026 254B     		ldr	r3, .L20
+ 144 0028 9842     		cmp	r0, r3
+ 145 002a 00D8     		bhi	.L5
+ 146              		.loc 1 41 99 discriminator 2 view .LVU34
+ 147 002c 1AB9     		cbnz	r2, .L18
+ 148              	.LVL12:
+ 149              	.L5:
+  42:Modules/flash.c ****         return;
+  43:Modules/flash.c **** 
+  44:Modules/flash.c ****     HAL_FLASH_Unlock(); // 解锁
+  45:Modules/flash.c ****     do
+  46:Modules/flash.c ****     {
+  47:Modules/flash.c ****         // 读出一页数据
+  48:Modules/flash.c ****         for (i = 0; i < FMC_SECTOR_SIZE; i += 4)
+  49:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+  50:Modules/flash.c **** 
+  51:Modules/flash.c ****         // 修改要改入的数据
+  52:Modules/flash.c ****         for (i = 0; (i + Offset) < FMC_SECTOR_SIZE && i < remaindNum; i++)
+  53:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+  54:Modules/flash.c **** 
+  55:Modules/flash.c ****         // 擦除一ROW数据
+  56:Modules/flash.c ****         FLASH_PageErase(StartAddress);
+  57:Modules/flash.c **** 
+  58:Modules/flash.c ****         // HAL库 FLASH_PageErase有BUFF,要加上下面三行代码
+  59:Modules/flash.c ****         while (status != HAL_OK)
+  60:Modules/flash.c ****             status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+  61:Modules/flash.c ****         CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
+  62:Modules/flash.c **** 
+  63:Modules/flash.c ****         // 写入数据
+  64:Modules/flash.c ****         FlashWriteNoCheck(StartAddress, FlashBuff, FMC_SECTOR_SIZE);
+  65:Modules/flash.c **** 
+  66:Modules/flash.c ****         // 为下一页做准备
+  67:Modules/flash.c ****         StartAddress += FMC_SECTOR_SIZE;
+  68:Modules/flash.c ****         remaindNum -= i;
+  69:Modules/flash.c ****         pBuf += i;
+  70:Modules/flash.c ****         Offset = 0;
+  71:Modules/flash.c **** 
+  72:Modules/flash.c ****     } while (remaindNum > 0);
+  73:Modules/flash.c **** 
+  74:Modules/flash.c ****     HAL_FLASH_Lock(); // 上锁
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 5
+
+
+  75:Modules/flash.c **** }
+ 150              		.loc 1 75 1 view .LVU35
+ 151 002e 0DF2044D 		addw	sp, sp, #1028
+ 152              	.LCFI3:
+ 153              		.cfi_remember_state
+ 154              		.cfi_def_cfa_offset 28
+ 155              		@ sp needed
+ 156 0032 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 157              	.LVL13:
+ 158              	.L18:
+ 159              	.LCFI4:
+ 160              		.cfi_restore_state
+  44:Modules/flash.c ****     do
+ 161              		.loc 1 44 5 is_stmt 1 view .LVU36
+ 162 0036 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 163              	.LVL14:
+  38:Modules/flash.c **** 
+ 164              		.loc 1 38 23 is_stmt 0 view .LVU37
+ 165 003a 0125     		movs	r5, #1
+ 166 003c 38E0     		b	.L16
+ 167              	.LVL15:
+ 168              	.L10:
+  49:Modules/flash.c **** 
+ 169              		.loc 1 49 13 is_stmt 1 discriminator 3 view .LVU38
+  49:Modules/flash.c **** 
+ 170              		.loc 1 49 42 is_stmt 0 discriminator 3 view .LVU39
+ 171 003e 1A59     		ldr	r2, [r3, r4]
+ 172 0040 4DF80320 		str	r2, [sp, r3]
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 173              		.loc 1 48 42 is_stmt 1 discriminator 3 view .LVU40
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 174              		.loc 1 48 44 is_stmt 0 discriminator 3 view .LVU41
+ 175 0044 0433     		adds	r3, r3, #4
+ 176              	.LVL16:
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 177              		.loc 1 48 44 discriminator 3 view .LVU42
+ 178 0046 9BB2     		uxth	r3, r3
+ 179              	.LVL17:
+ 180              	.L9:
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 181              		.loc 1 48 21 is_stmt 1 discriminator 1 view .LVU43
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 182              		.loc 1 48 9 is_stmt 0 discriminator 1 view .LVU44
+ 183 0048 B3F5806F 		cmp	r3, #1024
+ 184 004c F7D3     		bcc	.L10
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 185              		.loc 1 52 16 view .LVU45
+ 186 004e 4FF00009 		mov	r9, #0
+ 187 0052 09E0     		b	.L11
+ 188              	.LVL18:
+ 189              	.L13:
+  53:Modules/flash.c **** 
+ 190              		.loc 1 53 13 is_stmt 1 discriminator 4 view .LVU46
+  53:Modules/flash.c **** 
+ 191              		.loc 1 53 34 is_stmt 0 discriminator 4 view .LVU47
+ 192 0054 06EB0903 		add	r3, r6, r9
+  53:Modules/flash.c **** 
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 6
+
+
+ 193              		.loc 1 53 41 discriminator 4 view .LVU48
+ 194 0058 18F80920 		ldrb	r2, [r8, r9]	@ zero_extendqisi2
+  53:Modules/flash.c **** 
+ 195              		.loc 1 53 39 discriminator 4 view .LVU49
+ 196 005c 0DF80320 		strb	r2, [sp, r3]
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 197              		.loc 1 52 71 is_stmt 1 discriminator 4 view .LVU50
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 198              		.loc 1 52 72 is_stmt 0 discriminator 4 view .LVU51
+ 199 0060 09F10109 		add	r9, r9, #1
+ 200              	.LVL19:
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 201              		.loc 1 52 72 discriminator 4 view .LVU52
+ 202 0064 1FFA89F9 		uxth	r9, r9
+ 203              	.LVL20:
+ 204              	.L11:
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 205              		.loc 1 52 21 is_stmt 1 discriminator 1 view .LVU53
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 206              		.loc 1 52 24 is_stmt 0 discriminator 1 view .LVU54
+ 207 0068 09EB0603 		add	r3, r9, r6
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 208              		.loc 1 52 9 discriminator 1 view .LVU55
+ 209 006c B3F5806F 		cmp	r3, #1024
+ 210 0070 01DA     		bge	.L12
+  52:Modules/flash.c ****             *(FlashBuff + Offset + i) = *(pBuf + i);
+ 211              		.loc 1 52 52 discriminator 3 view .LVU56
+ 212 0072 B945     		cmp	r9, r7
+ 213 0074 EED3     		bcc	.L13
+ 214              	.L12:
+  56:Modules/flash.c **** 
+ 215              		.loc 1 56 9 is_stmt 1 view .LVU57
+ 216 0076 2046     		mov	r0, r4
+ 217 0078 FFF7FEFF 		bl	FLASH_PageErase
+ 218              	.LVL21:
+  59:Modules/flash.c ****             status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ 219              		.loc 1 59 9 view .LVU58
+  59:Modules/flash.c ****             status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ 220              		.loc 1 59 15 is_stmt 0 view .LVU59
+ 221 007c 04E0     		b	.L14
+ 222              	.L15:
+  60:Modules/flash.c ****         CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
+ 223              		.loc 1 60 13 is_stmt 1 view .LVU60
+  60:Modules/flash.c ****         CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
+ 224              		.loc 1 60 22 is_stmt 0 view .LVU61
+ 225 007e 4CF25030 		movw	r0, #50000
+ 226 0082 FFF7FEFF 		bl	FLASH_WaitForLastOperation
+ 227              	.LVL22:
+ 228 0086 0546     		mov	r5, r0
+ 229              	.LVL23:
+ 230              	.L14:
+  59:Modules/flash.c ****             status = FLASH_WaitForLastOperation(FLASH_TIMEOUT_VALUE);
+ 231              		.loc 1 59 15 is_stmt 1 view .LVU62
+ 232 0088 002D     		cmp	r5, #0
+ 233 008a F8D1     		bne	.L15
+  61:Modules/flash.c **** 
+ 234              		.loc 1 61 9 view .LVU63
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 7
+
+
+ 235 008c 0C4A     		ldr	r2, .L20+4
+ 236 008e 1369     		ldr	r3, [r2, #16]
+ 237 0090 23F00203 		bic	r3, r3, #2
+ 238 0094 1361     		str	r3, [r2, #16]
+  64:Modules/flash.c **** 
+ 239              		.loc 1 64 9 view .LVU64
+ 240 0096 4FF48062 		mov	r2, #1024
+ 241 009a 6946     		mov	r1, sp
+ 242 009c 2046     		mov	r0, r4
+ 243 009e FFF7FEFF 		bl	FlashWriteNoCheck
+ 244              	.LVL24:
+  67:Modules/flash.c ****         remaindNum -= i;
+ 245              		.loc 1 67 9 view .LVU65
+  67:Modules/flash.c ****         remaindNum -= i;
+ 246              		.loc 1 67 22 is_stmt 0 view .LVU66
+ 247 00a2 04F58064 		add	r4, r4, #1024
+ 248              	.LVL25:
+  68:Modules/flash.c ****         pBuf += i;
+ 249              		.loc 1 68 9 is_stmt 1 view .LVU67
+  69:Modules/flash.c ****         Offset = 0;
+ 250              		.loc 1 69 9 view .LVU68
+  69:Modules/flash.c ****         Offset = 0;
+ 251              		.loc 1 69 14 is_stmt 0 view .LVU69
+ 252 00a6 C844     		add	r8, r8, r9
+ 253              	.LVL26:
+  70:Modules/flash.c **** 
+ 254              		.loc 1 70 9 is_stmt 1 view .LVU70
+  72:Modules/flash.c **** 
+ 255              		.loc 1 72 13 view .LVU71
+  70:Modules/flash.c **** 
+ 256              		.loc 1 70 16 is_stmt 0 view .LVU72
+ 257 00a8 0026     		movs	r6, #0
+  72:Modules/flash.c **** 
+ 258              		.loc 1 72 5 view .LVU73
+ 259 00aa B7EB0907 		subs	r7, r7, r9
+ 260              	.LVL27:
+  72:Modules/flash.c **** 
+ 261              		.loc 1 72 5 view .LVU74
+ 262 00ae 01D0     		beq	.L19
+ 263              	.LVL28:
+ 264              	.L16:
+  45:Modules/flash.c ****     {
+ 265              		.loc 1 45 5 is_stmt 1 view .LVU75
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 266              		.loc 1 48 9 view .LVU76
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 267              		.loc 1 48 16 is_stmt 0 view .LVU77
+ 268 00b0 0023     		movs	r3, #0
+  48:Modules/flash.c ****             *(uint32_t *)(FlashBuff + i) = *(uint32_t *)(StartAddress + i);
+ 269              		.loc 1 48 9 view .LVU78
+ 270 00b2 C9E7     		b	.L9
+ 271              	.LVL29:
+ 272              	.L19:
+  74:Modules/flash.c **** }
+ 273              		.loc 1 74 5 is_stmt 1 view .LVU79
+ 274 00b4 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 275              	.LVL30:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 8
+
+
+ 276 00b8 B9E7     		b	.L5
+ 277              	.L21:
+ 278 00ba 00BF     		.align	2
+ 279              	.L20:
+ 280 00bc FFFF0008 		.word	134283263
+ 281 00c0 00200240 		.word	1073881088
+ 282              		.cfi_endproc
+ 283              	.LFE66:
+ 285              		.section	.text.FlashReadBuff,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	FlashReadBuff
+ 288              		.syntax unified
+ 289              		.thumb
+ 290              		.thumb_func
+ 292              	FlashReadBuff:
+ 293              	.LVL31:
+ 294              	.LFB67:
+  76:Modules/flash.c **** 
+  77:Modules/flash.c **** // 从FLASH中读指定长度数据
+  78:Modules/flash.c **** void FlashReadBuff(const uint32_t source_address, uint8_t *const buffer, uint16_t length)
+  79:Modules/flash.c **** {
+ 295              		.loc 1 79 1 view -0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299              		.loc 1 79 1 is_stmt 0 view .LVU81
+ 300 0000 30B5     		push	{r4, r5, lr}
+ 301              	.LCFI5:
+ 302              		.cfi_def_cfa_offset 12
+ 303              		.cfi_offset 4, -12
+ 304              		.cfi_offset 5, -8
+ 305              		.cfi_offset 14, -4
+  80:Modules/flash.c ****     uint16_t i;
+ 306              		.loc 1 80 5 is_stmt 1 view .LVU82
+  81:Modules/flash.c ****     uint8_t Offset = 0;
+ 307              		.loc 1 81 5 view .LVU83
+ 308              	.LVL32:
+  82:Modules/flash.c ****     uint32_t StartAddress = source_address;
+ 309              		.loc 1 82 5 view .LVU84
+  83:Modules/flash.c ****     uint16_t data;
+ 310              		.loc 1 83 5 view .LVU85
+  84:Modules/flash.c **** 
+  85:Modules/flash.c ****     // 地址检测
+  86:Modules/flash.c ****     if (source_address + length > FMC_FLASH_END)
+ 311              		.loc 1 86 5 view .LVU86
+ 312              		.loc 1 86 24 is_stmt 0 view .LVU87
+ 313 0002 1418     		adds	r4, r2, r0
+ 314              		.loc 1 86 8 view .LVU88
+ 315 0004 134B     		ldr	r3, .L30
+ 316 0006 9C42     		cmp	r4, r3
+ 317 0008 22D8     		bhi	.L22
+  87:Modules/flash.c ****         return;
+  88:Modules/flash.c **** 
+  89:Modules/flash.c ****     // 如果没有对16齐
+  90:Modules/flash.c ****     if (source_address & 1)
+ 318              		.loc 1 90 5 is_stmt 1 view .LVU89
+ 319              		.loc 1 90 8 is_stmt 0 view .LVU90
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 9
+
+
+ 320 000a 10F0010F 		tst	r0, #1
+ 321 000e 07D0     		beq	.L28
+  91:Modules/flash.c ****     {
+  92:Modules/flash.c ****         Offset = 1;
+ 322              		.loc 1 92 9 is_stmt 1 view .LVU91
+ 323              	.LVL33:
+  93:Modules/flash.c ****         StartAddress = source_address - 1;
+ 324              		.loc 1 93 9 view .LVU92
+  94:Modules/flash.c ****     }
+  95:Modules/flash.c **** 
+  96:Modules/flash.c ****     // flash的操作要求16对齐 最小读写操作16个比特
+  97:Modules/flash.c ****     if (Offset)
+ 325              		.loc 1 97 5 view .LVU93
+  98:Modules/flash.c ****     {
+  99:Modules/flash.c ****         data = *(uint16_t *)(StartAddress);
+ 326              		.loc 1 99 9 view .LVU94
+ 327              		.loc 1 99 14 is_stmt 0 view .LVU95
+ 328 0010 30F8013C 		ldrh	r3, [r0, #-1]
+ 329              	.LVL34:
+ 100:Modules/flash.c ****         buffer[0] = data >> 8;
+ 330              		.loc 1 100 9 is_stmt 1 view .LVU96
+ 331              		.loc 1 100 19 is_stmt 0 view .LVU97
+ 332 0014 1B0A     		lsrs	r3, r3, #8
+ 333              	.LVL35:
+ 334              		.loc 1 100 19 view .LVU98
+ 335 0016 0B70     		strb	r3, [r1]
+ 336              	.LVL36:
+ 101:Modules/flash.c ****         StartAddress += 2;
+ 337              		.loc 1 101 9 is_stmt 1 view .LVU99
+ 338              		.loc 1 101 22 is_stmt 0 view .LVU100
+ 339 0018 0130     		adds	r0, r0, #1
+ 340              	.LVL37:
+  92:Modules/flash.c ****         StartAddress = source_address - 1;
+ 341              		.loc 1 92 16 view .LVU101
+ 342 001a 0124     		movs	r4, #1
+ 343              	.LVL38:
+ 344              	.L24:
+ 102:Modules/flash.c ****     }
+ 103:Modules/flash.c **** 
+ 104:Modules/flash.c ****     for (i = 0; i < (length - Offset); i += 2)
+ 345              		.loc 1 104 5 is_stmt 1 view .LVU102
+ 346              		.loc 1 104 12 is_stmt 0 view .LVU103
+ 347 001c 0023     		movs	r3, #0
+ 348              		.loc 1 104 5 view .LVU104
+ 349 001e 03E0     		b	.L25
+ 350              	.LVL39:
+ 351              	.L28:
+  81:Modules/flash.c ****     uint32_t StartAddress = source_address;
+ 352              		.loc 1 81 13 view .LVU105
+ 353 0020 0024     		movs	r4, #0
+ 354 0022 FBE7     		b	.L24
+ 355              	.LVL40:
+ 356              	.L26:
+ 357              		.loc 1 104 40 is_stmt 1 discriminator 2 view .LVU106
+ 358              		.loc 1 104 42 is_stmt 0 discriminator 2 view .LVU107
+ 359 0024 0233     		adds	r3, r3, #2
+ 360              	.LVL41:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 10
+
+
+ 361              		.loc 1 104 42 discriminator 2 view .LVU108
+ 362 0026 9BB2     		uxth	r3, r3
+ 363              	.LVL42:
+ 364              	.L25:
+ 365              		.loc 1 104 17 is_stmt 1 discriminator 1 view .LVU109
+ 366              		.loc 1 104 29 is_stmt 0 discriminator 1 view .LVU110
+ 367 0028 A2EB040C 		sub	ip, r2, r4
+ 368              		.loc 1 104 5 discriminator 1 view .LVU111
+ 369 002c 6345     		cmp	r3, ip
+ 370 002e 0FDA     		bge	.L22
+ 105:Modules/flash.c ****     {
+ 106:Modules/flash.c ****         data = *(uint16_t *)(StartAddress + i);
+ 371              		.loc 1 106 9 is_stmt 1 view .LVU112
+ 372              		.loc 1 106 14 is_stmt 0 view .LVU113
+ 373 0030 33F800E0 		ldrh	lr, [r3, r0]
+ 374              	.LVL43:
+ 107:Modules/flash.c ****         buffer[i + Offset] = (data & 0xFF);
+ 375              		.loc 1 107 9 is_stmt 1 view .LVU114
+ 376              		.loc 1 107 18 is_stmt 0 view .LVU115
+ 377 0034 03EB040C 		add	ip, r3, r4
+ 378              		.loc 1 107 28 view .LVU116
+ 379 0038 01F80CE0 		strb	lr, [r1, ip]
+ 108:Modules/flash.c ****         if ((i + Offset) < (length - 1))
+ 380              		.loc 1 108 9 is_stmt 1 view .LVU117
+ 381              		.loc 1 108 36 is_stmt 0 view .LVU118
+ 382 003c 551E     		subs	r5, r2, #1
+ 383              		.loc 1 108 12 view .LVU119
+ 384 003e AC45     		cmp	ip, r5
+ 385 0040 F0DA     		bge	.L26
+ 109:Modules/flash.c ****             buffer[i + Offset + 1] = (data >> 8);
+ 386              		.loc 1 109 13 is_stmt 1 view .LVU120
+ 387              		.loc 1 109 19 is_stmt 0 view .LVU121
+ 388 0042 0CF1010C 		add	ip, ip, #1
+ 389              		.loc 1 109 36 view .LVU122
+ 390 0046 4FEA1E2E 		lsr	lr, lr, #8
+ 391              	.LVL44:
+ 392              		.loc 1 109 36 view .LVU123
+ 393 004a 01F80CE0 		strb	lr, [r1, ip]
+ 394 004e E9E7     		b	.L26
+ 395              	.LVL45:
+ 396              	.L22:
+ 110:Modules/flash.c ****     }
+ 111:Modules/flash.c **** }
+ 397              		.loc 1 111 1 view .LVU124
+ 398 0050 30BD     		pop	{r4, r5, pc}
+ 399              	.L31:
+ 400 0052 00BF     		.align	2
+ 401              	.L30:
+ 402 0054 00000108 		.word	134283264
+ 403              		.cfi_endproc
+ 404              	.LFE67:
+ 406              		.text
+ 407              	.Letext0:
+ 408              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 409              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 410              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h"
+ 411              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 11
+
+
+ 412              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccoEksdn.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 flash.c
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:18     .text.FlashWriteNoCheck:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:24     .text.FlashWriteNoCheck:00000000 FlashWriteNoCheck
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:85     .text.FlashWriteBuff:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:91     .text.FlashWriteBuff:00000000 FlashWriteBuff
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:280    .text.FlashWriteBuff:000000bc $d
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:286    .text.FlashReadBuff:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:292    .text.FlashReadBuff:00000000 FlashReadBuff
+C:\Users\20398\AppData\Local\Temp\ccoEksdn.s:402    .text.FlashReadBuff:00000054 $d
+
+UNDEFINED SYMBOLS
+HAL_FLASH_Program
+HAL_FLASH_Unlock
+FLASH_PageErase
+FLASH_WaitForLastOperation
+HAL_FLASH_Lock

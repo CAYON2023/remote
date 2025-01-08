@@ -131,12 +131,7 @@ void MENU_Calibration(void)
                     rc->offset_rocker[2 + i] = adc_sum[2 + i] / adc_cnt;
                     adc_sum[2 + i] = 0;
                 }
-                // __disable_irq();
-                // taskENTER_CRITICAL(); // 进入基本临界区
-                // TODO: 为什么写flash后其他任务不跑了？？？？
                 write_offset_rocker_to_flash(rc->offset_rocker);
-                // taskEXIT_CRITICAL(); // 退出基本临界区
-                // __enable_irq();
                 adc_cnt = 0;
                 state = 2;
             }

@@ -24,7 +24,7 @@
 #define FMC_FLASH_SIZE 64 // 定义Flash大小，单位KB
 
 #if FMC_FLASH_SIZE < 256
-#define FMC_SECTOR_SIZE 1024 // 字节
+#define FMC_SECTOR_SIZE 32 // 字节
 #define MOD_SECTOR_SIZE 0X3FF
 #define PAGE_COUNT_BY16 512
 #else

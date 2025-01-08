@@ -62,13 +62,14 @@ static void ScanRemoteInfo(void)
 
 static void SendBuff(void)
 {
-    tx_buf[0] = remote_info.key.kb;
-    // 将16位转回8位整包发送
+    // 0     1   2   3   4   5   6   7
+    // 键值 p1   p2  rl0 rl1 rr0 rr1 校验位
+    tx_buf[7] = 0xBB; // 校验位
+    tx_buf[0] = remote.res.key.kb;
     for (int i = 0; i < 2; i++)
-        tx_buf[1 + i] = remote_info.pVal[i] / 4096 * 256;
+        tx_buf[1 + i] = remote.res.potVal[i];
     for (int i = 0; i < 4; i++)
-        tx_buf[3 + i] = remote_info.rockerVal[i] / 4096 * 256;
-    tx_buf[7] = 0xFE; // 校验位
+        tx_buf[3 + i] = remote.res.potVal[i] + 128;
     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
     {
         HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);

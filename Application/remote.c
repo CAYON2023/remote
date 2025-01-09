@@ -72,14 +72,17 @@ static void SendBuff(void)
     for (int i = 0; i < 2; i++)
         tx_buf[1 + i] = remote.res.potVal[i];
     for (int i = 0; i < 4; i++)
-        tx_buf[3 + i] = remote.res.potVal[i] + 128;
+        tx_buf[3 + i] = remote.res.rockerVal[i] + 128;
     if (NRF24L01_TxPacket(tx_buf) == TX_OK)
     {
-        HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
         remote.online = 1;
     }
     else
+    {
+        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
         remote.online = 0;
+    }
 }
 
 __attribute__((noreturn)) void ScanInfoTASK(void const *argument)

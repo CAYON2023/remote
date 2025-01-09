@@ -588,6 +588,8 @@ Discarded input sections
  .bss           0x00000000        0x0 build/stm32f1xx_hal_gpio.o
  .text.HAL_GPIO_DeInit
                 0x00000000      0x100 build/stm32f1xx_hal_gpio.o
+ .text.HAL_GPIO_TogglePin
+                0x00000000       0x12 build/stm32f1xx_hal_gpio.o
  .text.HAL_GPIO_LockPin
                 0x00000000       0x2e build/stm32f1xx_hal_gpio.o
  .text          0x00000000        0x0 build/stm32f1xx_hal_dma.o
@@ -2281,7 +2283,7 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
                 0x08000000                g_pfnVectors
                 0x0800010c                . = ALIGN (0x4)
 
-.text           0x08000110     0x78d4
+.text           0x08000110     0x78bc
                 0x08000110                . = ALIGN (0x4)
  *(.text)
  .text          0x08000110       0x40 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
@@ -2566,676 +2568,671 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .text.HAL_GPIO_WritePin
                 0x08002bde        0xc build/stm32f1xx_hal_gpio.o
                 0x08002bde                HAL_GPIO_WritePin
- .text.HAL_GPIO_TogglePin
-                0x08002bea       0x12 build/stm32f1xx_hal_gpio.o
-                0x08002bea                HAL_GPIO_TogglePin
  .text.HAL_GPIO_EXTI_Callback
-                0x08002bfc        0x2 build/stm32f1xx_hal_gpio.o
-                0x08002bfc                HAL_GPIO_EXTI_Callback
- *fill*         0x08002bfe        0x2 
+                0x08002bea        0x2 build/stm32f1xx_hal_gpio.o
+                0x08002bea                HAL_GPIO_EXTI_Callback
  .text.HAL_GPIO_EXTI_IRQHandler
-                0x08002c00       0x1c build/stm32f1xx_hal_gpio.o
-                0x08002c00                HAL_GPIO_EXTI_IRQHandler
+                0x08002bec       0x1c build/stm32f1xx_hal_gpio.o
+                0x08002bec                HAL_GPIO_EXTI_IRQHandler
  .text.DMA_SetConfig
-                0x08002c1c       0x2c build/stm32f1xx_hal_dma.o
+                0x08002c08       0x2c build/stm32f1xx_hal_dma.o
  .text.HAL_DMA_Init
-                0x08002c48       0x6c build/stm32f1xx_hal_dma.o
-                0x08002c48                HAL_DMA_Init
+                0x08002c34       0x6c build/stm32f1xx_hal_dma.o
+                0x08002c34                HAL_DMA_Init
  .text.HAL_DMA_Start_IT
-                0x08002cb4       0x76 build/stm32f1xx_hal_dma.o
-                0x08002cb4                HAL_DMA_Start_IT
- *fill*         0x08002d2a        0x2 
+                0x08002ca0       0x76 build/stm32f1xx_hal_dma.o
+                0x08002ca0                HAL_DMA_Start_IT
+ *fill*         0x08002d16        0x2 
  .text.HAL_DMA_IRQHandler
-                0x08002d2c      0x144 build/stm32f1xx_hal_dma.o
-                0x08002d2c                HAL_DMA_IRQHandler
+                0x08002d18      0x144 build/stm32f1xx_hal_dma.o
+                0x08002d18                HAL_DMA_IRQHandler
  .text.HAL_NVIC_SetPriorityGrouping
-                0x08002e70       0x24 build/stm32f1xx_hal_cortex.o
-                0x08002e70                HAL_NVIC_SetPriorityGrouping
+                0x08002e5c       0x24 build/stm32f1xx_hal_cortex.o
+                0x08002e5c                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x08002e94       0x70 build/stm32f1xx_hal_cortex.o
-                0x08002e94                HAL_NVIC_SetPriority
+                0x08002e80       0x70 build/stm32f1xx_hal_cortex.o
+                0x08002e80                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x08002f04       0x1c build/stm32f1xx_hal_cortex.o
-                0x08002f04                HAL_NVIC_EnableIRQ
+                0x08002ef0       0x1c build/stm32f1xx_hal_cortex.o
+                0x08002ef0                HAL_NVIC_EnableIRQ
  .text.FLASH_Program_HalfWord
-                0x08002f20       0x1c build/stm32f1xx_hal_flash.o
+                0x08002f0c       0x1c build/stm32f1xx_hal_flash.o
  .text.FLASH_SetErrorCode
-                0x08002f3c       0x70 build/stm32f1xx_hal_flash.o
+                0x08002f28       0x70 build/stm32f1xx_hal_flash.o
  .text.HAL_FLASH_Unlock
-                0x08002fac       0x34 build/stm32f1xx_hal_flash.o
-                0x08002fac                HAL_FLASH_Unlock
+                0x08002f98       0x34 build/stm32f1xx_hal_flash.o
+                0x08002f98                HAL_FLASH_Unlock
  .text.HAL_FLASH_Lock
-                0x08002fe0       0x14 build/stm32f1xx_hal_flash.o
-                0x08002fe0                HAL_FLASH_Lock
+                0x08002fcc       0x14 build/stm32f1xx_hal_flash.o
+                0x08002fcc                HAL_FLASH_Lock
  .text.FLASH_WaitForLastOperation
-                0x08002ff4       0x68 build/stm32f1xx_hal_flash.o
-                0x08002ff4                FLASH_WaitForLastOperation
+                0x08002fe0       0x68 build/stm32f1xx_hal_flash.o
+                0x08002fe0                FLASH_WaitForLastOperation
  .text.HAL_FLASH_Program
-                0x0800305c       0xa0 build/stm32f1xx_hal_flash.o
-                0x0800305c                HAL_FLASH_Program
+                0x08003048       0xa0 build/stm32f1xx_hal_flash.o
+                0x08003048                HAL_FLASH_Program
  .text.FLASH_PageErase
-                0x080030fc       0x24 build/stm32f1xx_hal_flash_ex.o
-                0x080030fc                FLASH_PageErase
+                0x080030e8       0x24 build/stm32f1xx_hal_flash_ex.o
+                0x080030e8                FLASH_PageErase
  .text.I2C_IsAcknowledgeFailed
-                0x08003120       0x32 build/stm32f1xx_hal_i2c.o
+                0x0800310c       0x32 build/stm32f1xx_hal_i2c.o
  .text.I2C_WaitOnFlagUntilTimeout
-                0x08003152       0xaa build/stm32f1xx_hal_i2c.o
+                0x0800313e       0xaa build/stm32f1xx_hal_i2c.o
  .text.I2C_WaitOnMasterAddressFlagUntilTimeout
-                0x080031fc       0xd6 build/stm32f1xx_hal_i2c.o
- *fill*         0x080032d2        0x2 
+                0x080031e8       0xd6 build/stm32f1xx_hal_i2c.o
+ *fill*         0x080032be        0x2 
  .text.I2C_MasterRequestWrite
-                0x080032d4       0xb4 build/stm32f1xx_hal_i2c.o
+                0x080032c0       0xb4 build/stm32f1xx_hal_i2c.o
  .text.I2C_WaitOnTXEFlagUntilTimeout
-                0x08003388       0x5e build/stm32f1xx_hal_i2c.o
+                0x08003374       0x5e build/stm32f1xx_hal_i2c.o
  .text.I2C_WaitOnBTFFlagUntilTimeout
-                0x080033e6       0x5e build/stm32f1xx_hal_i2c.o
+                0x080033d2       0x5e build/stm32f1xx_hal_i2c.o
  .text.HAL_I2C_Init
-                0x08003444      0x1bc build/stm32f1xx_hal_i2c.o
-                0x08003444                HAL_I2C_Init
+                0x08003430      0x1bc build/stm32f1xx_hal_i2c.o
+                0x08003430                HAL_I2C_Init
  .text.HAL_I2C_Master_Transmit
-                0x08003600      0x178 build/stm32f1xx_hal_i2c.o
-                0x08003600                HAL_I2C_Master_Transmit
+                0x080035ec      0x178 build/stm32f1xx_hal_i2c.o
+                0x080035ec                HAL_I2C_Master_Transmit
  .text.SPI_WaitFlagStateUntilTimeout
-                0x08003778       0xd4 build/stm32f1xx_hal_spi.o
+                0x08003764       0xd4 build/stm32f1xx_hal_spi.o
  .text.SPI_EndRxTxTransaction
-                0x0800384c       0x44 build/stm32f1xx_hal_spi.o
+                0x08003838       0x44 build/stm32f1xx_hal_spi.o
  .text.SPI_EndRxTransaction
-                0x08003890       0x74 build/stm32f1xx_hal_spi.o
+                0x0800387c       0x74 build/stm32f1xx_hal_spi.o
  .text.HAL_SPI_Init
-                0x08003904       0xb6 build/stm32f1xx_hal_spi.o
-                0x08003904                HAL_SPI_Init
+                0x080038f0       0xb6 build/stm32f1xx_hal_spi.o
+                0x080038f0                HAL_SPI_Init
  .text.HAL_SPI_Transmit
-                0x080039ba      0x1c4 build/stm32f1xx_hal_spi.o
-                0x080039ba                HAL_SPI_Transmit
+                0x080039a6      0x1c4 build/stm32f1xx_hal_spi.o
+                0x080039a6                HAL_SPI_Transmit
  .text.HAL_SPI_TransmitReceive
-                0x08003b7e      0x254 build/stm32f1xx_hal_spi.o
-                0x08003b7e                HAL_SPI_TransmitReceive
+                0x08003b6a      0x254 build/stm32f1xx_hal_spi.o
+                0x08003b6a                HAL_SPI_TransmitReceive
  .text.HAL_SPI_Receive
-                0x08003dd2      0x188 build/stm32f1xx_hal_spi.o
-                0x08003dd2                HAL_SPI_Receive
+                0x08003dbe      0x188 build/stm32f1xx_hal_spi.o
+                0x08003dbe                HAL_SPI_Receive
  .text.SystemInit
-                0x08003f5a        0x2 build/system_stm32f1xx.o
-                0x08003f5a                SystemInit
+                0x08003f46        0x2 build/system_stm32f1xx.o
+                0x08003f46                SystemInit
  .text.vListInitialise
-                0x08003f5c       0x16 build/list.o
-                0x08003f5c                vListInitialise
+                0x08003f48       0x16 build/list.o
+                0x08003f48                vListInitialise
  .text.vListInitialiseItem
-                0x08003f72        0x6 build/list.o
-                0x08003f72                vListInitialiseItem
+                0x08003f5e        0x6 build/list.o
+                0x08003f5e                vListInitialiseItem
  .text.vListInsertEnd
-                0x08003f78       0x16 build/list.o
-                0x08003f78                vListInsertEnd
+                0x08003f64       0x16 build/list.o
+                0x08003f64                vListInsertEnd
  .text.vListInsert
-                0x08003f8e       0x32 build/list.o
-                0x08003f8e                vListInsert
+                0x08003f7a       0x32 build/list.o
+                0x08003f7a                vListInsert
  .text.uxListRemove
-                0x08003fc0       0x26 build/list.o
-                0x08003fc0                uxListRemove
- *fill*         0x08003fe6        0x2 
+                0x08003fac       0x26 build/list.o
+                0x08003fac                uxListRemove
+ *fill*         0x08003fd2        0x2 
  .text.prvResetNextTaskUnblockTime
-                0x08003fe8       0x2c build/tasks.o
+                0x08003fd4       0x2c build/tasks.o
  .text.prvInitialiseNewTask
-                0x08004014       0xa2 build/tasks.o
- *fill*         0x080040b6        0x2 
+                0x08004000       0xa2 build/tasks.o
+ *fill*         0x080040a2        0x2 
  .text.prvInitialiseTaskLists
-                0x080040b8       0x68 build/tasks.o
+                0x080040a4       0x68 build/tasks.o
  .text.prvAddNewTaskToReadyList
-                0x08004120       0xa8 build/tasks.o
+                0x0800410c       0xa8 build/tasks.o
  .text.prvDeleteTCB
-                0x080041c8       0x38 build/tasks.o
+                0x080041b4       0x38 build/tasks.o
  .text.prvCheckTasksWaitingTermination
-                0x08004200       0x4c build/tasks.o
+                0x080041ec       0x4c build/tasks.o
  .text.prvIdleTask
-                0x0800424c       0x28 build/tasks.o
+                0x08004238       0x28 build/tasks.o
  .text.prvAddCurrentTaskToDelayedList
-                0x08004274       0x98 build/tasks.o
+                0x08004260       0x98 build/tasks.o
  .text.xTaskCreateStatic
-                0x0800430c       0x76 build/tasks.o
-                0x0800430c                xTaskCreateStatic
+                0x080042f8       0x76 build/tasks.o
+                0x080042f8                xTaskCreateStatic
  .text.xTaskCreate
-                0x08004382       0x68 build/tasks.o
-                0x08004382                xTaskCreate
- *fill*         0x080043ea        0x2 
+                0x0800436e       0x68 build/tasks.o
+                0x0800436e                xTaskCreate
+ *fill*         0x080043d6        0x2 
  .text.vTaskStartScheduler
-                0x080043ec       0x74 build/tasks.o
-                0x080043ec                vTaskStartScheduler
+                0x080043d8       0x74 build/tasks.o
+                0x080043d8                vTaskStartScheduler
  .text.vTaskSuspendAll
-                0x08004460       0x10 build/tasks.o
-                0x08004460                vTaskSuspendAll
+                0x0800444c       0x10 build/tasks.o
+                0x0800444c                vTaskSuspendAll
  .text.xTaskIncrementTick
-                0x08004470      0x118 build/tasks.o
-                0x08004470                xTaskIncrementTick
+                0x0800445c      0x118 build/tasks.o
+                0x0800445c                xTaskIncrementTick
  .text.xTaskResumeAll
-                0x08004588       0xf8 build/tasks.o
-                0x08004588                xTaskResumeAll
+                0x08004574       0xf8 build/tasks.o
+                0x08004574                xTaskResumeAll
  .text.vTaskDelay
-                0x08004680       0x4c build/tasks.o
-                0x08004680                vTaskDelay
+                0x0800466c       0x4c build/tasks.o
+                0x0800466c                vTaskDelay
  .text.vTaskSwitchContext
-                0x080046cc       0x98 build/tasks.o
-                0x080046cc                vTaskSwitchContext
+                0x080046b8       0x98 build/tasks.o
+                0x080046b8                vTaskSwitchContext
  .text.makeFreeRtosPriority
-                0x08004764        0xc build/cmsis_os.o
+                0x08004750        0xc build/cmsis_os.o
  .text.osKernelStart
-                0x08004770        0xa build/cmsis_os.o
-                0x08004770                osKernelStart
+                0x0800475c        0xa build/cmsis_os.o
+                0x0800475c                osKernelStart
  .text.osThreadCreate
-                0x0800477a       0x6a build/cmsis_os.o
-                0x0800477a                osThreadCreate
- .text.osDelay  0x080047e4        0xe build/cmsis_os.o
-                0x080047e4                osDelay
- *fill*         0x080047f2        0x2 
+                0x08004766       0x6a build/cmsis_os.o
+                0x08004766                osThreadCreate
+ .text.osDelay  0x080047d0        0xe build/cmsis_os.o
+                0x080047d0                osDelay
+ *fill*         0x080047de        0x2 
  .text.prvHeapInit
-                0x080047f4       0x64 build/heap_4.o
+                0x080047e0       0x64 build/heap_4.o
  .text.prvInsertBlockIntoFreeList
-                0x08004858       0x60 build/heap_4.o
+                0x08004844       0x60 build/heap_4.o
  .text.pvPortMalloc
-                0x080048b8       0xfc build/heap_4.o
-                0x080048b8                pvPortMalloc
+                0x080048a4       0xfc build/heap_4.o
+                0x080048a4                pvPortMalloc
  .text.vPortFree
-                0x080049b4       0x7c build/heap_4.o
-                0x080049b4                vPortFree
+                0x080049a0       0x7c build/heap_4.o
+                0x080049a0                vPortFree
  .text.prvTaskExitError
-                0x08004a30       0x40 build/port.o
+                0x08004a1c       0x40 build/port.o
  .text.prvPortStartFirstTask
-                0x08004a70       0x20 build/port.o
+                0x08004a5c       0x20 build/port.o
  .text.pxPortInitialiseStack
-                0x08004a90       0x24 build/port.o
-                0x08004a90                pxPortInitialiseStack
- *fill*         0x08004ab4        0xc 
+                0x08004a7c       0x24 build/port.o
+                0x08004a7c                pxPortInitialiseStack
  .text.SVC_Handler
-                0x08004ac0       0x24 build/port.o
-                0x08004ac0                SVC_Handler
+                0x08004aa0       0x24 build/port.o
+                0x08004aa0                SVC_Handler
  .text.vPortEnterCritical
-                0x08004ae4       0x44 build/port.o
-                0x08004ae4                vPortEnterCritical
+                0x08004ac4       0x44 build/port.o
+                0x08004ac4                vPortEnterCritical
  .text.vPortExitCritical
-                0x08004b28       0x2c build/port.o
-                0x08004b28                vPortExitCritical
- *fill*         0x08004b54        0xc 
+                0x08004b08       0x2c build/port.o
+                0x08004b08                vPortExitCritical
+ *fill*         0x08004b34        0xc 
  .text.PendSV_Handler
-                0x08004b60       0x44 build/port.o
-                0x08004b60                PendSV_Handler
+                0x08004b40       0x44 build/port.o
+                0x08004b40                PendSV_Handler
  .text.SysTick_Handler
-                0x08004ba4       0x2c build/port.o
-                0x08004ba4                SysTick_Handler
+                0x08004b84       0x2c build/port.o
+                0x08004b84                SysTick_Handler
  .text.vPortSetupTimerInterrupt
-                0x08004bd0       0x28 build/port.o
-                0x08004bd0                vPortSetupTimerInterrupt
+                0x08004bb0       0x28 build/port.o
+                0x08004bb0                vPortSetupTimerInterrupt
  .text.xPortStartScheduler
-                0x08004bf8       0xc0 build/port.o
-                0x08004bf8                xPortStartScheduler
- .text._sbrk    0x08004cb8       0x48 build/sysmem.o
-                0x08004cb8                _sbrk
+                0x08004bd8       0xc0 build/port.o
+                0x08004bd8                xPortStartScheduler
+ .text._sbrk    0x08004c98       0x48 build/sysmem.o
+                0x08004c98                _sbrk
  .text.OLED_Send
-                0x08004d00       0x20 build/oled.o
-                0x08004d00                OLED_Send
+                0x08004ce0       0x20 build/oled.o
+                0x08004ce0                OLED_Send
  .text.OLED_SendCmd
-                0x08004d20       0x14 build/oled.o
-                0x08004d20                OLED_SendCmd
+                0x08004d00       0x14 build/oled.o
+                0x08004d00                OLED_SendCmd
  .text.OLED_NewFrame
-                0x08004d34       0x14 build/oled.o
-                0x08004d34                OLED_NewFrame
+                0x08004d14       0x14 build/oled.o
+                0x08004d14                OLED_NewFrame
  .text.OLED_ShowFrame
-                0x08004d48       0x4c build/oled.o
-                0x08004d48                OLED_ShowFrame
+                0x08004d28       0x4c build/oled.o
+                0x08004d28                OLED_ShowFrame
  .text.OLED_Init
-                0x08004d94       0xb4 build/oled.o
-                0x08004d94                OLED_Init
+                0x08004d74       0xb4 build/oled.o
+                0x08004d74                OLED_Init
  .text.OLED_SetPixel
-                0x08004e48       0x48 build/oled.o
-                0x08004e48                OLED_SetPixel
+                0x08004e28       0x48 build/oled.o
+                0x08004e28                OLED_SetPixel
  .text.OLED_SetByte_Fine
-                0x08004e90       0x6c build/oled.o
-                0x08004e90                OLED_SetByte_Fine
+                0x08004e70       0x6c build/oled.o
+                0x08004e70                OLED_SetByte_Fine
  .text.OLED_SetBits_Fine
-                0x08004efc       0x78 build/oled.o
-                0x08004efc                OLED_SetBits_Fine
+                0x08004edc       0x78 build/oled.o
+                0x08004edc                OLED_SetBits_Fine
  .text.OLED_SetBits
-                0x08004f74       0x4e build/oled.o
-                0x08004f74                OLED_SetBits
+                0x08004f54       0x4e build/oled.o
+                0x08004f54                OLED_SetBits
  .text.OLED_SetBlock
-                0x08004fc2       0x8c build/oled.o
-                0x08004fc2                OLED_SetBlock
- *fill*         0x0800504e        0x2 
+                0x08004fa2       0x8c build/oled.o
+                0x08004fa2                OLED_SetBlock
+ *fill*         0x0800502e        0x2 
  .text.OLED_DrawLine
-                0x08005050      0x13c build/oled.o
-                0x08005050                OLED_DrawLine
+                0x08005030      0x13c build/oled.o
+                0x08005030                OLED_DrawLine
  .text.OLED_DrawRectangle
-                0x0800518c       0x5a build/oled.o
-                0x0800518c                OLED_DrawRectangle
+                0x0800516c       0x5a build/oled.o
+                0x0800516c                OLED_DrawRectangle
  .text.OLED_DrawFilledRectangle
-                0x080051e6       0x3a build/oled.o
-                0x080051e6                OLED_DrawFilledRectangle
+                0x080051c6       0x3a build/oled.o
+                0x080051c6                OLED_DrawFilledRectangle
  .text.OLED_DrawCircle
-                0x08005220      0x10c build/oled.o
-                0x08005220                OLED_DrawCircle
+                0x08005200      0x10c build/oled.o
+                0x08005200                OLED_DrawCircle
  .text.OLED_DrawFilledCircle
-                0x0800532c       0xe4 build/oled.o
-                0x0800532c                OLED_DrawFilledCircle
+                0x0800530c       0xe4 build/oled.o
+                0x0800530c                OLED_DrawFilledCircle
  .text.OLED_DrawImage
-                0x08005410       0x18 build/oled.o
-                0x08005410                OLED_DrawImage
+                0x080053f0       0x18 build/oled.o
+                0x080053f0                OLED_DrawImage
  .text.OLED_PrintASCIIChar
-                0x08005428       0x2c build/oled.o
-                0x08005428                OLED_PrintASCIIChar
+                0x08005408       0x2c build/oled.o
+                0x08005408                OLED_PrintASCIIChar
  .text.OLED_PrintASCIIString
-                0x08005454       0x36 build/oled.o
-                0x08005454                OLED_PrintASCIIString
+                0x08005434       0x36 build/oled.o
+                0x08005434                OLED_PrintASCIIString
  .text._OLED_GetUTF8Len
-                0x0800548a       0x36 build/oled.o
-                0x0800548a                _OLED_GetUTF8Len
+                0x0800546a       0x36 build/oled.o
+                0x0800546a                _OLED_GetUTF8Len
  .text.OLED_PrintString
-                0x080054c0       0xf0 build/oled.o
-                0x080054c0                OLED_PrintString
+                0x080054a0       0xf0 build/oled.o
+                0x080054a0                OLED_PrintString
  .text.NRF24L01_SPI_Send_Byte
-                0x080055b0       0x2c build/nrf24l01.o
+                0x08005590       0x2c build/nrf24l01.o
  .text.NRF24L01_Write_Buf
-                0x080055dc       0x44 build/nrf24l01.o
+                0x080055bc       0x44 build/nrf24l01.o
  .text.NRF24L01_Write_Reg
-                0x08005620       0x38 build/nrf24l01.o
+                0x08005600       0x38 build/nrf24l01.o
  .text.NRF24L01_Read_Reg
-                0x08005658       0x34 build/nrf24l01.o
+                0x08005638       0x34 build/nrf24l01.o
  .text.NRF24L01_Read_Buf
-                0x0800568c       0x44 build/nrf24l01.o
+                0x0800566c       0x44 build/nrf24l01.o
  .text.NRF24L01_Init
-                0x080056d0       0x30 build/nrf24l01.o
-                0x080056d0                NRF24L01_Init
+                0x080056b0       0x30 build/nrf24l01.o
+                0x080056b0                NRF24L01_Init
  .text.NRF24L01_Check
-                0x08005700       0x4c build/nrf24l01.o
-                0x08005700                NRF24L01_Check
- .text.TX_Mode  0x0800574c       0x6c build/nrf24l01.o
-                0x0800574c                TX_Mode
+                0x080056e0       0x4c build/nrf24l01.o
+                0x080056e0                NRF24L01_Check
+ .text.TX_Mode  0x0800572c       0x6c build/nrf24l01.o
+                0x0800572c                TX_Mode
  .text.NRF24L01_TxPacket
-                0x080057b8       0x70 build/nrf24l01.o
-                0x080057b8                NRF24L01_TxPacket
+                0x08005798       0x70 build/nrf24l01.o
+                0x08005798                NRF24L01_TxPacket
  .text.FlashWriteNoCheck
-                0x08005828       0x26 build/flash.o
-                0x08005828                FlashWriteNoCheck
- *fill*         0x0800584e        0x2 
+                0x08005808       0x26 build/flash.o
+                0x08005808                FlashWriteNoCheck
+ *fill*         0x0800582e        0x2 
  .text.FlashWriteBuff
-                0x08005850       0xac build/flash.o
-                0x08005850                FlashWriteBuff
+                0x08005830       0xac build/flash.o
+                0x08005830                FlashWriteBuff
  .text.FlashReadBuff
-                0x080058fc       0x58 build/flash.o
-                0x080058fc                FlashReadBuff
+                0x080058dc       0x58 build/flash.o
+                0x080058dc                FlashReadBuff
  .text.DWT_CNT_Update
-                0x08005954       0x4c build/bsp_dwt.o
+                0x08005934       0x4c build/bsp_dwt.o
  .text.DWT_Init
-                0x080059a0       0x70 build/bsp_dwt.o
-                0x080059a0                DWT_Init
+                0x08005980       0x70 build/bsp_dwt.o
+                0x08005980                DWT_Init
  .text.DWT_Delay
-                0x08005a10       0x38 build/bsp_dwt.o
-                0x08005a10                DWT_Delay
+                0x080059f0       0x38 build/bsp_dwt.o
+                0x080059f0                DWT_Delay
  .text.RemoteDataProc
-                0x08005a48       0xc4 build/remote.o
+                0x08005a28       0xc4 build/remote.o
  .text.RemoteHardware_Init
-                0x08005b0c       0x40 build/remote.o
+                0x08005aec       0x40 build/remote.o
  .text.ScanRemoteInfo
-                0x08005b4c       0xc8 build/remote.o
+                0x08005b2c       0xc8 build/remote.o
  .text.ScanInfoTASK
-                0x08005c14       0x18 build/remote.o
-                0x08005c14                ScanInfoTASK
+                0x08005bf4       0x18 build/remote.o
+                0x08005bf4                ScanInfoTASK
  .text.SendBuff
-                0x08005c2c       0x70 build/remote.o
+                0x08005c0c       0x7c build/remote.o
  .text.SendTASK
-                0x08005c9c        0xe build/remote.o
-                0x08005c9c                SendTASK
- *fill*         0x08005caa        0x2 
+                0x08005c88        0xe build/remote.o
+                0x08005c88                SendTASK
+ *fill*         0x08005c96        0x2 
  .text.MenuTASK
-                0x08005cac       0x40 build/remote.o
-                0x08005cac                MenuTASK
+                0x08005c98       0x40 build/remote.o
+                0x08005c98                MenuTASK
  .text.Remote_Init
-                0x08005cec       0x28 build/remote.o
-                0x08005cec                Remote_Init
+                0x08005cd8       0x28 build/remote.o
+                0x08005cd8                Remote_Init
  .text.RemoteTask_Init
-                0x08005d14       0x84 build/remote.o
-                0x08005d14                RemoteTask_Init
+                0x08005d00       0x84 build/remote.o
+                0x08005d00                RemoteTask_Init
  .text.GetRCpointer
-                0x08005d98        0x8 build/remote.o
-                0x08005d98                GetRCpointer
+                0x08005d84        0x8 build/remote.o
+                0x08005d84                GetRCpointer
  .text.Key_GetEvent_Back
-                0x08005da0       0x1c build/MENU.o
-                0x08005da0                Key_GetEvent_Back
+                0x08005d8c       0x1c build/MENU.o
+                0x08005d8c                Key_GetEvent_Back
  .text.Key_GetEvent_Up
-                0x08005dbc       0x1c build/MENU.o
-                0x08005dbc                Key_GetEvent_Up
+                0x08005da8       0x1c build/MENU.o
+                0x08005da8                Key_GetEvent_Up
  .text.Key_GetEvent_Down
-                0x08005dd8       0x1c build/MENU.o
-                0x08005dd8                Key_GetEvent_Down
+                0x08005dc4       0x1c build/MENU.o
+                0x08005dc4                Key_GetEvent_Down
  .text.Key_GetEvent_Enter
-                0x08005df4       0x1c build/MENU.o
-                0x08005df4                Key_GetEvent_Enter
+                0x08005de0       0x1c build/MENU.o
+                0x08005de0                Key_GetEvent_Enter
  .text.Key_GetEvent_Right
-                0x08005e10        0x4 build/MENU.o
-                0x08005e10                Key_GetEvent_Right
+                0x08005dfc        0x4 build/MENU.o
+                0x08005dfc                Key_GetEvent_Right
  .text.menu_command_callback
-                0x08005e14       0xd0 build/MENU.o
-                0x08005e14                menu_command_callback
+                0x08005e00       0xd0 build/MENU.o
+                0x08005e00                menu_command_callback
  .text.MENU_UpdateIndex
-                0x08005ee4       0x5a build/MENU.o
-                0x08005ee4                MENU_UpdateIndex
+                0x08005ed0       0x5a build/MENU.o
+                0x08005ed0                MENU_UpdateIndex
  .text.MENU_Event_and_Action
-                0x08005f3e       0x52 build/MENU.o
-                0x08005f3e                MENU_Event_and_Action
+                0x08005f2a       0x52 build/MENU.o
+                0x08005f2a                MENU_Event_and_Action
  .text.MENU_ShowOption
-                0x08005f90       0xc4 build/MENU.o
-                0x08005f90                MENU_ShowOption
+                0x08005f7c       0xc4 build/MENU.o
+                0x08005f7c                MENU_ShowOption
  .text.MENU_HandleInit
-                0x08006054       0x46 build/MENU.o
-                0x08006054                MENU_HandleInit
- *fill*         0x0800609a        0x6 
+                0x08006040       0x46 build/MENU.o
+                0x08006040                MENU_HandleInit
+ *fill*         0x08006086        0x2 
  .text.MENU_ShowOptionList
-                0x080060a0      0x12c build/MENU.o
-                0x080060a0                MENU_ShowOptionList
- *fill*         0x080061cc        0x4 
+                0x08006088      0x12c build/MENU.o
+                0x08006088                MENU_ShowOptionList
+ *fill*         0x080061b4        0x4 
  .text.MENU_ShowCursor
-                0x080061d0      0x658 build/MENU.o
-                0x080061d0                MENU_ShowCursor
+                0x080061b8      0x658 build/MENU.o
+                0x080061b8                MENU_ShowCursor
  .text.MENU_ShowBorder
-                0x08006828        0x2 build/MENU.o
-                0x08006828                MENU_ShowBorder
- *fill*         0x0800682a        0x2 
+                0x08006810        0x2 build/MENU.o
+                0x08006810                MENU_ShowBorder
+ *fill*         0x08006812        0x2 
  .text.read_offset_rocker_from_flash
-                0x0800682c       0x40 build/menu_task.o
+                0x08006814       0x40 build/menu_task.o
  .text.write_offset_rocker_to_flash
-                0x0800686c       0x40 build/menu_task.o
+                0x08006854       0x40 build/menu_task.o
  .text.MENU_Init
-                0x080068ac       0x18 build/menu_task.o
-                0x080068ac                MENU_Init
- *fill*         0x080068c4        0x4 
+                0x08006894       0x18 build/menu_task.o
+                0x08006894                MENU_Init
+ *fill*         0x080068ac        0x4 
  .text.MENU_RockerInfo
-                0x080068c8      0x290 build/menu_task.o
-                0x080068c8                MENU_RockerInfo
+                0x080068b0      0x290 build/menu_task.o
+                0x080068b0                MENU_RockerInfo
  .text.MENU_Calibration
-                0x08006b58      0x224 build/menu_task.o
-                0x08006b58                MENU_Calibration
+                0x08006b40      0x224 build/menu_task.o
+                0x08006b40                MENU_Calibration
  .text.MENU_ShowImage
-                0x08006d7c      0x110 build/menu_task.o
-                0x08006d7c                MENU_ShowImage
- *fill*         0x08006e8c        0x4 
+                0x08006d64      0x110 build/menu_task.o
+                0x08006d64                MENU_ShowImage
+ *fill*         0x08006e74        0x4 
  .text.MENU_ShowInfomation
-                0x08006e90      0x178 build/menu_task.o
-                0x08006e90                MENU_ShowInfomation
+                0x08006e78      0x178 build/menu_task.o
+                0x08006e78                MENU_ShowInfomation
  .text.Reset_Handler
-                0x08007008       0x48 build/startup_stm32f103xb.o
-                0x08007008                Reset_Handler
+                0x08006ff0       0x48 build/startup_stm32f103xb.o
+                0x08006ff0                Reset_Handler
  .text.Default_Handler
-                0x08007050        0x2 build/startup_stm32f103xb.o
-                0x08007050                RTC_Alarm_IRQHandler
-                0x08007050                EXTI2_IRQHandler
-                0x08007050                TIM1_CC_IRQHandler
-                0x08007050                PVD_IRQHandler
-                0x08007050                EXTI0_IRQHandler
-                0x08007050                I2C2_EV_IRQHandler
-                0x08007050                ADC1_2_IRQHandler
-                0x08007050                SPI1_IRQHandler
-                0x08007050                TAMPER_IRQHandler
-                0x08007050                DMA1_Channel4_IRQHandler
-                0x08007050                USART3_IRQHandler
-                0x08007050                RTC_IRQHandler
-                0x08007050                DMA1_Channel7_IRQHandler
-                0x08007050                CAN1_RX1_IRQHandler
-                0x08007050                I2C1_EV_IRQHandler
-                0x08007050                DMA1_Channel6_IRQHandler
-                0x08007050                TIM3_IRQHandler
-                0x08007050                RCC_IRQHandler
-                0x08007050                TIM1_TRG_COM_IRQHandler
-                0x08007050                Default_Handler
-                0x08007050                EXTI9_5_IRQHandler
-                0x08007050                SPI2_IRQHandler
-                0x08007050                DMA1_Channel5_IRQHandler
-                0x08007050                USB_LP_CAN1_RX0_IRQHandler
-                0x08007050                USB_HP_CAN1_TX_IRQHandler
-                0x08007050                DMA1_Channel3_IRQHandler
-                0x08007050                TIM1_UP_IRQHandler
-                0x08007050                WWDG_IRQHandler
-                0x08007050                TIM2_IRQHandler
-                0x08007050                TIM1_BRK_IRQHandler
-                0x08007050                EXTI1_IRQHandler
-                0x08007050                USART2_IRQHandler
-                0x08007050                I2C2_ER_IRQHandler
-                0x08007050                DMA1_Channel2_IRQHandler
-                0x08007050                CAN1_SCE_IRQHandler
-                0x08007050                FLASH_IRQHandler
-                0x08007050                USART1_IRQHandler
-                0x08007050                I2C1_ER_IRQHandler
-                0x08007050                USBWakeUp_IRQHandler
- *fill*         0x08007052        0x2 
- .text.__errno  0x08007054        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-errno.o)
-                0x08007054                __errno
+                0x08007038        0x2 build/startup_stm32f103xb.o
+                0x08007038                RTC_Alarm_IRQHandler
+                0x08007038                EXTI2_IRQHandler
+                0x08007038                TIM1_CC_IRQHandler
+                0x08007038                PVD_IRQHandler
+                0x08007038                EXTI0_IRQHandler
+                0x08007038                I2C2_EV_IRQHandler
+                0x08007038                ADC1_2_IRQHandler
+                0x08007038                SPI1_IRQHandler
+                0x08007038                TAMPER_IRQHandler
+                0x08007038                DMA1_Channel4_IRQHandler
+                0x08007038                USART3_IRQHandler
+                0x08007038                RTC_IRQHandler
+                0x08007038                DMA1_Channel7_IRQHandler
+                0x08007038                CAN1_RX1_IRQHandler
+                0x08007038                I2C1_EV_IRQHandler
+                0x08007038                DMA1_Channel6_IRQHandler
+                0x08007038                TIM3_IRQHandler
+                0x08007038                RCC_IRQHandler
+                0x08007038                TIM1_TRG_COM_IRQHandler
+                0x08007038                Default_Handler
+                0x08007038                EXTI9_5_IRQHandler
+                0x08007038                SPI2_IRQHandler
+                0x08007038                DMA1_Channel5_IRQHandler
+                0x08007038                USB_LP_CAN1_RX0_IRQHandler
+                0x08007038                USB_HP_CAN1_TX_IRQHandler
+                0x08007038                DMA1_Channel3_IRQHandler
+                0x08007038                TIM1_UP_IRQHandler
+                0x08007038                WWDG_IRQHandler
+                0x08007038                TIM2_IRQHandler
+                0x08007038                TIM1_BRK_IRQHandler
+                0x08007038                EXTI1_IRQHandler
+                0x08007038                USART2_IRQHandler
+                0x08007038                I2C2_ER_IRQHandler
+                0x08007038                DMA1_Channel2_IRQHandler
+                0x08007038                CAN1_SCE_IRQHandler
+                0x08007038                FLASH_IRQHandler
+                0x08007038                USART1_IRQHandler
+                0x08007038                I2C1_ER_IRQHandler
+                0x08007038                USBWakeUp_IRQHandler
+ *fill*         0x0800703a        0x2 
+ .text.__errno  0x0800703c        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-errno.o)
+                0x0800703c                __errno
  .text.__libc_init_array
-                0x08007060       0x48 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-init.o)
-                0x08007060                __libc_init_array
- .text.memcmp   0x080070a8       0x20 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memcmp.o)
-                0x080070a8                memcmp
- .text.memcpy   0x080070c8       0x1c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memcpy-stub.o)
-                0x080070c8                memcpy
- .text.memset   0x080070e4       0x10 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memset.o)
-                0x080070e4                memset
- .text.sprintf  0x080070f4       0x40 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-sprintf.o)
-                0x080070f4                siprintf
-                0x080070f4                sprintf
+                0x08007048       0x48 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-init.o)
+                0x08007048                __libc_init_array
+ .text.memcmp   0x08007090       0x20 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memcmp.o)
+                0x08007090                memcmp
+ .text.memcpy   0x080070b0       0x1c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memcpy-stub.o)
+                0x080070b0                memcpy
+ .text.memset   0x080070cc       0x10 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memset.o)
+                0x080070cc                memset
+ .text.sprintf  0x080070dc       0x40 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-sprintf.o)
+                0x080070dc                siprintf
+                0x080070dc                sprintf
  .text.__ssputs_r
-                0x08007134       0xb6 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
-                0x08007134                __ssputs_r
- *fill*         0x080071ea        0x2 
+                0x0800711c       0xb6 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0800711c                __ssputs_r
+ *fill*         0x080071d2        0x2 
  .text._svfprintf_r
-                0x080071ec      0x200 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
-                0x080071ec                _svfiprintf_r
-                0x080071ec                _svfprintf_r
+                0x080071d4      0x200 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
+                0x080071d4                _svfiprintf_r
+                0x080071d4                _svfprintf_r
  .text._printf_common
-                0x080073ec       0xde e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x080073ec                _printf_common
- *fill*         0x080074ca        0x2 
+                0x080073d4       0xde e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x080073d4                _printf_common
+ *fill*         0x080074b2        0x2 
  .text._printf_i
-                0x080074cc      0x24c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x080074cc                _printf_i
- .text.memchr   0x08007718       0x1c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memchr-stub.o)
-                0x08007718                memchr
- .text.memmove  0x08007734       0x34 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memmove.o)
-                0x08007734                memmove
- .text._free_r  0x08007768       0x90 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-freer.o)
-                0x08007768                _free_r
+                0x080074b4      0x24c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x080074b4                _printf_i
+ .text.memchr   0x08007700       0x1c e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memchr-stub.o)
+                0x08007700                memchr
+ .text.memmove  0x0800771c       0x34 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-memmove.o)
+                0x0800771c                memmove
+ .text._free_r  0x08007750       0x90 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-freer.o)
+                0x08007750                _free_r
  .text.sbrk_aligned
-                0x080077f8       0x40 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-mallocr.o)
+                0x080077e0       0x40 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-mallocr.o)
  .text._malloc_r
-                0x08007838       0xe8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-mallocr.o)
-                0x08007838                _malloc_r
+                0x08007820       0xe8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-mallocr.o)
+                0x08007820                _malloc_r
  .text._realloc_r
-                0x08007920       0x5e e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-reallocr.o)
-                0x08007920                _realloc_r
- *fill*         0x0800797e        0x2 
- .text._sbrk_r  0x08007980       0x20 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-sbrkr.o)
-                0x08007980                _sbrk_r
+                0x08007908       0x5e e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-reallocr.o)
+                0x08007908                _realloc_r
+ *fill*         0x08007966        0x2 
+ .text._sbrk_r  0x08007968       0x20 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-sbrkr.o)
+                0x08007968                _sbrk_r
  .text.__malloc_lock
-                0x080079a0        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-mlock.o)
-                0x080079a0                __malloc_lock
+                0x08007988        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-mlock.o)
+                0x08007988                __malloc_lock
  .text.__malloc_unlock
-                0x080079ac        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-mlock.o)
-                0x080079ac                __malloc_unlock
+                0x08007994        0xc e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-mlock.o)
+                0x08007994                __malloc_unlock
  .text._malloc_usable_size_r
-                0x080079b8       0x10 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-msizer.o)
-                0x080079b8                _malloc_usable_size_r
+                0x080079a0       0x10 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-msizer.o)
+                0x080079a0                _malloc_usable_size_r
  .text.__retarget_lock_acquire_recursive
-                0x080079c8        0x2 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-lock.o)
-                0x080079c8                __retarget_lock_acquire_recursive
+                0x080079b0        0x2 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-lock.o)
+                0x080079b0                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x080079ca        0x2 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-lock.o)
-                0x080079ca                __retarget_lock_release_recursive
+                0x080079b2        0x2 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-lock.o)
+                0x080079b2                __retarget_lock_release_recursive
  *(.glue_7)
- .glue_7        0x080079cc        0x0 linker stubs
+ .glue_7        0x080079b4        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x080079cc        0x0 linker stubs
+ .glue_7t       0x080079b4        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x080079cc        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
+ .eh_frame      0x080079b4        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
  *(.init)
- .init          0x080079cc        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x080079cc                _init
- .init          0x080079d0        0x8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
+ .init          0x080079b4        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x080079b4                _init
+ .init          0x080079b8        0x8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
  *(.fini)
- .fini          0x080079d8        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
-                0x080079d8                _fini
- .fini          0x080079dc        0x8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
-                0x080079e4                . = ALIGN (0x4)
-                0x080079e4                _etext = .
+ .fini          0x080079c0        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crti.o
+                0x080079c0                _fini
+ .fini          0x080079c4        0x8 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtn.o
+                0x080079cc                . = ALIGN (0x4)
+                0x080079cc                _etext = .
 
-.vfp11_veneer   0x080079e4        0x0
- .vfp11_veneer  0x080079e4        0x0 linker stubs
+.vfp11_veneer   0x080079cc        0x0
+ .vfp11_veneer  0x080079cc        0x0 linker stubs
 
-.v4_bx          0x080079e4        0x0
- .v4_bx         0x080079e4        0x0 linker stubs
+.v4_bx          0x080079cc        0x0
+ .v4_bx         0x080079cc        0x0 linker stubs
 
-.iplt           0x080079e4        0x0
- .iplt          0x080079e4        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
+.iplt           0x080079cc        0x0
+ .iplt          0x080079cc        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
 
-.rodata         0x080079e4     0x2968
-                0x080079e4                . = ALIGN (0x4)
+.rodata         0x080079cc     0x2968
+                0x080079cc                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x080079e4       0x1c build/freertos.o
- .rodata        0x08007a00       0x54 build/remote.o
+ .rodata        0x080079cc       0x1c build/freertos.o
+ .rodata        0x080079e8       0x54 build/remote.o
  *(.rodata*)
  .rodata.str1.4
-                0x08007a54        0xc build/freertos.o
+                0x08007a3c        0xc build/freertos.o
  .rodata.aPLLMULFactorTable.1
-                0x08007a60       0x10 build/stm32f1xx_hal_rcc.o
+                0x08007a48       0x10 build/stm32f1xx_hal_rcc.o
  .rodata.aPredivFactorTable.0
-                0x08007a70        0x2 build/stm32f1xx_hal_rcc.o
- *fill*         0x08007a72        0x2 
+                0x08007a58        0x2 build/stm32f1xx_hal_rcc.o
+ *fill*         0x08007a5a        0x2 
  .rodata.aPLLMULFactorTable.1
-                0x08007a74       0x10 build/stm32f1xx_hal_rcc_ex.o
+                0x08007a5c       0x10 build/stm32f1xx_hal_rcc_ex.o
  .rodata.aPredivFactorTable.0
-                0x08007a84        0x2 build/stm32f1xx_hal_rcc_ex.o
- *fill*         0x08007a86        0x2 
+                0x08007a6c        0x2 build/stm32f1xx_hal_rcc_ex.o
+ *fill*         0x08007a6e        0x2 
  .rodata.AHBPrescTable
-                0x08007a88       0x10 build/system_stm32f1xx.o
-                0x08007a88                AHBPrescTable
+                0x08007a70       0x10 build/system_stm32f1xx.o
+                0x08007a70                AHBPrescTable
  .rodata.APBPrescTable
-                0x08007a98        0x8 build/system_stm32f1xx.o
-                0x08007a98                APBPrescTable
+                0x08007a80        0x8 build/system_stm32f1xx.o
+                0x08007a80                APBPrescTable
  .rodata.vTaskStartScheduler.str1.4
-                0x08007aa0        0x5 build/tasks.o
- *fill*         0x08007aa5        0x3 
+                0x08007a88        0x5 build/tasks.o
+ *fill*         0x08007a8d        0x3 
  .rodata.ACEData
-                0x08007aa8      0x200 build/font.o
-                0x08007aa8                ACEData
+                0x08007a90      0x200 build/font.o
+                0x08007a90                ACEData
  .rodata.ACEImg
-                0x08007ca8        0x8 build/font.o
-                0x08007ca8                ACEImg
+                0x08007c90        0x8 build/font.o
+                0x08007c90                ACEImg
  .rodata.APEXData
-                0x08007cb0      0x1f8 build/font.o
-                0x08007cb0                APEXData
+                0x08007c98      0x1f8 build/font.o
+                0x08007c98                APEXData
  .rodata.APEXImg
-                0x08007ea8        0x8 build/font.o
-                0x08007ea8                APEXImg
+                0x08007e90        0x8 build/font.o
+                0x08007e90                APEXImg
  .rodata.CSGOData
-                0x08007eb0      0x348 build/font.o
-                0x08007eb0                CSGOData
+                0x08007e98      0x348 build/font.o
+                0x08007e98                CSGOData
  .rodata.CSGOImg
-                0x080081f8        0x8 build/font.o
-                0x080081f8                CSGOImg
+                0x080081e0        0x8 build/font.o
+                0x080081e0                CSGOImg
  .rodata.ROBOMASTERData
-                0x08008200      0x2e8 build/font.o
-                0x08008200                ROBOMASTERData
+                0x080081e8      0x2e8 build/font.o
+                0x080081e8                ROBOMASTERData
  .rodata.ROBOMASTERImg
-                0x080084e8        0x8 build/font.o
-                0x080084e8                ROBOMASTERImg
+                0x080084d0        0x8 build/font.o
+                0x080084d0                ROBOMASTERImg
  .rodata.afont12x6
-                0x080084f0        0x8 build/font.o
-                0x080084f0                afont12x6
+                0x080084d8        0x8 build/font.o
+                0x080084d8                afont12x6
  .rodata.afont16x8
-                0x080084f8        0x8 build/font.o
-                0x080084f8                afont16x8
+                0x080084e0        0x8 build/font.o
+                0x080084e0                afont16x8
  .rodata.ascii_12x6
-                0x08008500      0x474 build/font.o
-                0x08008500                ascii_12x6
+                0x080084e8      0x474 build/font.o
+                0x080084e8                ascii_12x6
  .rodata.ascii_16x8
-                0x08008974      0x5f0 build/font.o
-                0x08008974                ascii_16x8
+                0x0800895c      0x5f0 build/font.o
+                0x0800895c                ascii_16x8
  .rodata.dafuData
-                0x08008f64      0x300 build/font.o
-                0x08008f64                dafuData
+                0x08008f4c      0x300 build/font.o
+                0x08008f4c                dafuData
  .rodata.dafuImg
-                0x08009264        0x8 build/font.o
-                0x08009264                dafuImg
+                0x0800924c        0x8 build/font.o
+                0x0800924c                dafuImg
  .rodata.font14x14
-                0x0800926c       0x10 build/font.o
-                0x0800926c                font14x14
+                0x08009254       0x10 build/font.o
+                0x08009254                font14x14
  .rodata.font16x16
-                0x0800927c       0x10 build/font.o
-                0x0800927c                font16x16
+                0x08009264       0x10 build/font.o
+                0x08009264                font16x16
  .rodata.heroainfData
-                0x0800928c      0x300 build/font.o
-                0x0800928c                heroainfData
+                0x08009274      0x300 build/font.o
+                0x08009274                heroainfData
  .rodata.heroainfImg
-                0x0800958c        0x8 build/font.o
-                0x0800958c                heroainfImg
+                0x08009574        0x8 build/font.o
+                0x08009574                heroainfImg
  .rodata.inf4Data
-                0x08009594      0x300 build/font.o
-                0x08009594                inf4Data
+                0x0800957c      0x300 build/font.o
+                0x0800957c                inf4Data
  .rodata.inf4Img
-                0x08009894        0x8 build/font.o
-                0x08009894                inf4Img
+                0x0800987c        0x8 build/font.o
+                0x0800987c                inf4Img
  .rodata.infantry34Data
-                0x0800989c      0x2a8 build/font.o
-                0x0800989c                infantry34Data
+                0x08009884      0x2a8 build/font.o
+                0x08009884                infantry34Data
  .rodata.infantry34Img
-                0x08009b44        0x8 build/font.o
-                0x08009b44                infantry34Img
+                0x08009b2c        0x8 build/font.o
+                0x08009b2c                infantry34Img
  .rodata.zh14x14
-                0x08009b4c      0x320 build/font.o
-                0x08009b4c                zh14x14
+                0x08009b34      0x320 build/font.o
+                0x08009b34                zh14x14
  .rodata.zh16x16
-                0x08009e6c      0x384 build/font.o
-                0x08009e6c                zh16x16
+                0x08009e54      0x384 build/font.o
+                0x08009e54                zh16x16
  .rodata.NRF24L01_Check.str1.4
-                0x0800a1f0        0x6 build/nrf24l01.o
- *fill*         0x0800a1f6        0x2 
+                0x0800a1d8        0x6 build/nrf24l01.o
+ *fill*         0x0800a1de        0x2 
  .rodata.str1.4
-                0x0800a1f8       0x5b build/remote.o
- *fill*         0x0800a253        0x1 
+                0x0800a1e0       0x5b build/remote.o
+ *fill*         0x0800a23b        0x1 
  .rodata.MENU_Calibration.str1.4
-                0x0800a254       0x94 build/menu_task.o
+                0x0800a23c       0x94 build/menu_task.o
  .rodata.MENU_ShowInfomation.str1.4
-                0x0800a2e8       0x31 build/menu_task.o
+                0x0800a2d0       0x31 build/menu_task.o
  .rodata._svfprintf_r.str1.1
-                0x0800a319       0x11 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
+                0x0800a301       0x11 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-svfprintf.o)
  .rodata._printf_i.str1.1
-                0x0800a32a       0x22 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0800a34c                . = ALIGN (0x4)
+                0x0800a312       0x22 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp\libc_nano.a(lib_a-nano-vfprintf_i.o)
+                0x0800a334                . = ALIGN (0x4)
 
-.rel.dyn        0x0800a34c        0x0
- .rel.iplt      0x0800a34c        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
+.rel.dyn        0x0800a334        0x0
+ .rel.iplt      0x0800a334        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0800a34c        0x0
-                0x0800a34c                __exidx_start = .
+.ARM            0x0800a334        0x0
+                0x0800a334                __exidx_start = .
  *(.ARM.exidx*)
-                0x0800a34c                __exidx_end = .
+                0x0800a334                __exidx_end = .
 
-.preinit_array  0x0800a34c        0x0
-                0x0800a34c                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0800a334        0x0
+                0x0800a334                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0800a34c                PROVIDE (__preinit_array_end = .)
+                0x0800a334                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0800a34c        0x4
-                0x0800a34c                PROVIDE (__init_array_start = .)
+.init_array     0x0800a334        0x4
+                0x0800a334                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0800a34c        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
-                0x0800a350                PROVIDE (__init_array_end = .)
+ .init_array    0x0800a334        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
+                0x0800a338                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0800a350        0x4
+.fini_array     0x0800a338        0x4
                 [!provide]                PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0800a350        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
+ .fini_array    0x0800a338        0x4 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
                 [!provide]                PROVIDE (__fini_array_end = .)
-                0x0800a354                _sidata = LOADADDR (.data)
+                0x0800a33c                _sidata = LOADADDR (.data)
 
-.data           0x20000000       0xf4 load address 0x0800a354
+.data           0x20000000       0xf4 load address 0x0800a33c
                 0x20000000                . = ALIGN (0x4)
                 0x20000000                _sdata = .
  *(.data)
@@ -3270,11 +3267,11 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
                 0x200000f4                . = ALIGN (0x4)
                 0x200000f4                _edata = .
 
-.igot.plt       0x200000f4        0x0 load address 0x0800a448
+.igot.plt       0x200000f4        0x0 load address 0x0800a430
  .igot.plt      0x200000f4        0x0 e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchian/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7-m/nofp/crtbegin.o
                 0x200000f4                . = ALIGN (0x4)
 
-.bss            0x200000f8     0x16dc load address 0x0800a448
+.bss            0x200000f8     0x16dc load address 0x0800a430
                 0x200000f8                _sbss = .
                 0x200000f8                __bss_start__ = _sbss
  *(.bss)
@@ -3483,7 +3480,7 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
                 0x200017d4                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x200017d4     0x1004 load address 0x0800a448
+                0x200017d4     0x1004 load address 0x0800a430
                 0x200017d8                . = ALIGN (0x8)
  *fill*         0x200017d4        0x4 
                 [!provide]                PROVIDE (end = .)
@@ -3695,7 +3692,7 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .comment       0x00000049       0x4a build/MENU.o
  .comment       0x00000049       0x4a build/menu_task.o
 
-.debug_info     0x00000000    0x24f4a
+.debug_info     0x00000000    0x24f72
  .debug_info    0x00000000      0xae3 build/main.o
  .debug_info    0x00000ae3      0x5ee build/gpio.o
  .debug_info    0x000010d1      0x499 build/freertos.o
@@ -3732,10 +3729,10 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .debug_info    0x0001f618     0x100d build/nrf24l01.o
  .debug_info    0x00020625      0x45a build/flash.o
  .debug_info    0x00020a7f      0x790 build/bsp_dwt.o
- .debug_info    0x0002120f     0x14e7 build/remote.o
- .debug_info    0x000226f6     0x146a build/MENU.o
- .debug_info    0x00023b60     0x13c8 build/menu_task.o
- .debug_info    0x00024f28       0x22 build/startup_stm32f103xb.o
+ .debug_info    0x0002120f     0x150f build/remote.o
+ .debug_info    0x0002271e     0x146a build/MENU.o
+ .debug_info    0x00023b88     0x13c8 build/menu_task.o
+ .debug_info    0x00024f50       0x22 build/startup_stm32f103xb.o
 
 .debug_abbrev   0x00000000     0x553c
  .debug_abbrev  0x00000000      0x225 build/main.o
@@ -3942,7 +3939,7 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .debug_ranges  0x000018f0       0xd0 build/menu_task.o
  .debug_ranges  0x000019c0       0x20 build/startup_stm32f103xb.o
 
-.debug_line     0x00000000    0x1dbd9
+.debug_line     0x00000000    0x1dbdc
  .debug_line    0x00000000      0x41b build/main.o
  .debug_line    0x0000041b      0x27e build/gpio.o
  .debug_line    0x00000699      0x274 build/freertos.o
@@ -3979,10 +3976,10 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .debug_line    0x0001b4fa      0x447 build/nrf24l01.o
  .debug_line    0x0001b941      0x408 build/flash.o
  .debug_line    0x0001bd49      0x3ee build/bsp_dwt.o
- .debug_line    0x0001c137      0x74c build/remote.o
- .debug_line    0x0001c883      0xa72 build/MENU.o
- .debug_line    0x0001d2f5      0x870 build/menu_task.o
- .debug_line    0x0001db65       0x74 build/startup_stm32f103xb.o
+ .debug_line    0x0001c137      0x74f build/remote.o
+ .debug_line    0x0001c886      0xa72 build/MENU.o
+ .debug_line    0x0001d2f8      0x870 build/menu_task.o
+ .debug_line    0x0001db68       0x74 build/startup_stm32f103xb.o
 
 .debug_str      0x00000000     0x7bf4
  .debug_str     0x00000000      0x837 build/main.o
@@ -4058,7 +4055,7 @@ LOAD e:/ace2025/enviroment/gcc-arm-none-eabi-10.3-2021.10-win32/arm-gnu-toolchia
  .debug_str     0x00007205      0x27e build/bsp_dwt.o
                                 0x44f (size before relaxing)
  .debug_str     0x00007483      0x38b build/remote.o
-                                0xbe0 (size before relaxing)
+                                0xbdf (size before relaxing)
  .debug_str     0x0000780e      0x2c6 build/MENU.o
                                 0x7b3 (size before relaxing)
  .debug_str     0x00007ad4       0xfc build/menu_task.o
@@ -4337,8 +4334,8 @@ HAL_GPIO_ReadPin                                  build/stm32f1xx_hal_gpio.o
                                                   build/nrf24l01.o
                                                   build/stm32f1xx_it.o
 HAL_GPIO_TogglePin                                build/stm32f1xx_hal_gpio.o
-                                                  build/remote.o
 HAL_GPIO_WritePin                                 build/stm32f1xx_hal_gpio.o
+                                                  build/remote.o
                                                   build/nrf24l01.o
                                                   build/gpio.o
 HAL_GetDEVID                                      build/stm32f1xx_hal.o

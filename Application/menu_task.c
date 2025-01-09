@@ -71,10 +71,11 @@ void MENU_RockerInfo(void)
             OLED_DrawFilledCircle(128 - 36, 23, 3, 0);
         else
             OLED_DrawCircle(128 - 36, 23, 3, 0);
+        // 0L-> 1L↑ 2R↑ 3R->
         OLED_DrawRectangle(30, 30, 35 / 1.5, 42 / 1.5, 0);
-        OLED_DrawFilledCircle(30 + (35 / 1.5) / 2, 30 + (42 / 1.5) / 2, 2, 0); // 表示摇杆位置
+        OLED_DrawFilledCircle(30 + (35 / 1.5) / 2 + (35 / 1.5) / 2 * ((float)rc->res.rockerVal[0] / 105), 30 + (42 / 1.5) / 2 - (42 / 1.5) / 2 * ((float)rc->res.rockerVal[1] / 105), 2, 0); // 表示摇杆位置
         OLED_DrawRectangle(128 - 30 - 35 / 1.5, 30, 35 / 1.5, 42 / 1.5, 0);
-        OLED_DrawFilledCircle(128 - 30 - 35 / 1.5 + (35 / 1.5) / 2, 30 + (42 / 1.5) / 2, 2, 0); // 表示摇杆位置
+        OLED_DrawFilledCircle(128 - 30 - 35 / 1.5 + (35 / 1.5) / 2 + (35 / 1.5) / 2 * ((float)rc->res.rockerVal[3] / 105), 30 + (42 / 1.5) / 2 - (42 / 1.5) / 2 * ((float)rc->res.rockerVal[2] / 105), 2, 0); // 表示摇杆位置
         OLED_ShowFrame();
 
         if (menu_command_callback(GET_EVENT_BACK))

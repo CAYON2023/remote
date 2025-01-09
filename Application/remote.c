@@ -44,7 +44,10 @@ static void RemoteDataProc(RC_t *data)
 
     for (int i = 0; i < 4; i++)
     {
-        data->res.rockerVal[2 + i] = (int)(((float)(data->info->rockerVal[2 + i] - data->offset_rocker[2 + i]) / 2048) * 127);
+        if (i > 1)
+            data->res.rockerVal[i] = -(int)(((float)(data->info->rockerVal[i] - data->offset_rocker[2 + i]) / 2048) * 127 * 5);
+        else
+            data->res.rockerVal[i] = (int)(((float)(data->info->rockerVal[i] - data->offset_rocker[2 + i]) / 2048) * 127 * 5);
     }
 }
 static void ScanRemoteInfo(void)

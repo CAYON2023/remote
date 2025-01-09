@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
   33              	.LCFI0:
   34              		.cfi_def_cfa_offset 8
   35              		.cfi_offset 4, -8
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 2
 
 
   36              		.cfi_offset 14, -4
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
   30:Application/menu_task.c ****     {
   79              		.loc 1 30 21 is_stmt 1 discriminator 1 view .LVU17
   30:Application/menu_task.c ****     {
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 3
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 3
 
 
   80              		.loc 1 30 5 is_stmt 0 discriminator 1 view .LVU18
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
  127              		.loc 1 12 5 view .LVU27
  128 0006 0EE0     		b	.L8
  129              	.LVL8:
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 4
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 4
 
 
  130              	.L9:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
  171 003a 00BF     		.align	2
  172              	.L11:
  173 003c 00FD0008 		.word	134282496
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 5
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 5
 
 
  174              		.cfi_endproc
@@ -288,1936 +288,2067 @@ ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 1
  216              		.global	__aeabi_fdiv
  217              		.global	__aeabi_fmul
  218              		.global	__aeabi_f2uiz
- 219              		.section	.text.MENU_RockerInfo,"ax",%progbits
- 220              		.align	1
- 221              		.global	MENU_RockerInfo
- 222              		.syntax unified
- 223              		.thumb
- 224              		.thumb_func
- 226              	MENU_RockerInfo:
- 227              	.LFB76:
+ 219              		.global	__aeabi_i2f
+ 220              		.global	__aeabi_f2d
+ 221              		.global	__aeabi_dmul
+ 222              		.global	__aeabi_dadd
+ 223              		.global	__aeabi_dsub
+ 224              		.global	__aeabi_d2uiz
+ 225              		.section	.text.MENU_RockerInfo,"ax",%progbits
+ 226              		.align	1
+ 227              		.global	MENU_RockerInfo
+ 228              		.syntax unified
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 6
+
+
+ 229              		.thumb
+ 230              		.thumb_func
+ 232              	MENU_RockerInfo:
+ 233              	.LFB76:
   40:Application/menu_task.c **** 
   41:Application/menu_task.c **** void MENU_RockerInfo(void)
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 6
-
-
   42:Application/menu_task.c **** {
- 228              		.loc 1 42 1 is_stmt 1 view -0
- 229              		.cfi_startproc
- 230              		@ args = 0, pretend = 0, frame = 0
- 231              		@ frame_needed = 0, uses_anonymous_args = 0
- 232 0000 10B5     		push	{r4, lr}
- 233              	.LCFI7:
- 234              		.cfi_def_cfa_offset 8
- 235              		.cfi_offset 4, -8
- 236              		.cfi_offset 14, -4
- 237 0002 82B0     		sub	sp, sp, #8
- 238              	.LCFI8:
- 239              		.cfi_def_cfa_offset 16
- 240 0004 8FE0     		b	.L33
- 241              	.LVL14:
- 242              	.L19:
- 243              	.LBB4:
+ 234              		.loc 1 42 1 is_stmt 1 view -0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 239              	.LCFI7:
+ 240              		.cfi_def_cfa_offset 24
+ 241              		.cfi_offset 4, -24
+ 242              		.cfi_offset 5, -20
+ 243              		.cfi_offset 6, -16
+ 244              		.cfi_offset 7, -12
+ 245              		.cfi_offset 8, -8
+ 246              		.cfi_offset 14, -4
+ 247 0004 82B0     		sub	sp, sp, #8
+ 248              	.LCFI8:
+ 249              		.cfi_def_cfa_offset 32
+ 250 0006 F9E0     		b	.L33
+ 251              	.LVL14:
+ 252              	.L19:
+ 253              	.LBB4:
   43:Application/menu_task.c ****     while (1)
   44:Application/menu_task.c ****     {
   45:Application/menu_task.c ****         OLED_NewFrame();
   46:Application/menu_task.c ****         for (int i = 0; i < 2; i++)
   47:Application/menu_task.c ****         {
   48:Application/menu_task.c ****             OLED_DrawFilledRectangle(7 + i * 64, 10, (((float)rc->res.potVal[i] / 255) * 50), 5, 0)
- 244              		.loc 1 48 13 discriminator 3 view .LVU48
- 245              		.loc 1 48 65 is_stmt 0 discriminator 3 view .LVU49
- 246 0006 604B     		ldr	r3, .L35
- 247 0008 1B68     		ldr	r3, [r3]
- 248              		.loc 1 48 77 discriminator 3 view .LVU50
- 249 000a 2344     		add	r3, r3, r4
- 250              		.loc 1 48 56 discriminator 3 view .LVU51
- 251 000c D87D     		ldrb	r0, [r3, #23]	@ zero_extendqisi2
- 252 000e FFF7FEFF 		bl	__aeabi_ui2f
- 253              	.LVL15:
- 254              		.loc 1 48 81 discriminator 3 view .LVU52
- 255 0012 5E49     		ldr	r1, .L35+4
- 256 0014 FFF7FEFF 		bl	__aeabi_fdiv
- 257              	.LVL16:
- 258              		.loc 1 48 88 discriminator 3 view .LVU53
- 259 0018 5D49     		ldr	r1, .L35+8
- 260 001a FFF7FEFF 		bl	__aeabi_fmul
- 261              	.LVL17:
- 262              		.loc 1 48 13 discriminator 3 view .LVU54
- 263 001e FFF7FEFF 		bl	__aeabi_f2uiz
- 264              	.LVL18:
- 265 0022 4FEA841C 		lsl	ip, r4, #6
- 266 0026 0CF1070C 		add	ip, ip, #7
- 267 002a 0023     		movs	r3, #0
- 268 002c 0093     		str	r3, [sp]
- 269 002e 0523     		movs	r3, #5
- 270 0030 C2B2     		uxtb	r2, r0
- 271 0032 0A21     		movs	r1, #10
- 272 0034 5FFA8CF0 		uxtb	r0, ip
- 273 0038 FFF7FEFF 		bl	OLED_DrawFilledRectangle
- 274              	.LVL19:
-  46:Application/menu_task.c ****         {
- 275              		.loc 1 46 32 is_stmt 1 discriminator 3 view .LVU55
-  46:Application/menu_task.c ****         {
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 7
+ 254              		.loc 1 48 13 discriminator 3 view .LVU48
+ 255              		.loc 1 48 65 is_stmt 0 discriminator 3 view .LVU49
+ 256 0008 9B4B     		ldr	r3, .L35+24
+ 257 000a 1B68     		ldr	r3, [r3]
+ 258              		.loc 1 48 77 discriminator 3 view .LVU50
+ 259 000c 2344     		add	r3, r3, r4
+ 260              		.loc 1 48 56 discriminator 3 view .LVU51
+ 261 000e D87D     		ldrb	r0, [r3, #23]	@ zero_extendqisi2
+ 262 0010 FFF7FEFF 		bl	__aeabi_ui2f
+ 263              	.LVL15:
+ 264              		.loc 1 48 81 discriminator 3 view .LVU52
+ 265 0014 9949     		ldr	r1, .L35+28
+ 266 0016 FFF7FEFF 		bl	__aeabi_fdiv
+ 267              	.LVL16:
+ 268              		.loc 1 48 88 discriminator 3 view .LVU53
+ 269 001a 9949     		ldr	r1, .L35+32
+ 270 001c FFF7FEFF 		bl	__aeabi_fmul
+ 271              	.LVL17:
+ 272              		.loc 1 48 13 discriminator 3 view .LVU54
+ 273 0020 FFF7FEFF 		bl	__aeabi_f2uiz
+ 274              	.LVL18:
+ 275 0024 4FEA841C 		lsl	ip, r4, #6
+ 276 0028 0CF1070C 		add	ip, ip, #7
+ 277 002c 0023     		movs	r3, #0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 7
 
 
- 276              		.loc 1 46 33 is_stmt 0 discriminator 3 view .LVU56
- 277 003c 0134     		adds	r4, r4, #1
- 278              	.LVL20:
- 279              	.L18:
+ 278 002e 0093     		str	r3, [sp]
+ 279 0030 0523     		movs	r3, #5
+ 280 0032 C2B2     		uxtb	r2, r0
+ 281 0034 0A21     		movs	r1, #10
+ 282 0036 5FFA8CF0 		uxtb	r0, ip
+ 283 003a FFF7FEFF 		bl	OLED_DrawFilledRectangle
+ 284              	.LVL19:
   46:Application/menu_task.c ****         {
- 280              		.loc 1 46 25 is_stmt 1 discriminator 1 view .LVU57
+ 285              		.loc 1 46 32 is_stmt 1 discriminator 3 view .LVU55
   46:Application/menu_task.c ****         {
- 281              		.loc 1 46 9 is_stmt 0 discriminator 1 view .LVU58
- 282 003e 012C     		cmp	r4, #1
- 283 0040 E1DD     		ble	.L19
- 284              	.LBE4:
+ 286              		.loc 1 46 33 is_stmt 0 discriminator 3 view .LVU56
+ 287 003e 0134     		adds	r4, r4, #1
+ 288              	.LVL20:
+ 289              	.L18:
+  46:Application/menu_task.c ****         {
+ 290              		.loc 1 46 25 is_stmt 1 discriminator 1 view .LVU57
+  46:Application/menu_task.c ****         {
+ 291              		.loc 1 46 9 is_stmt 0 discriminator 1 view .LVU58
+ 292 0040 012C     		cmp	r4, #1
+ 293 0042 E1DD     		ble	.L19
+ 294              	.LBE4:
   49:Application/menu_task.c ****         }
   50:Application/menu_task.c ****         if (rc->info->key.bits.sw1)
- 285              		.loc 1 50 9 is_stmt 1 view .LVU59
- 286              		.loc 1 50 15 is_stmt 0 view .LVU60
- 287 0042 514B     		ldr	r3, .L35
- 288 0044 1B68     		ldr	r3, [r3]
- 289 0046 1B68     		ldr	r3, [r3]
- 290              		.loc 1 50 13 view .LVU61
- 291 0048 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 292              		.loc 1 50 12 view .LVU62
- 293 004a 13F0010F 		tst	r3, #1
- 294 004e 6ED0     		beq	.L20
+ 295              		.loc 1 50 9 is_stmt 1 view .LVU59
+ 296              		.loc 1 50 15 is_stmt 0 view .LVU60
+ 297 0044 8C4B     		ldr	r3, .L35+24
+ 298 0046 1B68     		ldr	r3, [r3]
+ 299 0048 1B68     		ldr	r3, [r3]
+ 300              		.loc 1 50 13 view .LVU61
+ 301 004a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 302              		.loc 1 50 12 view .LVU62
+ 303 004c 13F0010F 		tst	r3, #1
+ 304 0050 00F0D880 		beq	.L20
   51:Application/menu_task.c ****             OLED_DrawFilledCircle(16, 25, 5, 0);
- 295              		.loc 1 51 13 is_stmt 1 view .LVU63
- 296 0050 0023     		movs	r3, #0
- 297 0052 0522     		movs	r2, #5
- 298 0054 1921     		movs	r1, #25
- 299 0056 1020     		movs	r0, #16
- 300 0058 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 301              	.LVL21:
- 302              	.L21:
+ 305              		.loc 1 51 13 is_stmt 1 view .LVU63
+ 306 0054 0023     		movs	r3, #0
+ 307 0056 0522     		movs	r2, #5
+ 308 0058 1921     		movs	r1, #25
+ 309 005a 1020     		movs	r0, #16
+ 310 005c FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 311              	.LVL21:
+ 312              	.L21:
   52:Application/menu_task.c ****         else
   53:Application/menu_task.c ****             OLED_DrawCircle(16, 25, 5, 0);
   54:Application/menu_task.c ****         if (rc->info->key.bits.sw2)
- 303              		.loc 1 54 9 view .LVU64
- 304              		.loc 1 54 15 is_stmt 0 view .LVU65
- 305 005c 4A4B     		ldr	r3, .L35
- 306 005e 1B68     		ldr	r3, [r3]
- 307 0060 1B68     		ldr	r3, [r3]
- 308              		.loc 1 54 13 view .LVU66
- 309 0062 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 310              		.loc 1 54 12 view .LVU67
- 311 0064 13F0020F 		tst	r3, #2
- 312 0068 68D0     		beq	.L22
+ 313              		.loc 1 54 9 view .LVU64
+ 314              		.loc 1 54 15 is_stmt 0 view .LVU65
+ 315 0060 854B     		ldr	r3, .L35+24
+ 316 0062 1B68     		ldr	r3, [r3]
+ 317 0064 1B68     		ldr	r3, [r3]
+ 318              		.loc 1 54 13 view .LVU66
+ 319 0066 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 320              		.loc 1 54 12 view .LVU67
+ 321 0068 13F0020F 		tst	r3, #2
+ 322 006c 00F0D180 		beq	.L22
   55:Application/menu_task.c ****             OLED_DrawFilledCircle(128 - 16, 25, 5, 0);
- 313              		.loc 1 55 13 is_stmt 1 view .LVU68
- 314 006a 0023     		movs	r3, #0
- 315 006c 0522     		movs	r2, #5
- 316 006e 1921     		movs	r1, #25
- 317 0070 7020     		movs	r0, #112
- 318 0072 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 319              	.LVL22:
- 320              	.L23:
+ 323              		.loc 1 55 13 is_stmt 1 view .LVU68
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 8
+
+
+ 324 0070 0023     		movs	r3, #0
+ 325 0072 0522     		movs	r2, #5
+ 326 0074 1921     		movs	r1, #25
+ 327 0076 7020     		movs	r0, #112
+ 328 0078 FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 329              	.LVL22:
+ 330              	.L23:
   56:Application/menu_task.c ****         else
   57:Application/menu_task.c ****             OLED_DrawCircle(128 - 16, 25, 5, 0);
   58:Application/menu_task.c ****         if (rc->info->key.bits.key0)
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 8
-
-
- 321              		.loc 1 58 9 view .LVU69
- 322              		.loc 1 58 15 is_stmt 0 view .LVU70
- 323 0076 444B     		ldr	r3, .L35
- 324 0078 1B68     		ldr	r3, [r3]
- 325 007a 1B68     		ldr	r3, [r3]
- 326              		.loc 1 58 13 view .LVU71
- 327 007c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 328              		.loc 1 58 12 view .LVU72
- 329 007e 13F0040F 		tst	r3, #4
- 330 0082 62D0     		beq	.L24
+ 331              		.loc 1 58 9 view .LVU69
+ 332              		.loc 1 58 15 is_stmt 0 view .LVU70
+ 333 007c 7E4B     		ldr	r3, .L35+24
+ 334 007e 1B68     		ldr	r3, [r3]
+ 335 0080 1B68     		ldr	r3, [r3]
+ 336              		.loc 1 58 13 view .LVU71
+ 337 0082 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 338              		.loc 1 58 12 view .LVU72
+ 339 0084 13F0040F 		tst	r3, #4
+ 340 0088 00F0CA80 		beq	.L24
   59:Application/menu_task.c ****             OLED_DrawFilledCircle(33, 23, 3, 0);
- 331              		.loc 1 59 13 is_stmt 1 view .LVU73
- 332 0084 0023     		movs	r3, #0
- 333 0086 0322     		movs	r2, #3
- 334 0088 1721     		movs	r1, #23
- 335 008a 2120     		movs	r0, #33
- 336 008c FFF7FEFF 		bl	OLED_DrawFilledCircle
- 337              	.LVL23:
- 338              	.L25:
+ 341              		.loc 1 59 13 is_stmt 1 view .LVU73
+ 342 008c 0023     		movs	r3, #0
+ 343 008e 0322     		movs	r2, #3
+ 344 0090 1721     		movs	r1, #23
+ 345 0092 2120     		movs	r0, #33
+ 346 0094 FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 347              	.LVL23:
+ 348              	.L25:
   60:Application/menu_task.c ****         else
   61:Application/menu_task.c ****             OLED_DrawCircle(33, 23, 3, 0);
   62:Application/menu_task.c ****         if (rc->info->key.bits.key1)
- 339              		.loc 1 62 9 view .LVU74
- 340              		.loc 1 62 15 is_stmt 0 view .LVU75
- 341 0090 3D4B     		ldr	r3, .L35
- 342 0092 1B68     		ldr	r3, [r3]
- 343 0094 1B68     		ldr	r3, [r3]
- 344              		.loc 1 62 13 view .LVU76
- 345 0096 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 346              		.loc 1 62 12 view .LVU77
- 347 0098 13F0080F 		tst	r3, #8
- 348 009c 5CD0     		beq	.L26
+ 349              		.loc 1 62 9 view .LVU74
+ 350              		.loc 1 62 15 is_stmt 0 view .LVU75
+ 351 0098 774B     		ldr	r3, .L35+24
+ 352 009a 1B68     		ldr	r3, [r3]
+ 353 009c 1B68     		ldr	r3, [r3]
+ 354              		.loc 1 62 13 view .LVU76
+ 355 009e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 356              		.loc 1 62 12 view .LVU77
+ 357 00a0 13F0080F 		tst	r3, #8
+ 358 00a4 00F0C380 		beq	.L26
   63:Application/menu_task.c ****             OLED_DrawFilledCircle(33 + 18, 23, 3, 0);
- 349              		.loc 1 63 13 is_stmt 1 view .LVU78
- 350 009e 0023     		movs	r3, #0
- 351 00a0 0322     		movs	r2, #3
- 352 00a2 1721     		movs	r1, #23
- 353 00a4 3320     		movs	r0, #51
- 354 00a6 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 355              	.LVL24:
- 356              	.L27:
+ 359              		.loc 1 63 13 is_stmt 1 view .LVU78
+ 360 00a8 0023     		movs	r3, #0
+ 361 00aa 0322     		movs	r2, #3
+ 362 00ac 1721     		movs	r1, #23
+ 363 00ae 3320     		movs	r0, #51
+ 364 00b0 FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 365              	.LVL24:
+ 366              	.L27:
   64:Application/menu_task.c ****         else
   65:Application/menu_task.c ****             OLED_DrawCircle(33 + 18, 23, 3, 0);
   66:Application/menu_task.c ****         if (rc->info->key.bits.key2)
- 357              		.loc 1 66 9 view .LVU79
- 358              		.loc 1 66 15 is_stmt 0 view .LVU80
- 359 00aa 374B     		ldr	r3, .L35
- 360 00ac 1B68     		ldr	r3, [r3]
- 361 00ae 1B68     		ldr	r3, [r3]
- 362              		.loc 1 66 13 view .LVU81
- 363 00b0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 364              		.loc 1 66 12 view .LVU82
- 365 00b2 13F0100F 		tst	r3, #16
- 366 00b6 56D0     		beq	.L28
+ 367              		.loc 1 66 9 view .LVU79
+ 368              		.loc 1 66 15 is_stmt 0 view .LVU80
+ 369 00b4 704B     		ldr	r3, .L35+24
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 9
+
+
+ 370 00b6 1B68     		ldr	r3, [r3]
+ 371 00b8 1B68     		ldr	r3, [r3]
+ 372              		.loc 1 66 13 view .LVU81
+ 373 00ba 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 374              		.loc 1 66 12 view .LVU82
+ 375 00bc 13F0100F 		tst	r3, #16
+ 376 00c0 00F0BC80 		beq	.L28
   67:Application/menu_task.c ****             OLED_DrawFilledCircle(36 + 40, 23, 3, 0);
- 367              		.loc 1 67 13 is_stmt 1 view .LVU83
- 368 00b8 0023     		movs	r3, #0
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 9
-
-
- 369 00ba 0322     		movs	r2, #3
- 370 00bc 1721     		movs	r1, #23
- 371 00be 4C20     		movs	r0, #76
- 372 00c0 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 373              	.LVL25:
- 374              	.L29:
+ 377              		.loc 1 67 13 is_stmt 1 view .LVU83
+ 378 00c4 0023     		movs	r3, #0
+ 379 00c6 0322     		movs	r2, #3
+ 380 00c8 1721     		movs	r1, #23
+ 381 00ca 4C20     		movs	r0, #76
+ 382 00cc FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 383              	.LVL25:
+ 384              	.L29:
   68:Application/menu_task.c ****         else
   69:Application/menu_task.c ****             OLED_DrawCircle(36 + 40, 23, 3, 0);
   70:Application/menu_task.c ****         if (rc->info->key.bits.key3)
- 375              		.loc 1 70 9 view .LVU84
- 376              		.loc 1 70 15 is_stmt 0 view .LVU85
- 377 00c4 304B     		ldr	r3, .L35
- 378 00c6 1B68     		ldr	r3, [r3]
- 379 00c8 1B68     		ldr	r3, [r3]
- 380              		.loc 1 70 13 view .LVU86
- 381 00ca 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 382              		.loc 1 70 12 view .LVU87
- 383 00cc 13F0200F 		tst	r3, #32
- 384 00d0 50D0     		beq	.L30
+ 385              		.loc 1 70 9 view .LVU84
+ 386              		.loc 1 70 15 is_stmt 0 view .LVU85
+ 387 00d0 694B     		ldr	r3, .L35+24
+ 388 00d2 1B68     		ldr	r3, [r3]
+ 389 00d4 1B68     		ldr	r3, [r3]
+ 390              		.loc 1 70 13 view .LVU86
+ 391 00d6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 392              		.loc 1 70 12 view .LVU87
+ 393 00d8 13F0200F 		tst	r3, #32
+ 394 00dc 00F0B580 		beq	.L30
   71:Application/menu_task.c ****             OLED_DrawFilledCircle(128 - 36, 23, 3, 0);
- 385              		.loc 1 71 13 is_stmt 1 view .LVU88
- 386 00d2 0023     		movs	r3, #0
- 387 00d4 0322     		movs	r2, #3
- 388 00d6 1721     		movs	r1, #23
- 389 00d8 5C20     		movs	r0, #92
- 390 00da FFF7FEFF 		bl	OLED_DrawFilledCircle
- 391              	.LVL26:
- 392              	.L31:
+ 395              		.loc 1 71 13 is_stmt 1 view .LVU88
+ 396 00e0 0023     		movs	r3, #0
+ 397 00e2 0322     		movs	r2, #3
+ 398 00e4 1721     		movs	r1, #23
+ 399 00e6 5C20     		movs	r0, #92
+ 400 00e8 FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 401              	.LVL26:
+ 402              	.L31:
   72:Application/menu_task.c ****         else
   73:Application/menu_task.c ****             OLED_DrawCircle(128 - 36, 23, 3, 0);
-  74:Application/menu_task.c ****         OLED_DrawRectangle(30, 30, 35 / 1.5, 42 / 1.5, 0);
- 393              		.loc 1 74 9 view .LVU89
- 394 00de 0024     		movs	r4, #0
- 395              	.LVL27:
- 396              		.loc 1 74 9 is_stmt 0 view .LVU90
- 397 00e0 0094     		str	r4, [sp]
- 398 00e2 1C23     		movs	r3, #28
- 399 00e4 1722     		movs	r2, #23
- 400 00e6 1E21     		movs	r1, #30
- 401 00e8 0846     		mov	r0, r1
- 402 00ea FFF7FEFF 		bl	OLED_DrawRectangle
- 403              	.LVL28:
-  75:Application/menu_task.c ****         OLED_DrawFilledCircle(30 + (35 / 1.5) / 2, 30 + (42 / 1.5) / 2, 2, 0); // 表示摇杆位�
- 404              		.loc 1 75 9 is_stmt 1 view .LVU91
- 405 00ee 2346     		mov	r3, r4
- 406 00f0 0222     		movs	r2, #2
- 407 00f2 2C21     		movs	r1, #44
- 408 00f4 2920     		movs	r0, #41
- 409 00f6 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 410              	.LVL29:
-  76:Application/menu_task.c ****         OLED_DrawRectangle(128 - 30 - 35 / 1.5, 30, 35 / 1.5, 42 / 1.5, 0);
- 411              		.loc 1 76 9 view .LVU92
- 412 00fa 0094     		str	r4, [sp]
- 413 00fc 1C23     		movs	r3, #28
- 414 00fe 1722     		movs	r2, #23
- 415 0100 1E21     		movs	r1, #30
- 416 0102 4A20     		movs	r0, #74
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 10
+  74:Application/menu_task.c ****         // 0L-> 1L↑ 2R↑ 3R->
+  75:Application/menu_task.c ****         OLED_DrawRectangle(30, 30, 35 / 1.5, 42 / 1.5, 0);
+ 403              		.loc 1 75 9 view .LVU89
+ 404 00ec 0024     		movs	r4, #0
+ 405              	.LVL27:
+ 406              		.loc 1 75 9 is_stmt 0 view .LVU90
+ 407 00ee 0094     		str	r4, [sp]
+ 408 00f0 1C23     		movs	r3, #28
+ 409 00f2 1722     		movs	r2, #23
+ 410 00f4 1E21     		movs	r1, #30
+ 411 00f6 0846     		mov	r0, r1
+ 412 00f8 FFF7FEFF 		bl	OLED_DrawRectangle
+ 413              	.LVL28:
+  76:Application/menu_task.c ****         OLED_DrawFilledCircle(30 + (35 / 1.5) / 2 + (35 / 1.5) / 2 * ((float)rc->res.rockerVal[0] /
+ 414              		.loc 1 76 9 is_stmt 1 view .LVU91
+ 415              		.loc 1 76 80 is_stmt 0 view .LVU92
+ 416 00fc DFF87881 		ldr	r8, .L35+24
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 10
 
 
- 417 0104 FFF7FEFF 		bl	OLED_DrawRectangle
- 418              	.LVL30:
-  77:Application/menu_task.c ****         OLED_DrawFilledCircle(128 - 30 - 35 / 1.5 + (35 / 1.5) / 2, 30 + (42 / 1.5) / 2, 2, 0); // 
- 419              		.loc 1 77 9 view .LVU93
- 420 0108 2346     		mov	r3, r4
- 421 010a 0222     		movs	r2, #2
- 422 010c 2C21     		movs	r1, #44
- 423 010e 5620     		movs	r0, #86
- 424 0110 FFF7FEFF 		bl	OLED_DrawFilledCircle
- 425              	.LVL31:
-  78:Application/menu_task.c ****         OLED_ShowFrame();
- 426              		.loc 1 78 9 view .LVU94
- 427 0114 FFF7FEFF 		bl	OLED_ShowFrame
- 428              	.LVL32:
-  79:Application/menu_task.c **** 
-  80:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
- 429              		.loc 1 80 9 view .LVU95
- 430              		.loc 1 80 13 is_stmt 0 view .LVU96
- 431 0118 0620     		movs	r0, #6
- 432 011a FFF7FEFF 		bl	menu_command_callback
- 433              	.LVL33:
- 434              		.loc 1 80 12 view .LVU97
- 435 011e 80BB     		cbnz	r0, .L17
-  81:Application/menu_task.c ****             break;
-  82:Application/menu_task.c ****         osDelay(5);
- 436              		.loc 1 82 9 is_stmt 1 view .LVU98
- 437 0120 0520     		movs	r0, #5
- 438 0122 FFF7FEFF 		bl	osDelay
- 439              	.LVL34:
+ 417 0100 D8F80050 		ldr	r5, [r8]
+ 418              		.loc 1 76 71 view .LVU93
+ 419 0104 95F91900 		ldrsb	r0, [r5, #25]
+ 420 0108 FFF7FEFF 		bl	__aeabi_i2f
+ 421              	.LVL29:
+ 422              		.loc 1 76 99 view .LVU94
+ 423 010c 5D49     		ldr	r1, .L35+36
+ 424 010e FFF7FEFF 		bl	__aeabi_fdiv
+ 425              	.LVL30:
+ 426 0112 FFF7FEFF 		bl	__aeabi_f2d
+ 427              	.LVL31:
+ 428              		.loc 1 76 68 view .LVU95
+ 429 0116 52A3     		adr	r3, .L35
+ 430 0118 D3E90023 		ldrd	r2, [r3]
+ 431 011c FFF7FEFF 		bl	__aeabi_dmul
+ 432              	.LVL32:
+ 433              		.loc 1 76 51 view .LVU96
+ 434 0120 51A3     		adr	r3, .L35+8
+ 435 0122 D3E90023 		ldrd	r2, [r3]
+ 436 0126 FFF7FEFF 		bl	__aeabi_dadd
+ 437              	.LVL33:
+ 438 012a 0646     		mov	r6, r0
+ 439 012c 0F46     		mov	r7, r1
+ 440              		.loc 1 76 147 view .LVU97
+ 441 012e 95F91A00 		ldrsb	r0, [r5, #26]
+ 442 0132 FFF7FEFF 		bl	__aeabi_i2f
+ 443              	.LVL34:
+ 444              		.loc 1 76 175 view .LVU98
+ 445 0136 5349     		ldr	r1, .L35+36
+ 446 0138 FFF7FEFF 		bl	__aeabi_fdiv
+ 447              	.LVL35:
+ 448 013c FFF7FEFF 		bl	__aeabi_f2d
+ 449              	.LVL36:
+ 450              		.loc 1 76 144 view .LVU99
+ 451 0140 0022     		movs	r2, #0
+ 452 0142 514B     		ldr	r3, .L35+40
+ 453 0144 FFF7FEFF 		bl	__aeabi_dmul
+ 454              	.LVL37:
+ 455 0148 0246     		mov	r2, r0
+ 456 014a 0B46     		mov	r3, r1
+ 457              		.loc 1 76 127 view .LVU100
+ 458 014c 0020     		movs	r0, #0
+ 459 014e 4F49     		ldr	r1, .L35+44
+ 460 0150 FFF7FEFF 		bl	__aeabi_dsub
+ 461              	.LVL38:
+ 462              		.loc 1 76 9 view .LVU101
+ 463 0154 FFF7FEFF 		bl	__aeabi_d2uiz
+ 464              	.LVL39:
+ 465 0158 C5B2     		uxtb	r5, r0
+ 466 015a 3046     		mov	r0, r6
+ 467 015c 3946     		mov	r1, r7
+ 468 015e FFF7FEFF 		bl	__aeabi_d2uiz
+ 469              	.LVL40:
+ 470 0162 2346     		mov	r3, r4
+ 471 0164 0222     		movs	r2, #2
+ 472 0166 2946     		mov	r1, r5
+ 473 0168 C0B2     		uxtb	r0, r0
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 11
+
+
+ 474 016a FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 475              	.LVL41:
+  77:Application/menu_task.c ****         OLED_DrawRectangle(128 - 30 - 35 / 1.5, 30, 35 / 1.5, 42 / 1.5, 0);
+ 476              		.loc 1 77 9 is_stmt 1 view .LVU102
+ 477 016e 0094     		str	r4, [sp]
+ 478 0170 1C23     		movs	r3, #28
+ 479 0172 1722     		movs	r2, #23
+ 480 0174 1E21     		movs	r1, #30
+ 481 0176 4A20     		movs	r0, #74
+ 482 0178 FFF7FEFF 		bl	OLED_DrawRectangle
+ 483              	.LVL42:
+  78:Application/menu_task.c ****         OLED_DrawFilledCircle(128 - 30 - 35 / 1.5 + (35 / 1.5) / 2 + (35 / 1.5) / 2 * ((float)rc->r
+ 484              		.loc 1 78 9 view .LVU103
+ 485              		.loc 1 78 97 is_stmt 0 view .LVU104
+ 486 017c D8F80050 		ldr	r5, [r8]
+ 487              		.loc 1 78 88 view .LVU105
+ 488 0180 95F91C00 		ldrsb	r0, [r5, #28]
+ 489 0184 FFF7FEFF 		bl	__aeabi_i2f
+ 490              	.LVL43:
+ 491              		.loc 1 78 116 view .LVU106
+ 492 0188 3E49     		ldr	r1, .L35+36
+ 493 018a FFF7FEFF 		bl	__aeabi_fdiv
+ 494              	.LVL44:
+ 495 018e FFF7FEFF 		bl	__aeabi_f2d
+ 496              	.LVL45:
+ 497              		.loc 1 78 85 view .LVU107
+ 498 0192 33A3     		adr	r3, .L35
+ 499 0194 D3E90023 		ldrd	r2, [r3]
+ 500 0198 FFF7FEFF 		bl	__aeabi_dmul
+ 501              	.LVL46:
+ 502              		.loc 1 78 68 view .LVU108
+ 503 019c 34A3     		adr	r3, .L35+16
+ 504 019e D3E90023 		ldrd	r2, [r3]
+ 505 01a2 FFF7FEFF 		bl	__aeabi_dadd
+ 506              	.LVL47:
+ 507 01a6 0646     		mov	r6, r0
+ 508 01a8 0F46     		mov	r7, r1
+ 509              		.loc 1 78 164 view .LVU109
+ 510 01aa 95F91B00 		ldrsb	r0, [r5, #27]
+ 511 01ae FFF7FEFF 		bl	__aeabi_i2f
+ 512              	.LVL48:
+ 513              		.loc 1 78 192 view .LVU110
+ 514 01b2 3449     		ldr	r1, .L35+36
+ 515 01b4 FFF7FEFF 		bl	__aeabi_fdiv
+ 516              	.LVL49:
+ 517 01b8 FFF7FEFF 		bl	__aeabi_f2d
+ 518              	.LVL50:
+ 519              		.loc 1 78 161 view .LVU111
+ 520 01bc 0022     		movs	r2, #0
+ 521 01be 324B     		ldr	r3, .L35+40
+ 522 01c0 FFF7FEFF 		bl	__aeabi_dmul
+ 523              	.LVL51:
+ 524 01c4 0246     		mov	r2, r0
+ 525 01c6 0B46     		mov	r3, r1
+ 526              		.loc 1 78 144 view .LVU112
+ 527 01c8 0020     		movs	r0, #0
+ 528 01ca 3049     		ldr	r1, .L35+44
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 12
+
+
+ 529 01cc FFF7FEFF 		bl	__aeabi_dsub
+ 530              	.LVL52:
+ 531              		.loc 1 78 9 view .LVU113
+ 532 01d0 FFF7FEFF 		bl	__aeabi_d2uiz
+ 533              	.LVL53:
+ 534 01d4 C5B2     		uxtb	r5, r0
+ 535 01d6 3046     		mov	r0, r6
+ 536 01d8 3946     		mov	r1, r7
+ 537 01da FFF7FEFF 		bl	__aeabi_d2uiz
+ 538              	.LVL54:
+ 539 01de 2346     		mov	r3, r4
+ 540 01e0 0222     		movs	r2, #2
+ 541 01e2 2946     		mov	r1, r5
+ 542 01e4 C0B2     		uxtb	r0, r0
+ 543 01e6 FFF7FEFF 		bl	OLED_DrawFilledCircle
+ 544              	.LVL55:
+  79:Application/menu_task.c ****         OLED_ShowFrame();
+ 545              		.loc 1 79 9 is_stmt 1 view .LVU114
+ 546 01ea FFF7FEFF 		bl	OLED_ShowFrame
+ 547              	.LVL56:
+  80:Application/menu_task.c **** 
+  81:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
+ 548              		.loc 1 81 9 view .LVU115
+ 549              		.loc 1 81 13 is_stmt 0 view .LVU116
+ 550 01ee 0620     		movs	r0, #6
+ 551 01f0 FFF7FEFF 		bl	menu_command_callback
+ 552              	.LVL57:
+ 553              		.loc 1 81 12 view .LVU117
+ 554 01f4 80BB     		cbnz	r0, .L17
+  82:Application/menu_task.c ****             break;
+  83:Application/menu_task.c ****         osDelay(5);
+ 555              		.loc 1 83 9 is_stmt 1 view .LVU118
+ 556 01f6 0520     		movs	r0, #5
+ 557 01f8 FFF7FEFF 		bl	osDelay
+ 558              	.LVL58:
   43:Application/menu_task.c ****     {
- 440              		.loc 1 43 11 view .LVU99
- 441              	.L33:
+ 559              		.loc 1 43 11 view .LVU119
+ 560              	.L33:
   43:Application/menu_task.c ****     {
- 442              		.loc 1 43 5 view .LVU100
+ 561              		.loc 1 43 5 view .LVU120
   45:Application/menu_task.c ****         for (int i = 0; i < 2; i++)
- 443              		.loc 1 45 9 view .LVU101
- 444 0126 FFF7FEFF 		bl	OLED_NewFrame
- 445              	.LVL35:
+ 562              		.loc 1 45 9 view .LVU121
+ 563 01fc FFF7FEFF 		bl	OLED_NewFrame
+ 564              	.LVL59:
   46:Application/menu_task.c ****         {
- 446              		.loc 1 46 9 view .LVU102
- 447              	.LBB5:
+ 565              		.loc 1 46 9 view .LVU122
+ 566              	.LBB5:
   46:Application/menu_task.c ****         {
- 448              		.loc 1 46 14 view .LVU103
+ 567              		.loc 1 46 14 view .LVU123
   46:Application/menu_task.c ****         {
- 449              		.loc 1 46 18 is_stmt 0 view .LVU104
- 450 012a 0024     		movs	r4, #0
+ 568              		.loc 1 46 18 is_stmt 0 view .LVU124
+ 569 0200 0024     		movs	r4, #0
   46:Application/menu_task.c ****         {
- 451              		.loc 1 46 9 view .LVU105
- 452 012c 87E7     		b	.L18
- 453              	.LVL36:
- 454              	.L20:
+ 570              		.loc 1 46 9 view .LVU125
+ 571 0202 1DE7     		b	.L18
+ 572              	.LVL60:
+ 573              	.L20:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 13
+
+
   46:Application/menu_task.c ****         {
- 455              		.loc 1 46 9 view .LVU106
- 456              	.LBE5:
+ 574              		.loc 1 46 9 view .LVU126
+ 575              	.LBE5:
   53:Application/menu_task.c ****         if (rc->info->key.bits.sw2)
- 457              		.loc 1 53 13 is_stmt 1 view .LVU107
- 458 012e 0023     		movs	r3, #0
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 11
-
-
- 459 0130 0522     		movs	r2, #5
- 460 0132 1921     		movs	r1, #25
- 461 0134 1020     		movs	r0, #16
- 462 0136 FFF7FEFF 		bl	OLED_DrawCircle
- 463              	.LVL37:
- 464 013a 8FE7     		b	.L21
- 465              	.L22:
+ 576              		.loc 1 53 13 is_stmt 1 view .LVU127
+ 577 0204 0023     		movs	r3, #0
+ 578 0206 0522     		movs	r2, #5
+ 579 0208 1921     		movs	r1, #25
+ 580 020a 1020     		movs	r0, #16
+ 581 020c FFF7FEFF 		bl	OLED_DrawCircle
+ 582              	.LVL61:
+ 583 0210 26E7     		b	.L21
+ 584              	.L22:
   57:Application/menu_task.c ****         if (rc->info->key.bits.key0)
- 466              		.loc 1 57 13 view .LVU108
- 467 013c 0023     		movs	r3, #0
- 468 013e 0522     		movs	r2, #5
- 469 0140 1921     		movs	r1, #25
- 470 0142 7020     		movs	r0, #112
- 471 0144 FFF7FEFF 		bl	OLED_DrawCircle
- 472              	.LVL38:
- 473 0148 95E7     		b	.L23
- 474              	.L24:
+ 585              		.loc 1 57 13 view .LVU128
+ 586 0212 0023     		movs	r3, #0
+ 587 0214 0522     		movs	r2, #5
+ 588 0216 1921     		movs	r1, #25
+ 589 0218 7020     		movs	r0, #112
+ 590 021a FFF7FEFF 		bl	OLED_DrawCircle
+ 591              	.LVL62:
+ 592 021e 2DE7     		b	.L23
+ 593              	.L24:
   61:Application/menu_task.c ****         if (rc->info->key.bits.key1)
- 475              		.loc 1 61 13 view .LVU109
- 476 014a 0023     		movs	r3, #0
- 477 014c 0322     		movs	r2, #3
- 478 014e 1721     		movs	r1, #23
- 479 0150 2120     		movs	r0, #33
- 480 0152 FFF7FEFF 		bl	OLED_DrawCircle
- 481              	.LVL39:
- 482 0156 9BE7     		b	.L25
- 483              	.L26:
+ 594              		.loc 1 61 13 view .LVU129
+ 595 0220 0023     		movs	r3, #0
+ 596 0222 0322     		movs	r2, #3
+ 597 0224 1721     		movs	r1, #23
+ 598 0226 2120     		movs	r0, #33
+ 599 0228 FFF7FEFF 		bl	OLED_DrawCircle
+ 600              	.LVL63:
+ 601 022c 34E7     		b	.L25
+ 602              	.L26:
   65:Application/menu_task.c ****         if (rc->info->key.bits.key2)
- 484              		.loc 1 65 13 view .LVU110
- 485 0158 0023     		movs	r3, #0
- 486 015a 0322     		movs	r2, #3
- 487 015c 1721     		movs	r1, #23
- 488 015e 3320     		movs	r0, #51
- 489 0160 FFF7FEFF 		bl	OLED_DrawCircle
- 490              	.LVL40:
- 491 0164 A1E7     		b	.L27
- 492              	.L28:
+ 603              		.loc 1 65 13 view .LVU130
+ 604 022e 0023     		movs	r3, #0
+ 605 0230 0322     		movs	r2, #3
+ 606 0232 1721     		movs	r1, #23
+ 607 0234 3320     		movs	r0, #51
+ 608 0236 FFF7FEFF 		bl	OLED_DrawCircle
+ 609              	.LVL64:
+ 610 023a 3BE7     		b	.L27
+ 611              	.L28:
   69:Application/menu_task.c ****         if (rc->info->key.bits.key3)
- 493              		.loc 1 69 13 view .LVU111
- 494 0166 0023     		movs	r3, #0
- 495 0168 0322     		movs	r2, #3
- 496 016a 1721     		movs	r1, #23
- 497 016c 4C20     		movs	r0, #76
- 498 016e FFF7FEFF 		bl	OLED_DrawCircle
- 499              	.LVL41:
- 500 0172 A7E7     		b	.L29
- 501              	.L30:
-  73:Application/menu_task.c ****         OLED_DrawRectangle(30, 30, 35 / 1.5, 42 / 1.5, 0);
- 502              		.loc 1 73 13 view .LVU112
- 503 0174 0023     		movs	r3, #0
- 504 0176 0322     		movs	r2, #3
- 505 0178 1721     		movs	r1, #23
- 506 017a 5C20     		movs	r0, #92
- 507 017c FFF7FEFF 		bl	OLED_DrawCircle
- 508              	.LVL42:
- 509 0180 ADE7     		b	.L31
- 510              	.LVL43:
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 12
+ 612              		.loc 1 69 13 view .LVU131
+ 613 023c 0023     		movs	r3, #0
+ 614 023e 0322     		movs	r2, #3
+ 615 0240 1721     		movs	r1, #23
+ 616 0242 4C20     		movs	r0, #76
+ 617 0244 FFF7FEFF 		bl	OLED_DrawCircle
+ 618              	.LVL65:
+ 619 0248 42E7     		b	.L29
+ 620              	.L30:
+  73:Application/menu_task.c ****         // 0L-> 1L↑ 2R↑ 3R->
+ 621              		.loc 1 73 13 view .LVU132
+ 622 024a 0023     		movs	r3, #0
+ 623 024c 0322     		movs	r2, #3
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 14
 
 
- 511              	.L17:
-  83:Application/menu_task.c ****     }
-  84:Application/menu_task.c **** }
- 512              		.loc 1 84 1 is_stmt 0 view .LVU113
- 513 0182 02B0     		add	sp, sp, #8
- 514              	.LCFI9:
- 515              		.cfi_def_cfa_offset 8
- 516              		@ sp needed
- 517 0184 10BD     		pop	{r4, pc}
- 518              	.L36:
- 519 0186 00BF     		.align	2
- 520              	.L35:
- 521 0188 00000000 		.word	.LANCHOR0
- 522 018c 00007F43 		.word	1132396544
- 523 0190 00004842 		.word	1112014848
- 524              		.cfi_endproc
- 525              	.LFE76:
- 527              		.section	.rodata.MENU_Calibration.str1.4,"aMS",%progbits,1
- 528              		.align	2
- 529              	.LC0:
- 530 0000 E69187E6 		.ascii	"\346\221\207\346\235\206\346\240\241\345\207\206\000"
- 530      9D86E6A0 
- 530      A1E58786 
- 530      00
- 531 000d 000000   		.align	2
- 532              	.LC1:
- 533 0010 E5B086E6 		.ascii	"\345\260\206\346\211\200\346\234\211\346\221\207\346"
- 533      8980E69C 
- 533      89E69187 
- 533      E6
- 534 001d 9D86E5BD 		.ascii	"\235\206\345\275\222\344\270\255\000"
- 534      92E4B8AD 
- 534      00
- 535 0026 0000     		.align	2
- 536              	.LC2:
- 537 0028 E68C89E4 		.ascii	"\346\214\211\344\270\213\347\241\256\350\256\244\351"
- 537      B88BE7A1 
- 537      AEE8AEA4 
- 537      E9
- 538 0035 94AEE6A0 		.ascii	"\224\256\346\240\241\345\207\206\000"
- 538      A1E58786 
- 538      00
- 539 003e 0000     		.align	2
- 540              	.LC3:
- 541 0040 E6A0A1E5 		.ascii	"\346\240\241\345\207\206\344\270\255\000"
- 541      8786E4B8 
- 541      AD00
- 542 004a 0000     		.align	2
- 543              	.LC4:
- 544 004c E6A0A1E5 		.ascii	"\346\240\241\345\207\206\345\256\214\346\210\220\000"
- 544      8786E5AE 
- 544      8CE68890 
- 544      00
- 545 0059 000000   		.align	2
- 546              	.LC5:
- 547 005c E68C89E4 		.ascii	"\346\214\211\344\270\213\347\241\256\350\256\244\351"
- 547      B88BE7A1 
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 13
+ 624 024e 1721     		movs	r1, #23
+ 625 0250 5C20     		movs	r0, #92
+ 626 0252 FFF7FEFF 		bl	OLED_DrawCircle
+ 627              	.LVL66:
+ 628 0256 49E7     		b	.L31
+ 629              	.LVL67:
+ 630              	.L17:
+  84:Application/menu_task.c ****     }
+  85:Application/menu_task.c **** }
+ 631              		.loc 1 85 1 is_stmt 0 view .LVU133
+ 632 0258 02B0     		add	sp, sp, #8
+ 633              	.LCFI9:
+ 634              		.cfi_def_cfa_offset 24
+ 635              		@ sp needed
+ 636 025a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 637              	.L36:
+ 638 025e 00BF     		.align	3
+ 639              	.L35:
+ 640 0260 55555555 		.word	1431655765
+ 641 0264 55552740 		.word	1076319573
+ 642 0268 55555555 		.word	1431655765
+ 643 026c 55D54440 		.word	1078252885
+ 644 0270 56555555 		.word	1431655766
+ 645 0274 55955540 		.word	1079350613
+ 646 0278 00000000 		.word	.LANCHOR0
+ 647 027c 00007F43 		.word	1132396544
+ 648 0280 00004842 		.word	1112014848
+ 649 0284 0000D242 		.word	1121058816
+ 650 0288 00002C40 		.word	1076625408
+ 651 028c 00004640 		.word	1078329344
+ 652              		.cfi_endproc
+ 653              	.LFE76:
+ 655              		.section	.rodata.MENU_Calibration.str1.4,"aMS",%progbits,1
+ 656              		.align	2
+ 657              	.LC0:
+ 658 0000 E69187E6 		.ascii	"\346\221\207\346\235\206\346\240\241\345\207\206\000"
+ 658      9D86E6A0 
+ 658      A1E58786 
+ 658      00
+ 659 000d 000000   		.align	2
+ 660              	.LC1:
+ 661 0010 E5B086E6 		.ascii	"\345\260\206\346\211\200\346\234\211\346\221\207\346"
+ 661      8980E69C 
+ 661      89E69187 
+ 661      E6
+ 662 001d 9D86E5BD 		.ascii	"\235\206\345\275\222\344\270\255\000"
+ 662      92E4B8AD 
+ 662      00
+ 663 0026 0000     		.align	2
+ 664              	.LC2:
+ 665 0028 E68C89E4 		.ascii	"\346\214\211\344\270\213\347\241\256\350\256\244\351"
+ 665      B88BE7A1 
+ 665      AEE8AEA4 
+ 665      E9
+ 666 0035 94AEE6A0 		.ascii	"\224\256\346\240\241\345\207\206\000"
+ 666      A1E58786 
+ 666      00
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 15
 
 
- 547      AEE8AEA4 
- 547      E9
- 548 0069 94AEE987 		.ascii	"\224\256\351\207\215\346\226\260\346\240\241\345\207"
- 548      8DE696B0 
- 548      E6A0A1E5 
- 548      87
- 549 0076 8600     		.ascii	"\206\000"
- 550              		.align	2
- 551              	.LC6:
- 552 0078 E68C89E4 		.ascii	"\346\214\211\344\270\213\350\277\224\345\233\236\351"
- 552      B88BE8BF 
- 552      94E59B9E 
- 552      E9
- 553 0085 94AEE8BF 		.ascii	"\224\256\350\277\224\345\233\236\350\217\234\345\215"
- 553      94E59B9E 
- 553      E88F9CE5 
- 553      8D
- 554 0092 9500     		.ascii	"\225\000"
- 555              		.section	.text.MENU_Calibration,"ax",%progbits
- 556              		.align	1
- 557              		.global	MENU_Calibration
- 558              		.syntax unified
- 559              		.thumb
- 560              		.thumb_func
- 562              	MENU_Calibration:
- 563              	.LFB77:
-  85:Application/menu_task.c **** 
-  86:Application/menu_task.c **** void MENU_Calibration(void)
-  87:Application/menu_task.c **** {
- 564              		.loc 1 87 1 is_stmt 1 view -0
- 565              		.cfi_startproc
- 566              		@ args = 0, pretend = 0, frame = 0
- 567              		@ frame_needed = 0, uses_anonymous_args = 0
- 568 0000 30B5     		push	{r4, r5, lr}
- 569              	.LCFI10:
- 570              		.cfi_def_cfa_offset 12
- 571              		.cfi_offset 4, -12
- 572              		.cfi_offset 5, -8
- 573              		.cfi_offset 14, -4
- 574 0002 83B0     		sub	sp, sp, #12
- 575              	.LCFI11:
- 576              		.cfi_def_cfa_offset 24
- 577 0004 11E0     		b	.L53
- 578              	.L38:
- 579              	.LBB6:
-  88:Application/menu_task.c ****     while (1)
+ 667 003e 0000     		.align	2
+ 668              	.LC3:
+ 669 0040 E6A0A1E5 		.ascii	"\346\240\241\345\207\206\344\270\255\000"
+ 669      8786E4B8 
+ 669      AD00
+ 670 004a 0000     		.align	2
+ 671              	.LC4:
+ 672 004c E6A0A1E5 		.ascii	"\346\240\241\345\207\206\345\256\214\346\210\220\000"
+ 672      8786E5AE 
+ 672      8CE68890 
+ 672      00
+ 673 0059 000000   		.align	2
+ 674              	.LC5:
+ 675 005c E68C89E4 		.ascii	"\346\214\211\344\270\213\347\241\256\350\256\244\351"
+ 675      B88BE7A1 
+ 675      AEE8AEA4 
+ 675      E9
+ 676 0069 94AEE987 		.ascii	"\224\256\351\207\215\346\226\260\346\240\241\345\207"
+ 676      8DE696B0 
+ 676      E6A0A1E5 
+ 676      87
+ 677 0076 8600     		.ascii	"\206\000"
+ 678              		.align	2
+ 679              	.LC6:
+ 680 0078 E68C89E4 		.ascii	"\346\214\211\344\270\213\350\277\224\345\233\236\351"
+ 680      B88BE8BF 
+ 680      94E59B9E 
+ 680      E9
+ 681 0085 94AEE8BF 		.ascii	"\224\256\350\277\224\345\233\236\350\217\234\345\215"
+ 681      94E59B9E 
+ 681      E88F9CE5 
+ 681      8D
+ 682 0092 9500     		.ascii	"\225\000"
+ 683              		.section	.text.MENU_Calibration,"ax",%progbits
+ 684              		.align	1
+ 685              		.global	MENU_Calibration
+ 686              		.syntax unified
+ 687              		.thumb
+ 688              		.thumb_func
+ 690              	MENU_Calibration:
+ 691              	.LFB77:
+  86:Application/menu_task.c **** 
+  87:Application/menu_task.c **** void MENU_Calibration(void)
+  88:Application/menu_task.c **** {
+ 692              		.loc 1 88 1 is_stmt 1 view -0
+ 693              		.cfi_startproc
+ 694              		@ args = 0, pretend = 0, frame = 0
+ 695              		@ frame_needed = 0, uses_anonymous_args = 0
+ 696 0000 30B5     		push	{r4, r5, lr}
+ 697              	.LCFI10:
+ 698              		.cfi_def_cfa_offset 12
+ 699              		.cfi_offset 4, -12
+ 700              		.cfi_offset 5, -8
+ 701              		.cfi_offset 14, -4
+ 702 0002 83B0     		sub	sp, sp, #12
+ 703              	.LCFI11:
+ 704              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 16
+
+
+ 705 0004 11E0     		b	.L53
+ 706              	.L38:
+ 707              	.LBB6:
+  89:Application/menu_task.c ****     while (1)
+  90:Application/menu_task.c ****     {
+  91:Application/menu_task.c ****         // 状态机思想
+  92:Application/menu_task.c ****         static uint8_t state = 0;
+  93:Application/menu_task.c ****         static uint32_t adc_sum[6];
+  94:Application/menu_task.c ****         static uint16_t adc_cnt = 0;
+  95:Application/menu_task.c ****         if (state == 0)
+  96:Application/menu_task.c ****         {
+  97:Application/menu_task.c ****             // 显示校准提示：plz Center all joysticks.
+  98:Application/menu_task.c ****             // 按下确认按键后 ，进行校准
+  99:Application/menu_task.c ****             OLED_NewFrame();
+ 100:Application/menu_task.c ****             OLED_PrintString(35, 10, "摇杆校准", &font16x16, 0);
+ 101:Application/menu_task.c ****             OLED_PrintString(17, 30, "将所有摇杆归中", &font14x14, 0);
+ 102:Application/menu_task.c ****             OLED_PrintString(17, 46, "按下确认键校准", &font14x14, 0);
+ 103:Application/menu_task.c ****             OLED_ShowFrame();
+ 104:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
+ 105:Application/menu_task.c ****                 state = 1;
+ 106:Application/menu_task.c ****         }
+ 107:Application/menu_task.c ****         if (state == 1)
+ 708              		.loc 1 107 9 view .LVU135
+ 709              		.loc 1 107 19 is_stmt 0 view .LVU136
+ 710 0006 784B     		ldr	r3, .L59
+ 711 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 712              		.loc 1 107 12 view .LVU137
+ 713 000a 012B     		cmp	r3, #1
+ 714 000c 35D0     		beq	.L56
+ 715              	.L39:
+ 108:Application/menu_task.c ****         {
+ 109:Application/menu_task.c ****             OLED_NewFrame();
+ 110:Application/menu_task.c ****             OLED_PrintString(42, 15, "校准中", &font16x16, 0);
+ 111:Application/menu_task.c ****             OLED_DrawFilledRectangle(16, 45, ((float)adc_cnt / 800) * 100, 12, 0);
+ 112:Application/menu_task.c ****             OLED_ShowFrame();
+ 113:Application/menu_task.c ****             for (int i = 0; i < 4; i++)
+ 114:Application/menu_task.c ****             {
+ 115:Application/menu_task.c ****                 adc_sum[2 + i] += rc->info->rockerVal[i];
+ 116:Application/menu_task.c ****                 adc_cnt++;
+ 117:Application/menu_task.c ****             }
+ 118:Application/menu_task.c ****             for (int i = 0; i < 2; i++)
+ 119:Application/menu_task.c ****             {
+ 120:Application/menu_task.c ****                 adc_sum[i] += rc->info->pVal[i];
+ 121:Application/menu_task.c ****             }
+ 122:Application/menu_task.c ****             if ((adc_cnt / 4) > 200) // 校准完成
+ 123:Application/menu_task.c ****             {
+ 124:Application/menu_task.c ****                 adc_cnt /= 4;
+ 125:Application/menu_task.c ****                 for (int i = 0; i < 2; i++)
+ 126:Application/menu_task.c ****                 {
+ 127:Application/menu_task.c ****                     rc->offset_rocker[i] = adc_sum[i] / adc_cnt;
+ 128:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 129:Application/menu_task.c ****                 }
+ 130:Application/menu_task.c ****                 for (int i = 0; i < 4; i++)
+ 131:Application/menu_task.c ****                 {
+ 132:Application/menu_task.c ****                     rc->offset_rocker[2 + i] = adc_sum[2 + i] / adc_cnt;
+ 133:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 134:Application/menu_task.c ****                 }
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 17
+
+
+ 135:Application/menu_task.c ****                 write_offset_rocker_to_flash(rc->offset_rocker);
+ 136:Application/menu_task.c ****                 adc_cnt = 0;
+ 137:Application/menu_task.c ****                 state = 2;
+ 138:Application/menu_task.c ****             }
+ 139:Application/menu_task.c ****         }
+ 140:Application/menu_task.c ****         if (state == 2)
+ 716              		.loc 1 140 9 is_stmt 1 view .LVU138
+ 717              		.loc 1 140 19 is_stmt 0 view .LVU139
+ 718 000e 764B     		ldr	r3, .L59
+ 719 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 720              		.loc 1 140 12 view .LVU140
+ 721 0012 022B     		cmp	r3, #2
+ 722 0014 00F0B480 		beq	.L57
+ 723              	.L48:
+ 141:Application/menu_task.c ****         {
+ 142:Application/menu_task.c ****             OLED_NewFrame();
+ 143:Application/menu_task.c ****             OLED_PrintString(35, 10, "校准完成", &font16x16, 0);
+ 144:Application/menu_task.c ****             OLED_PrintString(3, 30, "按下确认键重新校准", &font14x14, 0);
+ 145:Application/menu_task.c ****             OLED_PrintString(3, 46, "按下返回键返回菜单", &font14x14, 0);
+ 146:Application/menu_task.c ****             OLED_ShowFrame();
+ 147:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
+ 148:Application/menu_task.c ****                 state = 1;
+ 149:Application/menu_task.c ****         }
+ 150:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
+ 724              		.loc 1 150 9 is_stmt 1 view .LVU141
+ 725              		.loc 1 150 13 is_stmt 0 view .LVU142
+ 726 0018 0620     		movs	r0, #6
+ 727 001a FFF7FEFF 		bl	menu_command_callback
+ 728              	.LVL68:
+ 729              		.loc 1 150 12 view .LVU143
+ 730 001e 0028     		cmp	r0, #0
+ 731 0020 40F0D380 		bne	.L58
+ 151:Application/menu_task.c ****         {
+ 152:Application/menu_task.c ****             state = 0;
+ 153:Application/menu_task.c ****             adc_cnt = 0;
+ 154:Application/menu_task.c ****             for (int i = 0; i < 6; i++)
+ 155:Application/menu_task.c ****             {
+ 156:Application/menu_task.c ****                 adc_sum[i] = 0;
+ 157:Application/menu_task.c ****             }
+ 158:Application/menu_task.c ****             break;
+ 159:Application/menu_task.c ****         }
+ 160:Application/menu_task.c **** 
+ 161:Application/menu_task.c ****         osDelay(5);
+ 732              		.loc 1 161 9 is_stmt 1 view .LVU144
+ 733 0024 0520     		movs	r0, #5
+ 734 0026 FFF7FEFF 		bl	osDelay
+ 735              	.LVL69:
+ 736              	.LBE6:
   89:Application/menu_task.c ****     {
-  90:Application/menu_task.c ****         // 状态机思想
-  91:Application/menu_task.c ****         static uint8_t state = 0;
+ 737              		.loc 1 89 11 view .LVU145
+ 738              	.L53:
+  89:Application/menu_task.c ****     {
+ 739              		.loc 1 89 5 view .LVU146
+ 740              	.LBB12:
   92:Application/menu_task.c ****         static uint32_t adc_sum[6];
+ 741              		.loc 1 92 9 view .LVU147
   93:Application/menu_task.c ****         static uint16_t adc_cnt = 0;
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 18
+
+
+ 742              		.loc 1 93 9 view .LVU148
   94:Application/menu_task.c ****         if (state == 0)
+ 743              		.loc 1 94 9 view .LVU149
   95:Application/menu_task.c ****         {
-  96:Application/menu_task.c ****             // 显示校准提示：plz Center all joysticks.
-  97:Application/menu_task.c ****             // 按下确认按键后 ，进行校准
-  98:Application/menu_task.c ****             OLED_NewFrame();
+ 744              		.loc 1 95 9 view .LVU150
+  95:Application/menu_task.c ****         {
+ 745              		.loc 1 95 19 is_stmt 0 view .LVU151
+ 746 002a 6F4B     		ldr	r3, .L59
+ 747 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  95:Application/menu_task.c ****         {
+ 748              		.loc 1 95 12 view .LVU152
+ 749 002e 002B     		cmp	r3, #0
+ 750 0030 E9D1     		bne	.L38
   99:Application/menu_task.c ****             OLED_PrintString(35, 10, "摇杆校准", &font16x16, 0);
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 14
-
-
+ 751              		.loc 1 99 13 is_stmt 1 view .LVU153
+ 752 0032 FFF7FEFF 		bl	OLED_NewFrame
+ 753              	.LVL70:
  100:Application/menu_task.c ****             OLED_PrintString(17, 30, "将所有摇杆归中", &font14x14, 0);
+ 754              		.loc 1 100 13 view .LVU154
+ 755 0036 0024     		movs	r4, #0
+ 756 0038 0094     		str	r4, [sp]
+ 757 003a 6C4B     		ldr	r3, .L59+4
+ 758 003c 6C4A     		ldr	r2, .L59+8
+ 759 003e 0A21     		movs	r1, #10
+ 760 0040 2320     		movs	r0, #35
+ 761 0042 FFF7FEFF 		bl	OLED_PrintString
+ 762              	.LVL71:
  101:Application/menu_task.c ****             OLED_PrintString(17, 46, "按下确认键校准", &font14x14, 0);
+ 763              		.loc 1 101 13 view .LVU155
+ 764 0046 6B4D     		ldr	r5, .L59+12
+ 765 0048 0094     		str	r4, [sp]
+ 766 004a 2B46     		mov	r3, r5
+ 767 004c 6A4A     		ldr	r2, .L59+16
+ 768 004e 1E21     		movs	r1, #30
+ 769 0050 1120     		movs	r0, #17
+ 770 0052 FFF7FEFF 		bl	OLED_PrintString
+ 771              	.LVL72:
  102:Application/menu_task.c ****             OLED_ShowFrame();
+ 772              		.loc 1 102 13 view .LVU156
+ 773 0056 0094     		str	r4, [sp]
+ 774 0058 2B46     		mov	r3, r5
+ 775 005a 684A     		ldr	r2, .L59+20
+ 776 005c 2E21     		movs	r1, #46
+ 777 005e 1120     		movs	r0, #17
+ 778 0060 FFF7FEFF 		bl	OLED_PrintString
+ 779              	.LVL73:
  103:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
+ 780              		.loc 1 103 13 view .LVU157
+ 781 0064 FFF7FEFF 		bl	OLED_ShowFrame
+ 782              	.LVL74:
  104:Application/menu_task.c ****                 state = 1;
+ 783              		.loc 1 104 13 view .LVU158
+ 104:Application/menu_task.c ****                 state = 1;
+ 784              		.loc 1 104 17 is_stmt 0 view .LVU159
+ 785 0068 0520     		movs	r0, #5
+ 786 006a FFF7FEFF 		bl	menu_command_callback
+ 787              	.LVL75:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 19
+
+
+ 104:Application/menu_task.c ****                 state = 1;
+ 788              		.loc 1 104 16 view .LVU160
+ 789 006e 0028     		cmp	r0, #0
+ 790 0070 C9D0     		beq	.L38
  105:Application/menu_task.c ****         }
- 106:Application/menu_task.c ****         if (state == 1)
- 580              		.loc 1 106 9 view .LVU115
- 581              		.loc 1 106 19 is_stmt 0 view .LVU116
- 582 0006 784B     		ldr	r3, .L59
- 583 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 584              		.loc 1 106 12 view .LVU117
- 585 000a 012B     		cmp	r3, #1
- 586 000c 35D0     		beq	.L56
- 587              	.L39:
- 107:Application/menu_task.c ****         {
- 108:Application/menu_task.c ****             OLED_NewFrame();
+ 791              		.loc 1 105 17 is_stmt 1 view .LVU161
+ 105:Application/menu_task.c ****         }
+ 792              		.loc 1 105 23 is_stmt 0 view .LVU162
+ 793 0072 5D4B     		ldr	r3, .L59
+ 794 0074 0122     		movs	r2, #1
+ 795 0076 1A70     		strb	r2, [r3]
+ 796 0078 C5E7     		b	.L38
+ 797              	.L56:
  109:Application/menu_task.c ****             OLED_PrintString(42, 15, "校准中", &font16x16, 0);
+ 798              		.loc 1 109 13 is_stmt 1 view .LVU163
+ 799 007a FFF7FEFF 		bl	OLED_NewFrame
+ 800              	.LVL76:
  110:Application/menu_task.c ****             OLED_DrawFilledRectangle(16, 45, ((float)adc_cnt / 800) * 100, 12, 0);
+ 801              		.loc 1 110 13 view .LVU164
+ 802 007e 0024     		movs	r4, #0
+ 803 0080 0094     		str	r4, [sp]
+ 804 0082 5A4B     		ldr	r3, .L59+4
+ 805 0084 5E4A     		ldr	r2, .L59+24
+ 806 0086 0F21     		movs	r1, #15
+ 807 0088 2A20     		movs	r0, #42
+ 808 008a FFF7FEFF 		bl	OLED_PrintString
+ 809              	.LVL77:
  111:Application/menu_task.c ****             OLED_ShowFrame();
+ 810              		.loc 1 111 13 view .LVU165
+ 111:Application/menu_task.c ****             OLED_ShowFrame();
+ 811              		.loc 1 111 47 is_stmt 0 view .LVU166
+ 812 008e 5D4B     		ldr	r3, .L59+28
+ 813 0090 1888     		ldrh	r0, [r3]
+ 814 0092 FFF7FEFF 		bl	__aeabi_ui2f
+ 815              	.LVL78:
+ 111:Application/menu_task.c ****             OLED_ShowFrame();
+ 816              		.loc 1 111 62 view .LVU167
+ 817 0096 5C49     		ldr	r1, .L59+32
+ 818 0098 FFF7FEFF 		bl	__aeabi_fdiv
+ 819              	.LVL79:
+ 111:Application/menu_task.c ****             OLED_ShowFrame();
+ 820              		.loc 1 111 69 view .LVU168
+ 821 009c 5B49     		ldr	r1, .L59+36
+ 822 009e FFF7FEFF 		bl	__aeabi_fmul
+ 823              	.LVL80:
+ 111:Application/menu_task.c ****             OLED_ShowFrame();
+ 824              		.loc 1 111 13 view .LVU169
+ 825 00a2 FFF7FEFF 		bl	__aeabi_f2uiz
+ 826              	.LVL81:
+ 827 00a6 0094     		str	r4, [sp]
+ 828 00a8 0C23     		movs	r3, #12
+ 829 00aa C2B2     		uxtb	r2, r0
+ 830 00ac 2D21     		movs	r1, #45
+ 831 00ae 1020     		movs	r0, #16
+ 832 00b0 FFF7FEFF 		bl	OLED_DrawFilledRectangle
+ 833              	.LVL82:
  112:Application/menu_task.c ****             for (int i = 0; i < 4; i++)
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 20
+
+
+ 834              		.loc 1 112 13 is_stmt 1 view .LVU170
+ 835 00b4 FFF7FEFF 		bl	OLED_ShowFrame
+ 836              	.LVL83:
  113:Application/menu_task.c ****             {
- 114:Application/menu_task.c ****                 adc_sum[2 + i] += rc->info->rockerVal[i];
+ 837              		.loc 1 113 13 view .LVU171
+ 838              	.LBB7:
+ 113:Application/menu_task.c ****             {
+ 839              		.loc 1 113 18 view .LVU172
+ 113:Application/menu_task.c ****             {
+ 840              		.loc 1 113 22 is_stmt 0 view .LVU173
+ 841 00b8 2346     		mov	r3, r4
+ 113:Application/menu_task.c ****             {
+ 842              		.loc 1 113 13 view .LVU174
+ 843 00ba 11E0     		b	.L40
+ 844              	.LVL84:
+ 845              	.L41:
  115:Application/menu_task.c ****                 adc_cnt++;
+ 846              		.loc 1 115 17 is_stmt 1 discriminator 3 view .LVU175
+ 115:Application/menu_task.c ****                 adc_cnt++;
+ 847              		.loc 1 115 32 is_stmt 0 discriminator 3 view .LVU176
+ 848 00bc 981C     		adds	r0, r3, #2
+ 115:Application/menu_task.c ****                 adc_cnt++;
+ 849              		.loc 1 115 37 discriminator 3 view .LVU177
+ 850 00be 544A     		ldr	r2, .L59+40
+ 851 00c0 1268     		ldr	r2, [r2]
+ 852 00c2 1268     		ldr	r2, [r2]
+ 115:Application/menu_task.c ****                 adc_cnt++;
+ 853              		.loc 1 115 54 discriminator 3 view .LVU178
+ 854 00c4 02EB4302 		add	r2, r2, r3, lsl #1
+ 855 00c8 D488     		ldrh	r4, [r2, #6]
+ 115:Application/menu_task.c ****                 adc_cnt++;
+ 856              		.loc 1 115 32 discriminator 3 view .LVU179
+ 857 00ca 5249     		ldr	r1, .L59+44
+ 858 00cc 51F82020 		ldr	r2, [r1, r0, lsl #2]
+ 859 00d0 2244     		add	r2, r2, r4
+ 860 00d2 41F82020 		str	r2, [r1, r0, lsl #2]
  116:Application/menu_task.c ****             }
- 117:Application/menu_task.c ****             for (int i = 0; i < 2; i++)
+ 861              		.loc 1 116 17 is_stmt 1 discriminator 3 view .LVU180
+ 116:Application/menu_task.c ****             }
+ 862              		.loc 1 116 24 is_stmt 0 discriminator 3 view .LVU181
+ 863 00d6 4B49     		ldr	r1, .L59+28
+ 864 00d8 0A88     		ldrh	r2, [r1]
+ 865 00da 0132     		adds	r2, r2, #1
+ 866 00dc 0A80     		strh	r2, [r1]	@ movhi
+ 113:Application/menu_task.c ****             {
+ 867              		.loc 1 113 36 is_stmt 1 discriminator 3 view .LVU182
+ 113:Application/menu_task.c ****             {
+ 868              		.loc 1 113 37 is_stmt 0 discriminator 3 view .LVU183
+ 869 00de 0133     		adds	r3, r3, #1
+ 870              	.LVL85:
+ 871              	.L40:
+ 113:Application/menu_task.c ****             {
+ 872              		.loc 1 113 29 is_stmt 1 discriminator 1 view .LVU184
+ 113:Application/menu_task.c ****             {
+ 873              		.loc 1 113 13 is_stmt 0 discriminator 1 view .LVU185
+ 874 00e0 032B     		cmp	r3, #3
+ 875 00e2 EBDD     		ble	.L41
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 21
+
+
+ 876              	.LBE7:
+ 877              	.LBB8:
  118:Application/menu_task.c ****             {
- 119:Application/menu_task.c ****                 adc_sum[i] += rc->info->pVal[i];
+ 878              		.loc 1 118 22 view .LVU186
+ 879 00e4 0023     		movs	r3, #0
+ 880              	.LVL86:
+ 118:Application/menu_task.c ****             {
+ 881              		.loc 1 118 22 view .LVU187
+ 882 00e6 0CE0     		b	.L42
+ 883              	.LVL87:
+ 884              	.L43:
  120:Application/menu_task.c ****             }
- 121:Application/menu_task.c ****             if ((adc_cnt / 4) > 200) // 校准完成
+ 885              		.loc 1 120 17 is_stmt 1 discriminator 3 view .LVU188
+ 120:Application/menu_task.c ****             }
+ 886              		.loc 1 120 33 is_stmt 0 discriminator 3 view .LVU189
+ 887 00e8 494A     		ldr	r2, .L59+40
+ 888 00ea 1268     		ldr	r2, [r2]
+ 889 00ec 1268     		ldr	r2, [r2]
+ 120:Application/menu_task.c ****             }
+ 890              		.loc 1 120 45 discriminator 3 view .LVU190
+ 891 00ee 02EB4302 		add	r2, r2, r3, lsl #1
+ 892 00f2 5088     		ldrh	r0, [r2, #2]
+ 120:Application/menu_task.c ****             }
+ 893              		.loc 1 120 28 discriminator 3 view .LVU191
+ 894 00f4 4749     		ldr	r1, .L59+44
+ 895 00f6 51F82320 		ldr	r2, [r1, r3, lsl #2]
+ 896 00fa 0244     		add	r2, r2, r0
+ 897 00fc 41F82320 		str	r2, [r1, r3, lsl #2]
+ 118:Application/menu_task.c ****             {
+ 898              		.loc 1 118 36 is_stmt 1 discriminator 3 view .LVU192
+ 118:Application/menu_task.c ****             {
+ 899              		.loc 1 118 37 is_stmt 0 discriminator 3 view .LVU193
+ 900 0100 0133     		adds	r3, r3, #1
+ 901              	.LVL88:
+ 902              	.L42:
+ 118:Application/menu_task.c ****             {
+ 903              		.loc 1 118 29 is_stmt 1 discriminator 1 view .LVU194
+ 118:Application/menu_task.c ****             {
+ 904              		.loc 1 118 13 is_stmt 0 discriminator 1 view .LVU195
+ 905 0102 012B     		cmp	r3, #1
+ 906 0104 F0DD     		ble	.L43
+ 907              	.LBE8:
  122:Application/menu_task.c ****             {
- 123:Application/menu_task.c ****                 adc_cnt /= 4;
+ 908              		.loc 1 122 13 is_stmt 1 view .LVU196
+ 122:Application/menu_task.c ****             {
+ 909              		.loc 1 122 31 is_stmt 0 view .LVU197
+ 910 0106 3F4B     		ldr	r3, .L59+28
+ 911              	.LVL89:
+ 122:Application/menu_task.c ****             {
+ 912              		.loc 1 122 31 view .LVU198
+ 913 0108 1B88     		ldrh	r3, [r3]
+ 122:Application/menu_task.c ****             {
+ 914              		.loc 1 122 16 view .LVU199
+ 915 010a B3F5497F 		cmp	r3, #804
+ 916 010e FFF47EAF 		bcc	.L39
  124:Application/menu_task.c ****                 for (int i = 0; i < 2; i++)
+ 917              		.loc 1 124 17 is_stmt 1 view .LVU200
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 22
+
+
+ 124:Application/menu_task.c ****                 for (int i = 0; i < 2; i++)
+ 918              		.loc 1 124 25 is_stmt 0 view .LVU201
+ 919 0112 9D08     		lsrs	r5, r3, #2
+ 920 0114 3B4B     		ldr	r3, .L59+28
+ 921 0116 1D80     		strh	r5, [r3]	@ movhi
  125:Application/menu_task.c ****                 {
- 126:Application/menu_task.c ****                     rc->offset_rocker[i] = adc_sum[i] / adc_cnt;
+ 922              		.loc 1 125 17 is_stmt 1 view .LVU202
+ 923              	.LBB9:
+ 125:Application/menu_task.c ****                 {
+ 924              		.loc 1 125 22 view .LVU203
+ 925              	.LVL90:
+ 125:Application/menu_task.c ****                 {
+ 926              		.loc 1 125 26 is_stmt 0 view .LVU204
+ 927 0118 0023     		movs	r3, #0
+ 125:Application/menu_task.c ****                 {
+ 928              		.loc 1 125 17 view .LVU205
+ 929 011a 0EE0     		b	.L44
+ 930              	.LVL91:
+ 931              	.L45:
  127:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 932              		.loc 1 127 21 is_stmt 1 discriminator 3 view .LVU206
+ 127:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 933              		.loc 1 127 51 is_stmt 0 discriminator 3 view .LVU207
+ 934 011c 3D48     		ldr	r0, .L59+44
+ 935 011e 50F82320 		ldr	r2, [r0, r3, lsl #2]
+ 127:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 936              		.loc 1 127 55 discriminator 3 view .LVU208
+ 937 0122 B2FBF5F1 		udiv	r1, r2, r5
+ 127:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 938              		.loc 1 127 23 discriminator 3 view .LVU209
+ 939 0126 3A4A     		ldr	r2, .L59+40
+ 940 0128 1268     		ldr	r2, [r2]
+ 127:Application/menu_task.c ****                     adc_sum[i] = 0;
+ 941              		.loc 1 127 42 discriminator 3 view .LVU210
+ 942 012a 1C1D     		adds	r4, r3, #4
+ 943 012c 02EB4402 		add	r2, r2, r4, lsl #1
+ 944 0130 5180     		strh	r1, [r2, #2]	@ movhi
  128:Application/menu_task.c ****                 }
- 129:Application/menu_task.c ****                 for (int i = 0; i < 4; i++)
+ 945              		.loc 1 128 21 is_stmt 1 discriminator 3 view .LVU211
+ 128:Application/menu_task.c ****                 }
+ 946              		.loc 1 128 32 is_stmt 0 discriminator 3 view .LVU212
+ 947 0132 0022     		movs	r2, #0
+ 948 0134 40F82320 		str	r2, [r0, r3, lsl #2]
+ 125:Application/menu_task.c ****                 {
+ 949              		.loc 1 125 40 is_stmt 1 discriminator 3 view .LVU213
+ 125:Application/menu_task.c ****                 {
+ 950              		.loc 1 125 41 is_stmt 0 discriminator 3 view .LVU214
+ 951 0138 0133     		adds	r3, r3, #1
+ 952              	.LVL92:
+ 953              	.L44:
+ 125:Application/menu_task.c ****                 {
+ 954              		.loc 1 125 33 is_stmt 1 discriminator 1 view .LVU215
+ 125:Application/menu_task.c ****                 {
+ 955              		.loc 1 125 17 is_stmt 0 discriminator 1 view .LVU216
+ 956 013a 012B     		cmp	r3, #1
+ 957 013c EEDD     		ble	.L45
+ 958              	.LBE9:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 23
+
+
+ 959              	.LBB10:
  130:Application/menu_task.c ****                 {
- 131:Application/menu_task.c ****                     rc->offset_rocker[2 + i] = adc_sum[2 + i] / adc_cnt;
+ 960              		.loc 1 130 26 view .LVU217
+ 961 013e 0023     		movs	r3, #0
+ 962              	.LVL93:
+ 130:Application/menu_task.c ****                 {
+ 963              		.loc 1 130 26 view .LVU218
+ 964 0140 10E0     		b	.L46
+ 965              	.LVL94:
+ 966              	.L47:
  132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 967              		.loc 1 132 21 is_stmt 1 discriminator 3 view .LVU219
+ 132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 968              		.loc 1 132 58 is_stmt 0 discriminator 3 view .LVU220
+ 969 0142 9C1C     		adds	r4, r3, #2
+ 132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 970              		.loc 1 132 55 discriminator 3 view .LVU221
+ 971 0144 3348     		ldr	r0, .L59+44
+ 972 0146 50F82420 		ldr	r2, [r0, r4, lsl #2]
+ 132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 973              		.loc 1 132 63 discriminator 3 view .LVU222
+ 974 014a B2FBF5F1 		udiv	r1, r2, r5
+ 132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 975              		.loc 1 132 23 discriminator 3 view .LVU223
+ 976 014e 304A     		ldr	r2, .L59+40
+ 977 0150 1268     		ldr	r2, [r2]
+ 132:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
+ 978              		.loc 1 132 46 discriminator 3 view .LVU224
+ 979 0152 03F1060C 		add	ip, r3, #6
+ 980 0156 02EB4C02 		add	r2, r2, ip, lsl #1
+ 981 015a 5180     		strh	r1, [r2, #2]	@ movhi
  133:Application/menu_task.c ****                 }
- 134:Application/menu_task.c ****                 write_offset_rocker_to_flash(rc->offset_rocker);
+ 982              		.loc 1 133 21 is_stmt 1 discriminator 3 view .LVU225
+ 133:Application/menu_task.c ****                 }
+ 983              		.loc 1 133 36 is_stmt 0 discriminator 3 view .LVU226
+ 984 015c 0022     		movs	r2, #0
+ 985 015e 40F82420 		str	r2, [r0, r4, lsl #2]
+ 130:Application/menu_task.c ****                 {
+ 986              		.loc 1 130 40 is_stmt 1 discriminator 3 view .LVU227
+ 130:Application/menu_task.c ****                 {
+ 987              		.loc 1 130 41 is_stmt 0 discriminator 3 view .LVU228
+ 988 0162 0133     		adds	r3, r3, #1
+ 989              	.LVL95:
+ 990              	.L46:
+ 130:Application/menu_task.c ****                 {
+ 991              		.loc 1 130 33 is_stmt 1 discriminator 1 view .LVU229
+ 130:Application/menu_task.c ****                 {
+ 992              		.loc 1 130 17 is_stmt 0 discriminator 1 view .LVU230
+ 993 0164 032B     		cmp	r3, #3
+ 994 0166 ECDD     		ble	.L47
+ 995              	.LBE10:
  135:Application/menu_task.c ****                 adc_cnt = 0;
+ 996              		.loc 1 135 17 is_stmt 1 view .LVU231
+ 135:Application/menu_task.c ****                 adc_cnt = 0;
+ 997              		.loc 1 135 48 is_stmt 0 view .LVU232
+ 998 0168 294B     		ldr	r3, .L59+40
+ 999              	.LVL96:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 24
+
+
+ 135:Application/menu_task.c ****                 adc_cnt = 0;
+ 1000              		.loc 1 135 48 view .LVU233
+ 1001 016a 1868     		ldr	r0, [r3]
+ 135:Application/menu_task.c ****                 adc_cnt = 0;
+ 1002              		.loc 1 135 17 view .LVU234
+ 1003 016c 0A30     		adds	r0, r0, #10
+ 1004 016e FFF7FEFF 		bl	write_offset_rocker_to_flash
+ 1005              	.LVL97:
  136:Application/menu_task.c ****                 state = 2;
+ 1006              		.loc 1 136 17 is_stmt 1 view .LVU235
+ 136:Application/menu_task.c ****                 state = 2;
+ 1007              		.loc 1 136 25 is_stmt 0 view .LVU236
+ 1008 0172 244B     		ldr	r3, .L59+28
+ 1009 0174 0022     		movs	r2, #0
+ 1010 0176 1A80     		strh	r2, [r3]	@ movhi
  137:Application/menu_task.c ****             }
- 138:Application/menu_task.c ****         }
- 139:Application/menu_task.c ****         if (state == 2)
- 588              		.loc 1 139 9 is_stmt 1 view .LVU118
- 589              		.loc 1 139 19 is_stmt 0 view .LVU119
- 590 000e 764B     		ldr	r3, .L59
- 591 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 592              		.loc 1 139 12 view .LVU120
- 593 0012 022B     		cmp	r3, #2
- 594 0014 00F0B480 		beq	.L57
- 595              	.L48:
- 140:Application/menu_task.c ****         {
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 15
-
-
- 141:Application/menu_task.c ****             OLED_NewFrame();
+ 1011              		.loc 1 137 17 is_stmt 1 view .LVU237
+ 137:Application/menu_task.c ****             }
+ 1012              		.loc 1 137 23 is_stmt 0 view .LVU238
+ 1013 0178 1B4B     		ldr	r3, .L59
+ 1014 017a 0222     		movs	r2, #2
+ 1015 017c 1A70     		strb	r2, [r3]
+ 1016 017e 46E7     		b	.L39
+ 1017              	.L57:
  142:Application/menu_task.c ****             OLED_PrintString(35, 10, "校准完成", &font16x16, 0);
+ 1018              		.loc 1 142 13 is_stmt 1 view .LVU239
+ 1019 0180 FFF7FEFF 		bl	OLED_NewFrame
+ 1020              	.LVL98:
  143:Application/menu_task.c ****             OLED_PrintString(3, 30, "按下确认键重新校准", &font14x14, 0);
+ 1021              		.loc 1 143 13 view .LVU240
+ 1022 0184 0024     		movs	r4, #0
+ 1023 0186 0094     		str	r4, [sp]
+ 1024 0188 184B     		ldr	r3, .L59+4
+ 1025 018a 234A     		ldr	r2, .L59+48
+ 1026 018c 0A21     		movs	r1, #10
+ 1027 018e 2320     		movs	r0, #35
+ 1028 0190 FFF7FEFF 		bl	OLED_PrintString
+ 1029              	.LVL99:
  144:Application/menu_task.c ****             OLED_PrintString(3, 46, "按下返回键返回菜单", &font14x14, 0);
+ 1030              		.loc 1 144 13 view .LVU241
+ 1031 0194 174D     		ldr	r5, .L59+12
+ 1032 0196 0094     		str	r4, [sp]
+ 1033 0198 2B46     		mov	r3, r5
+ 1034 019a 204A     		ldr	r2, .L59+52
+ 1035 019c 1E21     		movs	r1, #30
+ 1036 019e 0320     		movs	r0, #3
+ 1037 01a0 FFF7FEFF 		bl	OLED_PrintString
+ 1038              	.LVL100:
  145:Application/menu_task.c ****             OLED_ShowFrame();
+ 1039              		.loc 1 145 13 view .LVU242
+ 1040 01a4 0094     		str	r4, [sp]
+ 1041 01a6 2B46     		mov	r3, r5
+ 1042 01a8 1D4A     		ldr	r2, .L59+56
+ 1043 01aa 2E21     		movs	r1, #46
+ 1044 01ac 0320     		movs	r0, #3
+ 1045 01ae FFF7FEFF 		bl	OLED_PrintString
+ 1046              	.LVL101:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 25
+
+
  146:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
+ 1047              		.loc 1 146 13 view .LVU243
+ 1048 01b2 FFF7FEFF 		bl	OLED_ShowFrame
+ 1049              	.LVL102:
  147:Application/menu_task.c ****                 state = 1;
+ 1050              		.loc 1 147 13 view .LVU244
+ 147:Application/menu_task.c ****                 state = 1;
+ 1051              		.loc 1 147 17 is_stmt 0 view .LVU245
+ 1052 01b6 0520     		movs	r0, #5
+ 1053 01b8 FFF7FEFF 		bl	menu_command_callback
+ 1054              	.LVL103:
+ 147:Application/menu_task.c ****                 state = 1;
+ 1055              		.loc 1 147 16 view .LVU246
+ 1056 01bc 0028     		cmp	r0, #0
+ 1057 01be 3FF42BAF 		beq	.L48
  148:Application/menu_task.c ****         }
- 149:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
- 596              		.loc 1 149 9 is_stmt 1 view .LVU121
- 597              		.loc 1 149 13 is_stmt 0 view .LVU122
- 598 0018 0620     		movs	r0, #6
- 599 001a FFF7FEFF 		bl	menu_command_callback
- 600              	.LVL44:
- 601              		.loc 1 149 12 view .LVU123
- 602 001e 0028     		cmp	r0, #0
- 603 0020 40F0D380 		bne	.L58
- 150:Application/menu_task.c ****         {
- 151:Application/menu_task.c ****             state = 0;
+ 1058              		.loc 1 148 17 is_stmt 1 view .LVU247
+ 148:Application/menu_task.c ****         }
+ 1059              		.loc 1 148 23 is_stmt 0 view .LVU248
+ 1060 01c2 094B     		ldr	r3, .L59
+ 1061 01c4 0122     		movs	r2, #1
+ 1062 01c6 1A70     		strb	r2, [r3]
+ 1063 01c8 26E7     		b	.L48
+ 1064              	.L58:
  152:Application/menu_task.c ****             adc_cnt = 0;
+ 1065              		.loc 1 152 13 is_stmt 1 view .LVU249
+ 152:Application/menu_task.c ****             adc_cnt = 0;
+ 1066              		.loc 1 152 19 is_stmt 0 view .LVU250
+ 1067 01ca 0023     		movs	r3, #0
+ 1068 01cc 064A     		ldr	r2, .L59
+ 1069 01ce 1370     		strb	r3, [r2]
  153:Application/menu_task.c ****             for (int i = 0; i < 6; i++)
+ 1070              		.loc 1 153 13 is_stmt 1 view .LVU251
+ 153:Application/menu_task.c ****             for (int i = 0; i < 6; i++)
+ 1071              		.loc 1 153 21 is_stmt 0 view .LVU252
+ 1072 01d0 0C4A     		ldr	r2, .L59+28
+ 1073 01d2 1380     		strh	r3, [r2]	@ movhi
  154:Application/menu_task.c ****             {
- 155:Application/menu_task.c ****                 adc_sum[i] = 0;
+ 1074              		.loc 1 154 13 is_stmt 1 view .LVU253
+ 1075              	.LBB11:
+ 154:Application/menu_task.c ****             {
+ 1076              		.loc 1 154 18 view .LVU254
+ 1077              	.LVL104:
+ 154:Application/menu_task.c ****             {
+ 1078              		.loc 1 154 13 is_stmt 0 view .LVU255
+ 1079 01d4 04E0     		b	.L50
+ 1080              	.LVL105:
+ 1081              	.L51:
  156:Application/menu_task.c ****             }
- 157:Application/menu_task.c ****             break;
- 158:Application/menu_task.c ****         }
- 159:Application/menu_task.c **** 
- 160:Application/menu_task.c ****         osDelay(5);
- 604              		.loc 1 160 9 is_stmt 1 view .LVU124
- 605 0024 0520     		movs	r0, #5
- 606 0026 FFF7FEFF 		bl	osDelay
- 607              	.LVL45:
- 608              	.LBE6:
-  88:Application/menu_task.c ****     {
- 609              		.loc 1 88 11 view .LVU125
- 610              	.L53:
-  88:Application/menu_task.c ****     {
- 611              		.loc 1 88 5 view .LVU126
- 612              	.LBB12:
-  91:Application/menu_task.c ****         static uint32_t adc_sum[6];
- 613              		.loc 1 91 9 view .LVU127
-  92:Application/menu_task.c ****         static uint16_t adc_cnt = 0;
- 614              		.loc 1 92 9 view .LVU128
-  93:Application/menu_task.c ****         if (state == 0)
- 615              		.loc 1 93 9 view .LVU129
-  94:Application/menu_task.c ****         {
- 616              		.loc 1 94 9 view .LVU130
-  94:Application/menu_task.c ****         {
- 617              		.loc 1 94 19 is_stmt 0 view .LVU131
- 618 002a 6F4B     		ldr	r3, .L59
- 619 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-  94:Application/menu_task.c ****         {
- 620              		.loc 1 94 12 view .LVU132
- 621 002e 002B     		cmp	r3, #0
- 622 0030 E9D1     		bne	.L38
-  98:Application/menu_task.c ****             OLED_PrintString(35, 10, "摇杆校准", &font16x16, 0);
- 623              		.loc 1 98 13 is_stmt 1 view .LVU133
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 16
+ 1082              		.loc 1 156 17 is_stmt 1 discriminator 3 view .LVU256
+ 156:Application/menu_task.c ****             }
+ 1083              		.loc 1 156 28 is_stmt 0 discriminator 3 view .LVU257
+ 1084 01d6 0F4A     		ldr	r2, .L59+44
+ 1085 01d8 0021     		movs	r1, #0
+ 1086 01da 42F82310 		str	r1, [r2, r3, lsl #2]
+ 154:Application/menu_task.c ****             {
+ 1087              		.loc 1 154 36 is_stmt 1 discriminator 3 view .LVU258
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 26
 
 
- 624 0032 FFF7FEFF 		bl	OLED_NewFrame
- 625              	.LVL46:
-  99:Application/menu_task.c ****             OLED_PrintString(17, 30, "将所有摇杆归中", &font14x14, 0);
- 626              		.loc 1 99 13 view .LVU134
- 627 0036 0024     		movs	r4, #0
- 628 0038 0094     		str	r4, [sp]
- 629 003a 6C4B     		ldr	r3, .L59+4
- 630 003c 6C4A     		ldr	r2, .L59+8
- 631 003e 0A21     		movs	r1, #10
- 632 0040 2320     		movs	r0, #35
- 633 0042 FFF7FEFF 		bl	OLED_PrintString
- 634              	.LVL47:
- 100:Application/menu_task.c ****             OLED_PrintString(17, 46, "按下确认键校准", &font14x14, 0);
- 635              		.loc 1 100 13 view .LVU135
- 636 0046 6B4D     		ldr	r5, .L59+12
- 637 0048 0094     		str	r4, [sp]
- 638 004a 2B46     		mov	r3, r5
- 639 004c 6A4A     		ldr	r2, .L59+16
- 640 004e 1E21     		movs	r1, #30
- 641 0050 1120     		movs	r0, #17
- 642 0052 FFF7FEFF 		bl	OLED_PrintString
- 643              	.LVL48:
- 101:Application/menu_task.c ****             OLED_ShowFrame();
- 644              		.loc 1 101 13 view .LVU136
- 645 0056 0094     		str	r4, [sp]
- 646 0058 2B46     		mov	r3, r5
- 647 005a 684A     		ldr	r2, .L59+20
- 648 005c 2E21     		movs	r1, #46
- 649 005e 1120     		movs	r0, #17
- 650 0060 FFF7FEFF 		bl	OLED_PrintString
- 651              	.LVL49:
- 102:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
- 652              		.loc 1 102 13 view .LVU137
- 653 0064 FFF7FEFF 		bl	OLED_ShowFrame
- 654              	.LVL50:
- 103:Application/menu_task.c ****                 state = 1;
- 655              		.loc 1 103 13 view .LVU138
- 103:Application/menu_task.c ****                 state = 1;
- 656              		.loc 1 103 17 is_stmt 0 view .LVU139
- 657 0068 0520     		movs	r0, #5
- 658 006a FFF7FEFF 		bl	menu_command_callback
- 659              	.LVL51:
- 103:Application/menu_task.c ****                 state = 1;
- 660              		.loc 1 103 16 view .LVU140
- 661 006e 0028     		cmp	r0, #0
- 662 0070 C9D0     		beq	.L38
- 104:Application/menu_task.c ****         }
- 663              		.loc 1 104 17 is_stmt 1 view .LVU141
- 104:Application/menu_task.c ****         }
- 664              		.loc 1 104 23 is_stmt 0 view .LVU142
- 665 0072 5D4B     		ldr	r3, .L59
- 666 0074 0122     		movs	r2, #1
- 667 0076 1A70     		strb	r2, [r3]
- 668 0078 C5E7     		b	.L38
- 669              	.L56:
- 108:Application/menu_task.c ****             OLED_PrintString(42, 15, "校准中", &font16x16, 0);
- 670              		.loc 1 108 13 is_stmt 1 view .LVU143
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 17
+ 154:Application/menu_task.c ****             {
+ 1088              		.loc 1 154 37 is_stmt 0 discriminator 3 view .LVU259
+ 1089 01de 0133     		adds	r3, r3, #1
+ 1090              	.LVL106:
+ 1091              	.L50:
+ 154:Application/menu_task.c ****             {
+ 1092              		.loc 1 154 29 is_stmt 1 discriminator 1 view .LVU260
+ 154:Application/menu_task.c ****             {
+ 1093              		.loc 1 154 13 is_stmt 0 discriminator 1 view .LVU261
+ 1094 01e0 052B     		cmp	r3, #5
+ 1095 01e2 F8DD     		ble	.L51
+ 1096              	.LBE11:
+ 1097              	.LBE12:
+ 162:Application/menu_task.c ****     }
+ 163:Application/menu_task.c **** }
+ 1098              		.loc 1 163 1 view .LVU262
+ 1099 01e4 03B0     		add	sp, sp, #12
+ 1100              	.LCFI12:
+ 1101              		.cfi_def_cfa_offset 12
+ 1102              		@ sp needed
+ 1103 01e6 30BD     		pop	{r4, r5, pc}
+ 1104              	.L60:
+ 1105              		.align	2
+ 1106              	.L59:
+ 1107 01e8 00000000 		.word	.LANCHOR1
+ 1108 01ec 00000000 		.word	font16x16
+ 1109 01f0 00000000 		.word	.LC0
+ 1110 01f4 00000000 		.word	font14x14
+ 1111 01f8 10000000 		.word	.LC1
+ 1112 01fc 28000000 		.word	.LC2
+ 1113 0200 40000000 		.word	.LC3
+ 1114 0204 00000000 		.word	.LANCHOR2
+ 1115 0208 00004844 		.word	1145569280
+ 1116 020c 0000C842 		.word	1120403456
+ 1117 0210 00000000 		.word	.LANCHOR0
+ 1118 0214 00000000 		.word	.LANCHOR3
+ 1119 0218 4C000000 		.word	.LC4
+ 1120 021c 5C000000 		.word	.LC5
+ 1121 0220 78000000 		.word	.LC6
+ 1122              		.cfi_endproc
+ 1123              	.LFE77:
+ 1125              		.section	.text.MENU_ShowImage,"ax",%progbits
+ 1126              		.align	1
+ 1127              		.global	MENU_ShowImage
+ 1128              		.syntax unified
+ 1129              		.thumb
+ 1130              		.thumb_func
+ 1132              	MENU_ShowImage:
+ 1133              	.LFB78:
+ 164:Application/menu_task.c **** 
+ 165:Application/menu_task.c **** void MENU_ShowImage(void)
+ 166:Application/menu_task.c **** {
+ 1134              		.loc 1 166 1 is_stmt 1 view -0
+ 1135              		.cfi_startproc
+ 1136              		@ args = 0, pretend = 0, frame = 0
+ 1137              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1138 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 27
 
 
- 671 007a FFF7FEFF 		bl	OLED_NewFrame
- 672              	.LVL52:
- 109:Application/menu_task.c ****             OLED_DrawFilledRectangle(16, 45, ((float)adc_cnt / 800) * 100, 12, 0);
- 673              		.loc 1 109 13 view .LVU144
- 674 007e 0024     		movs	r4, #0
- 675 0080 0094     		str	r4, [sp]
- 676 0082 5A4B     		ldr	r3, .L59+4
- 677 0084 5E4A     		ldr	r2, .L59+24
- 678 0086 0F21     		movs	r1, #15
- 679 0088 2A20     		movs	r0, #42
- 680 008a FFF7FEFF 		bl	OLED_PrintString
- 681              	.LVL53:
- 110:Application/menu_task.c ****             OLED_ShowFrame();
- 682              		.loc 1 110 13 view .LVU145
- 110:Application/menu_task.c ****             OLED_ShowFrame();
- 683              		.loc 1 110 47 is_stmt 0 view .LVU146
- 684 008e 5D4B     		ldr	r3, .L59+28
- 685 0090 1888     		ldrh	r0, [r3]
- 686 0092 FFF7FEFF 		bl	__aeabi_ui2f
- 687              	.LVL54:
- 110:Application/menu_task.c ****             OLED_ShowFrame();
- 688              		.loc 1 110 62 view .LVU147
- 689 0096 5C49     		ldr	r1, .L59+32
- 690 0098 FFF7FEFF 		bl	__aeabi_fdiv
- 691              	.LVL55:
- 110:Application/menu_task.c ****             OLED_ShowFrame();
- 692              		.loc 1 110 69 view .LVU148
- 693 009c 5B49     		ldr	r1, .L59+36
- 694 009e FFF7FEFF 		bl	__aeabi_fmul
- 695              	.LVL56:
- 110:Application/menu_task.c ****             OLED_ShowFrame();
- 696              		.loc 1 110 13 view .LVU149
- 697 00a2 FFF7FEFF 		bl	__aeabi_f2uiz
- 698              	.LVL57:
- 699 00a6 0094     		str	r4, [sp]
- 700 00a8 0C23     		movs	r3, #12
- 701 00aa C2B2     		uxtb	r2, r0
- 702 00ac 2D21     		movs	r1, #45
- 703 00ae 1020     		movs	r0, #16
- 704 00b0 FFF7FEFF 		bl	OLED_DrawFilledRectangle
- 705              	.LVL58:
- 111:Application/menu_task.c ****             for (int i = 0; i < 4; i++)
- 706              		.loc 1 111 13 is_stmt 1 view .LVU150
- 707 00b4 FFF7FEFF 		bl	OLED_ShowFrame
- 708              	.LVL59:
- 112:Application/menu_task.c ****             {
- 709              		.loc 1 112 13 view .LVU151
- 710              	.LBB7:
- 112:Application/menu_task.c ****             {
- 711              		.loc 1 112 18 view .LVU152
- 112:Application/menu_task.c ****             {
- 712              		.loc 1 112 22 is_stmt 0 view .LVU153
- 713 00b8 2346     		mov	r3, r4
- 112:Application/menu_task.c ****             {
- 714              		.loc 1 112 13 view .LVU154
- 715 00ba 11E0     		b	.L40
- 716              	.LVL60:
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 18
+ 1139              	.LCFI13:
+ 1140              		.cfi_def_cfa_offset 8
+ 1141              		.cfi_offset 3, -8
+ 1142              		.cfi_offset 14, -4
+ 1143 0002 17E0     		b	.L75
+ 1144              	.L63:
+ 1145              	.LBB13:
+ 1146              	.LBB14:
+ 167:Application/menu_task.c ****     while (1)
+ 168:Application/menu_task.c ****     {
+ 169:Application/menu_task.c ****         static int8_t rank_img = 5;
+ 170:Application/menu_task.c ****         // 按上/下键切换图片
+ 171:Application/menu_task.c ****         if (Key_GetEvent_Up())
+ 172:Application/menu_task.c ****             if (rank_img > 7)
+ 173:Application/menu_task.c ****                 rank_img = 0;
+ 174:Application/menu_task.c ****             else
+ 175:Application/menu_task.c ****                 rank_img++;
+ 1147              		.loc 1 175 17 view .LVU264
+ 1148              		.loc 1 175 25 is_stmt 0 view .LVU265
+ 1149 0004 0133     		adds	r3, r3, #1
+ 1150 0006 394A     		ldr	r2, .L84
+ 1151 0008 1370     		strb	r3, [r2]
+ 1152 000a 1EE0     		b	.L62
+ 1153              	.L77:
+ 1154              	.LBE14:
+ 1155              	.LBB15:
+ 176:Application/menu_task.c ****         if (Key_GetEvent_Down())
+ 177:Application/menu_task.c ****             if (rank_img < 2)
+ 178:Application/menu_task.c ****                 rank_img = 7;
+ 1156              		.loc 1 178 17 is_stmt 1 view .LVU266
+ 1157              		.loc 1 178 26 is_stmt 0 view .LVU267
+ 1158 000c 374B     		ldr	r3, .L84
+ 1159 000e 0722     		movs	r2, #7
+ 1160 0010 1A70     		strb	r2, [r3]
+ 1161 0012 25E0     		b	.L64
+ 1162              	.L78:
+ 1163              	.LBE15:
+ 179:Application/menu_task.c ****             else
+ 180:Application/menu_task.c ****                 rank_img--;
+ 181:Application/menu_task.c **** 
+ 182:Application/menu_task.c ****         OLED_NewFrame();
+ 183:Application/menu_task.c ****         if (rank_img > 7)
+ 184:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
+ 1164              		.loc 1 184 13 is_stmt 1 view .LVU268
+ 1165 0014 0023     		movs	r3, #0
+ 1166 0016 364A     		ldr	r2, .L84+4
+ 1167 0018 1946     		mov	r1, r3
+ 1168 001a 1820     		movs	r0, #24
+ 1169 001c FFF7FEFF 		bl	OLED_DrawImage
+ 1170              	.LVL107:
+ 1171              	.L67:
+ 185:Application/menu_task.c ****         else if (rank_img > 6)
+ 186:Application/menu_task.c ****             OLED_DrawImage(16, 0, &inf4Img, 0);
+ 187:Application/menu_task.c ****         else if (rank_img > 5)
+ 188:Application/menu_task.c ****             OLED_DrawImage(16, 0, &heroainfImg, 0);
+ 189:Application/menu_task.c ****         else if (rank_img > 4) // 5
+ 190:Application/menu_task.c ****             OLED_DrawImage(33, 0, &APEXImg, 0);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 28
 
 
- 717              	.L41:
- 114:Application/menu_task.c ****                 adc_cnt++;
- 718              		.loc 1 114 17 is_stmt 1 discriminator 3 view .LVU155
- 114:Application/menu_task.c ****                 adc_cnt++;
- 719              		.loc 1 114 32 is_stmt 0 discriminator 3 view .LVU156
- 720 00bc 981C     		adds	r0, r3, #2
- 114:Application/menu_task.c ****                 adc_cnt++;
- 721              		.loc 1 114 37 discriminator 3 view .LVU157
- 722 00be 544A     		ldr	r2, .L59+40
- 723 00c0 1268     		ldr	r2, [r2]
- 724 00c2 1268     		ldr	r2, [r2]
- 114:Application/menu_task.c ****                 adc_cnt++;
- 725              		.loc 1 114 54 discriminator 3 view .LVU158
- 726 00c4 02EB4302 		add	r2, r2, r3, lsl #1
- 727 00c8 D488     		ldrh	r4, [r2, #6]
- 114:Application/menu_task.c ****                 adc_cnt++;
- 728              		.loc 1 114 32 discriminator 3 view .LVU159
- 729 00ca 5249     		ldr	r1, .L59+44
- 730 00cc 51F82020 		ldr	r2, [r1, r0, lsl #2]
- 731 00d0 2244     		add	r2, r2, r4
- 732 00d2 41F82020 		str	r2, [r1, r0, lsl #2]
- 115:Application/menu_task.c ****             }
- 733              		.loc 1 115 17 is_stmt 1 discriminator 3 view .LVU160
- 115:Application/menu_task.c ****             }
- 734              		.loc 1 115 24 is_stmt 0 discriminator 3 view .LVU161
- 735 00d6 4B49     		ldr	r1, .L59+28
- 736 00d8 0A88     		ldrh	r2, [r1]
- 737 00da 0132     		adds	r2, r2, #1
- 738 00dc 0A80     		strh	r2, [r1]	@ movhi
- 112:Application/menu_task.c ****             {
- 739              		.loc 1 112 36 is_stmt 1 discriminator 3 view .LVU162
- 112:Application/menu_task.c ****             {
- 740              		.loc 1 112 37 is_stmt 0 discriminator 3 view .LVU163
- 741 00de 0133     		adds	r3, r3, #1
- 742              	.LVL61:
- 743              	.L40:
- 112:Application/menu_task.c ****             {
- 744              		.loc 1 112 29 is_stmt 1 discriminator 1 view .LVU164
- 112:Application/menu_task.c ****             {
- 745              		.loc 1 112 13 is_stmt 0 discriminator 1 view .LVU165
- 746 00e0 032B     		cmp	r3, #3
- 747 00e2 EBDD     		ble	.L41
- 748              	.LBE7:
- 749              	.LBB8:
- 117:Application/menu_task.c ****             {
- 750              		.loc 1 117 22 view .LVU166
- 751 00e4 0023     		movs	r3, #0
- 752              	.LVL62:
- 117:Application/menu_task.c ****             {
- 753              		.loc 1 117 22 view .LVU167
- 754 00e6 0CE0     		b	.L42
- 755              	.LVL63:
- 756              	.L43:
- 119:Application/menu_task.c ****             }
- 757              		.loc 1 119 17 is_stmt 1 discriminator 3 view .LVU168
- 119:Application/menu_task.c ****             }
- 758              		.loc 1 119 33 is_stmt 0 discriminator 3 view .LVU169
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 19
-
-
- 759 00e8 494A     		ldr	r2, .L59+40
- 760 00ea 1268     		ldr	r2, [r2]
- 761 00ec 1268     		ldr	r2, [r2]
- 119:Application/menu_task.c ****             }
- 762              		.loc 1 119 45 discriminator 3 view .LVU170
- 763 00ee 02EB4302 		add	r2, r2, r3, lsl #1
- 764 00f2 5088     		ldrh	r0, [r2, #2]
- 119:Application/menu_task.c ****             }
- 765              		.loc 1 119 28 discriminator 3 view .LVU171
- 766 00f4 4749     		ldr	r1, .L59+44
- 767 00f6 51F82320 		ldr	r2, [r1, r3, lsl #2]
- 768 00fa 0244     		add	r2, r2, r0
- 769 00fc 41F82320 		str	r2, [r1, r3, lsl #2]
- 117:Application/menu_task.c ****             {
- 770              		.loc 1 117 36 is_stmt 1 discriminator 3 view .LVU172
- 117:Application/menu_task.c ****             {
- 771              		.loc 1 117 37 is_stmt 0 discriminator 3 view .LVU173
- 772 0100 0133     		adds	r3, r3, #1
- 773              	.LVL64:
- 774              	.L42:
- 117:Application/menu_task.c ****             {
- 775              		.loc 1 117 29 is_stmt 1 discriminator 1 view .LVU174
- 117:Application/menu_task.c ****             {
- 776              		.loc 1 117 13 is_stmt 0 discriminator 1 view .LVU175
- 777 0102 012B     		cmp	r3, #1
- 778 0104 F0DD     		ble	.L43
- 779              	.LBE8:
- 121:Application/menu_task.c ****             {
- 780              		.loc 1 121 13 is_stmt 1 view .LVU176
- 121:Application/menu_task.c ****             {
- 781              		.loc 1 121 31 is_stmt 0 view .LVU177
- 782 0106 3F4B     		ldr	r3, .L59+28
- 783              	.LVL65:
- 121:Application/menu_task.c ****             {
- 784              		.loc 1 121 31 view .LVU178
- 785 0108 1B88     		ldrh	r3, [r3]
- 121:Application/menu_task.c ****             {
- 786              		.loc 1 121 16 view .LVU179
- 787 010a B3F5497F 		cmp	r3, #804
- 788 010e FFF47EAF 		bcc	.L39
- 123:Application/menu_task.c ****                 for (int i = 0; i < 2; i++)
- 789              		.loc 1 123 17 is_stmt 1 view .LVU180
- 123:Application/menu_task.c ****                 for (int i = 0; i < 2; i++)
- 790              		.loc 1 123 25 is_stmt 0 view .LVU181
- 791 0112 9D08     		lsrs	r5, r3, #2
- 792 0114 3B4B     		ldr	r3, .L59+28
- 793 0116 1D80     		strh	r5, [r3]	@ movhi
- 124:Application/menu_task.c ****                 {
- 794              		.loc 1 124 17 is_stmt 1 view .LVU182
- 795              	.LBB9:
- 124:Application/menu_task.c ****                 {
- 796              		.loc 1 124 22 view .LVU183
- 797              	.LVL66:
- 124:Application/menu_task.c ****                 {
- 798              		.loc 1 124 26 is_stmt 0 view .LVU184
- 799 0118 0023     		movs	r3, #0
- 124:Application/menu_task.c ****                 {
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 20
-
-
- 800              		.loc 1 124 17 view .LVU185
- 801 011a 0EE0     		b	.L44
- 802              	.LVL67:
- 803              	.L45:
- 126:Application/menu_task.c ****                     adc_sum[i] = 0;
- 804              		.loc 1 126 21 is_stmt 1 discriminator 3 view .LVU186
- 126:Application/menu_task.c ****                     adc_sum[i] = 0;
- 805              		.loc 1 126 51 is_stmt 0 discriminator 3 view .LVU187
- 806 011c 3D48     		ldr	r0, .L59+44
- 807 011e 50F82320 		ldr	r2, [r0, r3, lsl #2]
- 126:Application/menu_task.c ****                     adc_sum[i] = 0;
- 808              		.loc 1 126 55 discriminator 3 view .LVU188
- 809 0122 B2FBF5F1 		udiv	r1, r2, r5
- 126:Application/menu_task.c ****                     adc_sum[i] = 0;
- 810              		.loc 1 126 23 discriminator 3 view .LVU189
- 811 0126 3A4A     		ldr	r2, .L59+40
- 812 0128 1268     		ldr	r2, [r2]
- 126:Application/menu_task.c ****                     adc_sum[i] = 0;
- 813              		.loc 1 126 42 discriminator 3 view .LVU190
- 814 012a 1C1D     		adds	r4, r3, #4
- 815 012c 02EB4402 		add	r2, r2, r4, lsl #1
- 816 0130 5180     		strh	r1, [r2, #2]	@ movhi
- 127:Application/menu_task.c ****                 }
- 817              		.loc 1 127 21 is_stmt 1 discriminator 3 view .LVU191
- 127:Application/menu_task.c ****                 }
- 818              		.loc 1 127 32 is_stmt 0 discriminator 3 view .LVU192
- 819 0132 0022     		movs	r2, #0
- 820 0134 40F82320 		str	r2, [r0, r3, lsl #2]
- 124:Application/menu_task.c ****                 {
- 821              		.loc 1 124 40 is_stmt 1 discriminator 3 view .LVU193
- 124:Application/menu_task.c ****                 {
- 822              		.loc 1 124 41 is_stmt 0 discriminator 3 view .LVU194
- 823 0138 0133     		adds	r3, r3, #1
- 824              	.LVL68:
- 825              	.L44:
- 124:Application/menu_task.c ****                 {
- 826              		.loc 1 124 33 is_stmt 1 discriminator 1 view .LVU195
- 124:Application/menu_task.c ****                 {
- 827              		.loc 1 124 17 is_stmt 0 discriminator 1 view .LVU196
- 828 013a 012B     		cmp	r3, #1
- 829 013c EEDD     		ble	.L45
- 830              	.LBE9:
- 831              	.LBB10:
- 129:Application/menu_task.c ****                 {
- 832              		.loc 1 129 26 view .LVU197
- 833 013e 0023     		movs	r3, #0
- 834              	.LVL69:
- 129:Application/menu_task.c ****                 {
- 835              		.loc 1 129 26 view .LVU198
- 836 0140 10E0     		b	.L46
- 837              	.LVL70:
- 838              	.L47:
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 839              		.loc 1 131 21 is_stmt 1 discriminator 3 view .LVU199
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 840              		.loc 1 131 58 is_stmt 0 discriminator 3 view .LVU200
- 841 0142 9C1C     		adds	r4, r3, #2
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 21
-
-
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 842              		.loc 1 131 55 discriminator 3 view .LVU201
- 843 0144 3348     		ldr	r0, .L59+44
- 844 0146 50F82420 		ldr	r2, [r0, r4, lsl #2]
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 845              		.loc 1 131 63 discriminator 3 view .LVU202
- 846 014a B2FBF5F1 		udiv	r1, r2, r5
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 847              		.loc 1 131 23 discriminator 3 view .LVU203
- 848 014e 304A     		ldr	r2, .L59+40
- 849 0150 1268     		ldr	r2, [r2]
- 131:Application/menu_task.c ****                     adc_sum[2 + i] = 0;
- 850              		.loc 1 131 46 discriminator 3 view .LVU204
- 851 0152 03F1060C 		add	ip, r3, #6
- 852 0156 02EB4C02 		add	r2, r2, ip, lsl #1
- 853 015a 5180     		strh	r1, [r2, #2]	@ movhi
- 132:Application/menu_task.c ****                 }
- 854              		.loc 1 132 21 is_stmt 1 discriminator 3 view .LVU205
- 132:Application/menu_task.c ****                 }
- 855              		.loc 1 132 36 is_stmt 0 discriminator 3 view .LVU206
- 856 015c 0022     		movs	r2, #0
- 857 015e 40F82420 		str	r2, [r0, r4, lsl #2]
- 129:Application/menu_task.c ****                 {
- 858              		.loc 1 129 40 is_stmt 1 discriminator 3 view .LVU207
- 129:Application/menu_task.c ****                 {
- 859              		.loc 1 129 41 is_stmt 0 discriminator 3 view .LVU208
- 860 0162 0133     		adds	r3, r3, #1
- 861              	.LVL71:
- 862              	.L46:
- 129:Application/menu_task.c ****                 {
- 863              		.loc 1 129 33 is_stmt 1 discriminator 1 view .LVU209
- 129:Application/menu_task.c ****                 {
- 864              		.loc 1 129 17 is_stmt 0 discriminator 1 view .LVU210
- 865 0164 032B     		cmp	r3, #3
- 866 0166 ECDD     		ble	.L47
- 867              	.LBE10:
- 134:Application/menu_task.c ****                 adc_cnt = 0;
- 868              		.loc 1 134 17 is_stmt 1 view .LVU211
- 134:Application/menu_task.c ****                 adc_cnt = 0;
- 869              		.loc 1 134 48 is_stmt 0 view .LVU212
- 870 0168 294B     		ldr	r3, .L59+40
- 871              	.LVL72:
- 134:Application/menu_task.c ****                 adc_cnt = 0;
- 872              		.loc 1 134 48 view .LVU213
- 873 016a 1868     		ldr	r0, [r3]
- 134:Application/menu_task.c ****                 adc_cnt = 0;
- 874              		.loc 1 134 17 view .LVU214
- 875 016c 0A30     		adds	r0, r0, #10
- 876 016e FFF7FEFF 		bl	write_offset_rocker_to_flash
- 877              	.LVL73:
- 135:Application/menu_task.c ****                 state = 2;
- 878              		.loc 1 135 17 is_stmt 1 view .LVU215
- 135:Application/menu_task.c ****                 state = 2;
- 879              		.loc 1 135 25 is_stmt 0 view .LVU216
- 880 0172 244B     		ldr	r3, .L59+28
- 881 0174 0022     		movs	r2, #0
- 882 0176 1A80     		strh	r2, [r3]	@ movhi
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 22
-
-
- 136:Application/menu_task.c ****             }
- 883              		.loc 1 136 17 is_stmt 1 view .LVU217
- 136:Application/menu_task.c ****             }
- 884              		.loc 1 136 23 is_stmt 0 view .LVU218
- 885 0178 1B4B     		ldr	r3, .L59
- 886 017a 0222     		movs	r2, #2
- 887 017c 1A70     		strb	r2, [r3]
- 888 017e 46E7     		b	.L39
- 889              	.L57:
- 141:Application/menu_task.c ****             OLED_PrintString(35, 10, "校准完成", &font16x16, 0);
- 890              		.loc 1 141 13 is_stmt 1 view .LVU219
- 891 0180 FFF7FEFF 		bl	OLED_NewFrame
- 892              	.LVL74:
- 142:Application/menu_task.c ****             OLED_PrintString(3, 30, "按下确认键重新校准", &font14x14, 0);
- 893              		.loc 1 142 13 view .LVU220
- 894 0184 0024     		movs	r4, #0
- 895 0186 0094     		str	r4, [sp]
- 896 0188 184B     		ldr	r3, .L59+4
- 897 018a 234A     		ldr	r2, .L59+48
- 898 018c 0A21     		movs	r1, #10
- 899 018e 2320     		movs	r0, #35
- 900 0190 FFF7FEFF 		bl	OLED_PrintString
- 901              	.LVL75:
- 143:Application/menu_task.c ****             OLED_PrintString(3, 46, "按下返回键返回菜单", &font14x14, 0);
- 902              		.loc 1 143 13 view .LVU221
- 903 0194 174D     		ldr	r5, .L59+12
- 904 0196 0094     		str	r4, [sp]
- 905 0198 2B46     		mov	r3, r5
- 906 019a 204A     		ldr	r2, .L59+52
- 907 019c 1E21     		movs	r1, #30
- 908 019e 0320     		movs	r0, #3
- 909 01a0 FFF7FEFF 		bl	OLED_PrintString
- 910              	.LVL76:
- 144:Application/menu_task.c ****             OLED_ShowFrame();
- 911              		.loc 1 144 13 view .LVU222
- 912 01a4 0094     		str	r4, [sp]
- 913 01a6 2B46     		mov	r3, r5
- 914 01a8 1D4A     		ldr	r2, .L59+56
- 915 01aa 2E21     		movs	r1, #46
- 916 01ac 0320     		movs	r0, #3
- 917 01ae FFF7FEFF 		bl	OLED_PrintString
- 918              	.LVL77:
- 145:Application/menu_task.c ****             if (menu_command_callback(GET_EVENT_ENTER))
- 919              		.loc 1 145 13 view .LVU223
- 920 01b2 FFF7FEFF 		bl	OLED_ShowFrame
- 921              	.LVL78:
- 146:Application/menu_task.c ****                 state = 1;
- 922              		.loc 1 146 13 view .LVU224
- 146:Application/menu_task.c ****                 state = 1;
- 923              		.loc 1 146 17 is_stmt 0 view .LVU225
- 924 01b6 0520     		movs	r0, #5
- 925 01b8 FFF7FEFF 		bl	menu_command_callback
- 926              	.LVL79:
- 146:Application/menu_task.c ****                 state = 1;
- 927              		.loc 1 146 16 view .LVU226
- 928 01bc 0028     		cmp	r0, #0
- 929 01be 3FF42BAF 		beq	.L48
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 23
-
-
- 147:Application/menu_task.c ****         }
- 930              		.loc 1 147 17 is_stmt 1 view .LVU227
- 147:Application/menu_task.c ****         }
- 931              		.loc 1 147 23 is_stmt 0 view .LVU228
- 932 01c2 094B     		ldr	r3, .L59
- 933 01c4 0122     		movs	r2, #1
- 934 01c6 1A70     		strb	r2, [r3]
- 935 01c8 26E7     		b	.L48
- 936              	.L58:
- 151:Application/menu_task.c ****             adc_cnt = 0;
- 937              		.loc 1 151 13 is_stmt 1 view .LVU229
- 151:Application/menu_task.c ****             adc_cnt = 0;
- 938              		.loc 1 151 19 is_stmt 0 view .LVU230
- 939 01ca 0023     		movs	r3, #0
- 940 01cc 064A     		ldr	r2, .L59
- 941 01ce 1370     		strb	r3, [r2]
- 152:Application/menu_task.c ****             for (int i = 0; i < 6; i++)
- 942              		.loc 1 152 13 is_stmt 1 view .LVU231
- 152:Application/menu_task.c ****             for (int i = 0; i < 6; i++)
- 943              		.loc 1 152 21 is_stmt 0 view .LVU232
- 944 01d0 0C4A     		ldr	r2, .L59+28
- 945 01d2 1380     		strh	r3, [r2]	@ movhi
- 153:Application/menu_task.c ****             {
- 946              		.loc 1 153 13 is_stmt 1 view .LVU233
- 947              	.LBB11:
- 153:Application/menu_task.c ****             {
- 948              		.loc 1 153 18 view .LVU234
- 949              	.LVL80:
- 153:Application/menu_task.c ****             {
- 950              		.loc 1 153 13 is_stmt 0 view .LVU235
- 951 01d4 04E0     		b	.L50
- 952              	.LVL81:
- 953              	.L51:
- 155:Application/menu_task.c ****             }
- 954              		.loc 1 155 17 is_stmt 1 discriminator 3 view .LVU236
- 155:Application/menu_task.c ****             }
- 955              		.loc 1 155 28 is_stmt 0 discriminator 3 view .LVU237
- 956 01d6 0F4A     		ldr	r2, .L59+44
- 957 01d8 0021     		movs	r1, #0
- 958 01da 42F82310 		str	r1, [r2, r3, lsl #2]
- 153:Application/menu_task.c ****             {
- 959              		.loc 1 153 36 is_stmt 1 discriminator 3 view .LVU238
- 153:Application/menu_task.c ****             {
- 960              		.loc 1 153 37 is_stmt 0 discriminator 3 view .LVU239
- 961 01de 0133     		adds	r3, r3, #1
- 962              	.LVL82:
- 963              	.L50:
- 153:Application/menu_task.c ****             {
- 964              		.loc 1 153 29 is_stmt 1 discriminator 1 view .LVU240
- 153:Application/menu_task.c ****             {
- 965              		.loc 1 153 13 is_stmt 0 discriminator 1 view .LVU241
- 966 01e0 052B     		cmp	r3, #5
- 967 01e2 F8DD     		ble	.L51
- 968              	.LBE11:
- 969              	.LBE12:
- 161:Application/menu_task.c ****     }
- 162:Application/menu_task.c **** }
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 24
-
-
- 970              		.loc 1 162 1 view .LVU242
- 971 01e4 03B0     		add	sp, sp, #12
- 972              	.LCFI12:
- 973              		.cfi_def_cfa_offset 12
- 974              		@ sp needed
- 975 01e6 30BD     		pop	{r4, r5, pc}
- 976              	.L60:
- 977              		.align	2
- 978              	.L59:
- 979 01e8 00000000 		.word	.LANCHOR1
- 980 01ec 00000000 		.word	font16x16
- 981 01f0 00000000 		.word	.LC0
- 982 01f4 00000000 		.word	font14x14
- 983 01f8 10000000 		.word	.LC1
- 984 01fc 28000000 		.word	.LC2
- 985 0200 40000000 		.word	.LC3
- 986 0204 00000000 		.word	.LANCHOR2
- 987 0208 00004844 		.word	1145569280
- 988 020c 0000C842 		.word	1120403456
- 989 0210 00000000 		.word	.LANCHOR0
- 990 0214 00000000 		.word	.LANCHOR3
- 991 0218 4C000000 		.word	.LC4
- 992 021c 5C000000 		.word	.LC5
- 993 0220 78000000 		.word	.LC6
- 994              		.cfi_endproc
- 995              	.LFE77:
- 997              		.section	.text.MENU_ShowImage,"ax",%progbits
- 998              		.align	1
- 999              		.global	MENU_ShowImage
- 1000              		.syntax unified
- 1001              		.thumb
- 1002              		.thumb_func
- 1004              	MENU_ShowImage:
- 1005              	.LFB78:
- 163:Application/menu_task.c **** 
- 164:Application/menu_task.c **** void MENU_ShowImage(void)
- 165:Application/menu_task.c **** {
- 1006              		.loc 1 165 1 is_stmt 1 view -0
- 1007              		.cfi_startproc
- 1008              		@ args = 0, pretend = 0, frame = 0
- 1009              		@ frame_needed = 0, uses_anonymous_args = 0
- 1010 0000 08B5     		push	{r3, lr}
- 1011              	.LCFI13:
- 1012              		.cfi_def_cfa_offset 8
- 1013              		.cfi_offset 3, -8
- 1014              		.cfi_offset 14, -4
- 1015 0002 17E0     		b	.L75
- 1016              	.L63:
- 1017              	.LBB13:
- 1018              	.LBB14:
- 166:Application/menu_task.c ****     while (1)
+ 191:Application/menu_task.c ****         else if (rank_img > 3) // 4
+ 192:Application/menu_task.c ****             OLED_DrawImage(30, 0, &ACEImg, 0);
+ 193:Application/menu_task.c ****         else if (rank_img > 2) // 3
+ 194:Application/menu_task.c ****             OLED_DrawImage(17, 0, &ROBOMASTERImg, 0);
+ 195:Application/menu_task.c ****         else if (rank_img > 1) // 2
+ 196:Application/menu_task.c ****             OLED_DrawImage(17, 0, &CSGOImg, 0);
+ 197:Application/menu_task.c ****         else // 1
+ 198:Application/menu_task.c ****             OLED_DrawImage(24, 0, &dafuImg, 0);
+ 199:Application/menu_task.c ****         OLED_ShowFrame();
+ 1172              		.loc 1 199 9 view .LVU269
+ 1173 0020 FFF7FEFF 		bl	OLED_ShowFrame
+ 1174              	.LVL108:
+ 200:Application/menu_task.c **** 
+ 201:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
+ 1175              		.loc 1 201 9 view .LVU270
+ 1176              		.loc 1 201 13 is_stmt 0 view .LVU271
+ 1177 0024 0620     		movs	r0, #6
+ 1178 0026 FFF7FEFF 		bl	menu_command_callback
+ 1179              	.LVL109:
+ 1180              		.loc 1 201 12 view .LVU272
+ 1181 002a 0028     		cmp	r0, #0
+ 1182 002c 5CD1     		bne	.L61
+ 202:Application/menu_task.c ****             break;
+ 203:Application/menu_task.c ****         osDelay(5);
+ 1183              		.loc 1 203 9 is_stmt 1 view .LVU273
+ 1184 002e 0520     		movs	r0, #5
+ 1185 0030 FFF7FEFF 		bl	osDelay
+ 1186              	.LVL110:
+ 1187              	.LBE13:
  167:Application/menu_task.c ****     {
- 168:Application/menu_task.c ****         static int8_t rank_img = 5;
+ 1188              		.loc 1 167 11 view .LVU274
+ 1189              	.L75:
+ 167:Application/menu_task.c ****     {
+ 1190              		.loc 1 167 5 view .LVU275
+ 1191              	.LBB18:
  169:Application/menu_task.c ****         // 按上/下键切换图片
- 170:Application/menu_task.c ****         if (Key_GetEvent_Up())
+ 1192              		.loc 1 169 9 view .LVU276
  171:Application/menu_task.c ****             if (rank_img > 7)
+ 1193              		.loc 1 171 9 view .LVU277
+ 1194              	.LBB16:
+ 171:Application/menu_task.c ****             if (rank_img > 7)
+ 1195              		.loc 1 171 13 is_stmt 0 view .LVU278
+ 1196 0034 FFF7FEFF 		bl	Key_GetEvent_Up
+ 1197              	.LVL111:
+ 171:Application/menu_task.c ****             if (rank_img > 7)
+ 1198              		.loc 1 171 12 view .LVU279
+ 1199 0038 38B1     		cbz	r0, .L62
  172:Application/menu_task.c ****                 rank_img = 0;
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 25
+ 1200              		.loc 1 172 13 is_stmt 1 view .LVU280
+ 172:Application/menu_task.c ****                 rank_img = 0;
+ 1201              		.loc 1 172 26 is_stmt 0 view .LVU281
+ 1202 003a 2C4B     		ldr	r3, .L84
+ 1203 003c 93F90030 		ldrsb	r3, [r3]
+ 172:Application/menu_task.c ****                 rank_img = 0;
+ 1204              		.loc 1 172 16 view .LVU282
+ 1205 0040 072B     		cmp	r3, #7
+ 1206 0042 DFDD     		ble	.L63
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 29
 
 
  173:Application/menu_task.c ****             else
- 174:Application/menu_task.c ****                 rank_img++;
- 1019              		.loc 1 174 17 view .LVU244
- 1020              		.loc 1 174 25 is_stmt 0 view .LVU245
- 1021 0004 0133     		adds	r3, r3, #1
- 1022 0006 394A     		ldr	r2, .L84
- 1023 0008 1370     		strb	r3, [r2]
- 1024 000a 1EE0     		b	.L62
- 1025              	.L77:
- 1026              	.LBE14:
- 1027              	.LBB15:
- 175:Application/menu_task.c ****         if (Key_GetEvent_Down())
+ 1207              		.loc 1 173 17 is_stmt 1 view .LVU283
+ 173:Application/menu_task.c ****             else
+ 1208              		.loc 1 173 26 is_stmt 0 view .LVU284
+ 1209 0044 294B     		ldr	r3, .L84
+ 1210 0046 0022     		movs	r2, #0
+ 1211 0048 1A70     		strb	r2, [r3]
+ 1212              	.L62:
+ 1213              	.LBE16:
  176:Application/menu_task.c ****             if (rank_img < 2)
+ 1214              		.loc 1 176 9 is_stmt 1 view .LVU285
+ 1215              	.LBB17:
+ 176:Application/menu_task.c ****             if (rank_img < 2)
+ 1216              		.loc 1 176 13 is_stmt 0 view .LVU286
+ 1217 004a FFF7FEFF 		bl	Key_GetEvent_Down
+ 1218              	.LVL112:
+ 176:Application/menu_task.c ****             if (rank_img < 2)
+ 1219              		.loc 1 176 12 view .LVU287
+ 1220 004e 38B1     		cbz	r0, .L64
  177:Application/menu_task.c ****                 rank_img = 7;
- 1028              		.loc 1 177 17 is_stmt 1 view .LVU246
- 1029              		.loc 1 177 26 is_stmt 0 view .LVU247
- 1030 000c 374B     		ldr	r3, .L84
- 1031 000e 0722     		movs	r2, #7
- 1032 0010 1A70     		strb	r2, [r3]
- 1033 0012 25E0     		b	.L64
- 1034              	.L78:
- 1035              	.LBE15:
- 178:Application/menu_task.c ****             else
- 179:Application/menu_task.c ****                 rank_img--;
+ 1221              		.loc 1 177 13 is_stmt 1 view .LVU288
+ 177:Application/menu_task.c ****                 rank_img = 7;
+ 1222              		.loc 1 177 26 is_stmt 0 view .LVU289
+ 1223 0050 264B     		ldr	r3, .L84
+ 1224 0052 93F90030 		ldrsb	r3, [r3]
+ 177:Application/menu_task.c ****                 rank_img = 7;
+ 1225              		.loc 1 177 16 view .LVU290
+ 1226 0056 012B     		cmp	r3, #1
+ 1227 0058 D8DD     		ble	.L77
  180:Application/menu_task.c **** 
- 181:Application/menu_task.c ****         OLED_NewFrame();
+ 1228              		.loc 1 180 17 is_stmt 1 view .LVU291
+ 180:Application/menu_task.c **** 
+ 1229              		.loc 1 180 25 is_stmt 0 view .LVU292
+ 1230 005a 013B     		subs	r3, r3, #1
+ 1231 005c 234A     		ldr	r2, .L84
+ 1232 005e 1370     		strb	r3, [r2]
+ 1233              	.L64:
+ 1234              	.LBE17:
  182:Application/menu_task.c ****         if (rank_img > 7)
+ 1235              		.loc 1 182 9 is_stmt 1 view .LVU293
+ 1236 0060 FFF7FEFF 		bl	OLED_NewFrame
+ 1237              	.LVL113:
  183:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
- 1036              		.loc 1 183 13 is_stmt 1 view .LVU248
- 1037 0014 0023     		movs	r3, #0
- 1038 0016 364A     		ldr	r2, .L84+4
- 1039 0018 1946     		mov	r1, r3
- 1040 001a 1820     		movs	r0, #24
- 1041 001c FFF7FEFF 		bl	OLED_DrawImage
- 1042              	.LVL83:
- 1043              	.L67:
- 184:Application/menu_task.c ****         else if (rank_img > 6)
+ 1238              		.loc 1 183 9 view .LVU294
+ 183:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
+ 1239              		.loc 1 183 22 is_stmt 0 view .LVU295
+ 1240 0064 214B     		ldr	r3, .L84
+ 1241 0066 93F90030 		ldrsb	r3, [r3]
+ 183:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
+ 1242              		.loc 1 183 12 view .LVU296
+ 1243 006a 072B     		cmp	r3, #7
+ 1244 006c D2DC     		bgt	.L78
  185:Application/menu_task.c ****             OLED_DrawImage(16, 0, &inf4Img, 0);
- 186:Application/menu_task.c ****         else if (rank_img > 5)
+ 1245              		.loc 1 185 14 is_stmt 1 view .LVU297
+ 185:Application/menu_task.c ****             OLED_DrawImage(16, 0, &inf4Img, 0);
+ 1246              		.loc 1 185 17 is_stmt 0 view .LVU298
+ 1247 006e 062B     		cmp	r3, #6
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 30
+
+
+ 1248 0070 10DC     		bgt	.L79
  187:Application/menu_task.c ****             OLED_DrawImage(16, 0, &heroainfImg, 0);
- 188:Application/menu_task.c ****         else if (rank_img > 4) // 5
+ 1249              		.loc 1 187 14 is_stmt 1 view .LVU299
+ 187:Application/menu_task.c ****             OLED_DrawImage(16, 0, &heroainfImg, 0);
+ 1250              		.loc 1 187 17 is_stmt 0 view .LVU300
+ 1251 0072 052B     		cmp	r3, #5
+ 1252 0074 15DC     		bgt	.L80
  189:Application/menu_task.c ****             OLED_DrawImage(33, 0, &APEXImg, 0);
- 190:Application/menu_task.c ****         else if (rank_img > 3) // 4
+ 1253              		.loc 1 189 14 is_stmt 1 view .LVU301
+ 189:Application/menu_task.c ****             OLED_DrawImage(33, 0, &APEXImg, 0);
+ 1254              		.loc 1 189 17 is_stmt 0 view .LVU302
+ 1255 0076 042B     		cmp	r3, #4
+ 1256 0078 1ADC     		bgt	.L81
  191:Application/menu_task.c ****             OLED_DrawImage(30, 0, &ACEImg, 0);
- 192:Application/menu_task.c ****         else if (rank_img > 2) // 3
+ 1257              		.loc 1 191 14 is_stmt 1 view .LVU303
+ 191:Application/menu_task.c ****             OLED_DrawImage(30, 0, &ACEImg, 0);
+ 1258              		.loc 1 191 17 is_stmt 0 view .LVU304
+ 1259 007a 032B     		cmp	r3, #3
+ 1260 007c 1FDC     		bgt	.L82
  193:Application/menu_task.c ****             OLED_DrawImage(17, 0, &ROBOMASTERImg, 0);
- 194:Application/menu_task.c ****         else if (rank_img > 1) // 2
+ 1261              		.loc 1 193 14 is_stmt 1 view .LVU305
+ 193:Application/menu_task.c ****             OLED_DrawImage(17, 0, &ROBOMASTERImg, 0);
+ 1262              		.loc 1 193 17 is_stmt 0 view .LVU306
+ 1263 007e 022B     		cmp	r3, #2
+ 1264 0080 24DC     		bgt	.L83
  195:Application/menu_task.c ****             OLED_DrawImage(17, 0, &CSGOImg, 0);
+ 1265              		.loc 1 195 14 is_stmt 1 view .LVU307
+ 195:Application/menu_task.c ****             OLED_DrawImage(17, 0, &CSGOImg, 0);
+ 1266              		.loc 1 195 17 is_stmt 0 view .LVU308
+ 1267 0082 012B     		cmp	r3, #1
+ 1268 0084 29DD     		ble	.L73
  196:Application/menu_task.c ****         else // 1
- 197:Application/menu_task.c ****             OLED_DrawImage(24, 0, &dafuImg, 0);
+ 1269              		.loc 1 196 13 is_stmt 1 view .LVU309
+ 1270 0086 0023     		movs	r3, #0
+ 1271 0088 1A4A     		ldr	r2, .L84+8
+ 1272 008a 1946     		mov	r1, r3
+ 1273 008c 1120     		movs	r0, #17
+ 1274 008e FFF7FEFF 		bl	OLED_DrawImage
+ 1275              	.LVL114:
+ 1276 0092 C5E7     		b	.L67
+ 1277              	.L79:
+ 186:Application/menu_task.c ****         else if (rank_img > 5)
+ 1278              		.loc 1 186 13 view .LVU310
+ 1279 0094 0023     		movs	r3, #0
+ 1280 0096 184A     		ldr	r2, .L84+12
+ 1281 0098 1946     		mov	r1, r3
+ 1282 009a 1020     		movs	r0, #16
+ 1283 009c FFF7FEFF 		bl	OLED_DrawImage
+ 1284              	.LVL115:
+ 1285 00a0 BEE7     		b	.L67
+ 1286              	.L80:
+ 188:Application/menu_task.c ****         else if (rank_img > 4) // 5
+ 1287              		.loc 1 188 13 view .LVU311
+ 1288 00a2 0023     		movs	r3, #0
+ 1289 00a4 154A     		ldr	r2, .L84+16
+ 1290 00a6 1946     		mov	r1, r3
+ 1291 00a8 1020     		movs	r0, #16
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 31
+
+
+ 1292 00aa FFF7FEFF 		bl	OLED_DrawImage
+ 1293              	.LVL116:
+ 1294 00ae B7E7     		b	.L67
+ 1295              	.L81:
+ 190:Application/menu_task.c ****         else if (rank_img > 3) // 4
+ 1296              		.loc 1 190 13 view .LVU312
+ 1297 00b0 0023     		movs	r3, #0
+ 1298 00b2 134A     		ldr	r2, .L84+20
+ 1299 00b4 1946     		mov	r1, r3
+ 1300 00b6 2120     		movs	r0, #33
+ 1301 00b8 FFF7FEFF 		bl	OLED_DrawImage
+ 1302              	.LVL117:
+ 1303 00bc B0E7     		b	.L67
+ 1304              	.L82:
+ 192:Application/menu_task.c ****         else if (rank_img > 2) // 3
+ 1305              		.loc 1 192 13 view .LVU313
+ 1306 00be 0023     		movs	r3, #0
+ 1307 00c0 104A     		ldr	r2, .L84+24
+ 1308 00c2 1946     		mov	r1, r3
+ 1309 00c4 1E20     		movs	r0, #30
+ 1310 00c6 FFF7FEFF 		bl	OLED_DrawImage
+ 1311              	.LVL118:
+ 1312 00ca A9E7     		b	.L67
+ 1313              	.L83:
+ 194:Application/menu_task.c ****         else if (rank_img > 1) // 2
+ 1314              		.loc 1 194 13 view .LVU314
+ 1315 00cc 0023     		movs	r3, #0
+ 1316 00ce 0E4A     		ldr	r2, .L84+28
+ 1317 00d0 1946     		mov	r1, r3
+ 1318 00d2 1120     		movs	r0, #17
+ 1319 00d4 FFF7FEFF 		bl	OLED_DrawImage
+ 1320              	.LVL119:
+ 1321 00d8 A2E7     		b	.L67
+ 1322              	.L73:
  198:Application/menu_task.c ****         OLED_ShowFrame();
- 1044              		.loc 1 198 9 view .LVU249
- 1045 0020 FFF7FEFF 		bl	OLED_ShowFrame
- 1046              	.LVL84:
- 199:Application/menu_task.c **** 
- 200:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
- 1047              		.loc 1 200 9 view .LVU250
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 26
+ 1323              		.loc 1 198 13 view .LVU315
+ 1324 00da 0023     		movs	r3, #0
+ 1325 00dc 0B4A     		ldr	r2, .L84+32
+ 1326 00de 1946     		mov	r1, r3
+ 1327 00e0 1820     		movs	r0, #24
+ 1328 00e2 FFF7FEFF 		bl	OLED_DrawImage
+ 1329              	.LVL120:
+ 1330 00e6 9BE7     		b	.L67
+ 1331              	.L61:
+ 1332              	.LBE18:
+ 204:Application/menu_task.c ****     }
+ 205:Application/menu_task.c **** }
+ 1333              		.loc 1 205 1 is_stmt 0 view .LVU316
+ 1334 00e8 08BD     		pop	{r3, pc}
+ 1335              	.L85:
+ 1336 00ea 00BF     		.align	2
+ 1337              	.L84:
+ 1338 00ec 00000000 		.word	.LANCHOR4
+ 1339 00f0 00000000 		.word	infantry34Img
+ 1340 00f4 00000000 		.word	CSGOImg
+ 1341 00f8 00000000 		.word	inf4Img
+ 1342 00fc 00000000 		.word	heroainfImg
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 32
 
 
- 1048              		.loc 1 200 13 is_stmt 0 view .LVU251
- 1049 0024 0620     		movs	r0, #6
- 1050 0026 FFF7FEFF 		bl	menu_command_callback
- 1051              	.LVL85:
- 1052              		.loc 1 200 12 view .LVU252
- 1053 002a 0028     		cmp	r0, #0
- 1054 002c 5CD1     		bne	.L61
- 201:Application/menu_task.c ****             break;
- 202:Application/menu_task.c ****         osDelay(5);
- 1055              		.loc 1 202 9 is_stmt 1 view .LVU253
- 1056 002e 0520     		movs	r0, #5
- 1057 0030 FFF7FEFF 		bl	osDelay
- 1058              	.LVL86:
- 1059              	.LBE13:
- 166:Application/menu_task.c ****     {
- 1060              		.loc 1 166 11 view .LVU254
- 1061              	.L75:
- 166:Application/menu_task.c ****     {
- 1062              		.loc 1 166 5 view .LVU255
- 1063              	.LBB18:
- 168:Application/menu_task.c ****         // 按上/下键切换图片
- 1064              		.loc 1 168 9 view .LVU256
- 170:Application/menu_task.c ****             if (rank_img > 7)
- 1065              		.loc 1 170 9 view .LVU257
- 1066              	.LBB16:
- 170:Application/menu_task.c ****             if (rank_img > 7)
- 1067              		.loc 1 170 13 is_stmt 0 view .LVU258
- 1068 0034 FFF7FEFF 		bl	Key_GetEvent_Up
- 1069              	.LVL87:
- 170:Application/menu_task.c ****             if (rank_img > 7)
- 1070              		.loc 1 170 12 view .LVU259
- 1071 0038 38B1     		cbz	r0, .L62
- 171:Application/menu_task.c ****                 rank_img = 0;
- 1072              		.loc 1 171 13 is_stmt 1 view .LVU260
- 171:Application/menu_task.c ****                 rank_img = 0;
- 1073              		.loc 1 171 26 is_stmt 0 view .LVU261
- 1074 003a 2C4B     		ldr	r3, .L84
- 1075 003c 93F90030 		ldrsb	r3, [r3]
- 171:Application/menu_task.c ****                 rank_img = 0;
- 1076              		.loc 1 171 16 view .LVU262
- 1077 0040 072B     		cmp	r3, #7
- 1078 0042 DFDD     		ble	.L63
- 172:Application/menu_task.c ****             else
- 1079              		.loc 1 172 17 is_stmt 1 view .LVU263
- 172:Application/menu_task.c ****             else
- 1080              		.loc 1 172 26 is_stmt 0 view .LVU264
- 1081 0044 294B     		ldr	r3, .L84
- 1082 0046 0022     		movs	r2, #0
- 1083 0048 1A70     		strb	r2, [r3]
- 1084              	.L62:
- 1085              	.LBE16:
- 175:Application/menu_task.c ****             if (rank_img < 2)
- 1086              		.loc 1 175 9 is_stmt 1 view .LVU265
- 1087              	.LBB17:
- 175:Application/menu_task.c ****             if (rank_img < 2)
- 1088              		.loc 1 175 13 is_stmt 0 view .LVU266
- 1089 004a FFF7FEFF 		bl	Key_GetEvent_Down
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 27
+ 1343 0100 00000000 		.word	APEXImg
+ 1344 0104 00000000 		.word	ACEImg
+ 1345 0108 00000000 		.word	ROBOMASTERImg
+ 1346 010c 00000000 		.word	dafuImg
+ 1347              		.cfi_endproc
+ 1348              	.LFE78:
+ 1350              		.global	__aeabi_ddiv
+ 1351              		.global	__aeabi_d2f
+ 1352              		.global	__aeabi_f2iz
+ 1353              		.global	__aeabi_fsub
+ 1354              		.section	.rodata.MENU_ShowInfomation.str1.4,"aMS",%progbits,1
+ 1355              		.align	2
+ 1356              	.LC7:
+ 1357 0000 56726566 		.ascii	"Vref=%d.%dV\000"
+ 1357      3D25642E 
+ 1357      25645600 
+ 1358              		.align	2
+ 1359              	.LC8:
+ 1360 000c 54656D70 		.ascii	"Temp=%d.%dC\000"
+ 1360      3D25642E 
+ 1360      25644300 
+ 1361              		.align	2
+ 1362              	.LC9:
+ 1363 0018 4F4E4C49 		.ascii	"ONLINE\000"
+ 1363      4E4500
+ 1364 001f 00       		.align	2
+ 1365              	.LC10:
+ 1366 0020 4F46464C 		.ascii	"OFFLINE\000"
+ 1366      494E4500 
+ 1367              		.align	2
+ 1368              	.LC11:
+ 1369 0028 42792043 		.ascii	"By CAYON\000"
+ 1369      41594F4E 
+ 1369      00
+ 1370              		.section	.text.MENU_ShowInfomation,"ax",%progbits
+ 1371              		.align	1
+ 1372              		.global	MENU_ShowInfomation
+ 1373              		.syntax unified
+ 1374              		.thumb
+ 1375              		.thumb_func
+ 1377              	MENU_ShowInfomation:
+ 1378              	.LFB79:
+ 206:Application/menu_task.c **** 
+ 207:Application/menu_task.c **** void MENU_ShowInfomation(void)
+ 208:Application/menu_task.c **** {
+ 1379              		.loc 1 208 1 is_stmt 1 view -0
+ 1380              		.cfi_startproc
+ 1381              		@ args = 0, pretend = 0, frame = 104
+ 1382              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1383 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1384              	.LCFI14:
+ 1385              		.cfi_def_cfa_offset 20
+ 1386              		.cfi_offset 4, -20
+ 1387              		.cfi_offset 5, -16
+ 1388              		.cfi_offset 6, -12
+ 1389              		.cfi_offset 7, -8
+ 1390              		.cfi_offset 14, -4
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 33
 
 
- 1090              	.LVL88:
- 175:Application/menu_task.c ****             if (rank_img < 2)
- 1091              		.loc 1 175 12 view .LVU267
- 1092 004e 38B1     		cbz	r0, .L64
- 176:Application/menu_task.c ****                 rank_img = 7;
- 1093              		.loc 1 176 13 is_stmt 1 view .LVU268
- 176:Application/menu_task.c ****                 rank_img = 7;
- 1094              		.loc 1 176 26 is_stmt 0 view .LVU269
- 1095 0050 264B     		ldr	r3, .L84
- 1096 0052 93F90030 		ldrsb	r3, [r3]
- 176:Application/menu_task.c ****                 rank_img = 7;
- 1097              		.loc 1 176 16 view .LVU270
- 1098 0056 012B     		cmp	r3, #1
- 1099 0058 D8DD     		ble	.L77
- 179:Application/menu_task.c **** 
- 1100              		.loc 1 179 17 is_stmt 1 view .LVU271
- 179:Application/menu_task.c **** 
- 1101              		.loc 1 179 25 is_stmt 0 view .LVU272
- 1102 005a 013B     		subs	r3, r3, #1
- 1103 005c 234A     		ldr	r2, .L84
- 1104 005e 1370     		strb	r3, [r2]
- 1105              	.L64:
- 1106              	.LBE17:
- 181:Application/menu_task.c ****         if (rank_img > 7)
- 1107              		.loc 1 181 9 is_stmt 1 view .LVU273
- 1108 0060 FFF7FEFF 		bl	OLED_NewFrame
- 1109              	.LVL89:
- 182:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
- 1110              		.loc 1 182 9 view .LVU274
- 182:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
- 1111              		.loc 1 182 22 is_stmt 0 view .LVU275
- 1112 0064 214B     		ldr	r3, .L84
- 1113 0066 93F90030 		ldrsb	r3, [r3]
- 182:Application/menu_task.c ****             OLED_DrawImage(24, 0, &infantry34Img, 0);
- 1114              		.loc 1 182 12 view .LVU276
- 1115 006a 072B     		cmp	r3, #7
- 1116 006c D2DC     		bgt	.L78
- 184:Application/menu_task.c ****             OLED_DrawImage(16, 0, &inf4Img, 0);
- 1117              		.loc 1 184 14 is_stmt 1 view .LVU277
- 184:Application/menu_task.c ****             OLED_DrawImage(16, 0, &inf4Img, 0);
- 1118              		.loc 1 184 17 is_stmt 0 view .LVU278
- 1119 006e 062B     		cmp	r3, #6
- 1120 0070 10DC     		bgt	.L79
- 186:Application/menu_task.c ****             OLED_DrawImage(16, 0, &heroainfImg, 0);
- 1121              		.loc 1 186 14 is_stmt 1 view .LVU279
- 186:Application/menu_task.c ****             OLED_DrawImage(16, 0, &heroainfImg, 0);
- 1122              		.loc 1 186 17 is_stmt 0 view .LVU280
- 1123 0072 052B     		cmp	r3, #5
- 1124 0074 15DC     		bgt	.L80
- 188:Application/menu_task.c ****             OLED_DrawImage(33, 0, &APEXImg, 0);
- 1125              		.loc 1 188 14 is_stmt 1 view .LVU281
- 188:Application/menu_task.c ****             OLED_DrawImage(33, 0, &APEXImg, 0);
- 1126              		.loc 1 188 17 is_stmt 0 view .LVU282
- 1127 0076 042B     		cmp	r3, #4
- 1128 0078 1ADC     		bgt	.L81
- 190:Application/menu_task.c ****             OLED_DrawImage(30, 0, &ACEImg, 0);
- 1129              		.loc 1 190 14 is_stmt 1 view .LVU283
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 28
+ 1391 0002 9DB0     		sub	sp, sp, #116
+ 1392              	.LCFI15:
+ 1393              		.cfi_def_cfa_offset 136
+ 1394 0004 18E0     		b	.L90
+ 1395              	.LVL121:
+ 1396              	.L92:
+ 1397              	.LBB19:
+ 209:Application/menu_task.c ****     while (1)
+ 210:Application/menu_task.c ****     {
+ 211:Application/menu_task.c ****         char Vbuf[50];
+ 212:Application/menu_task.c ****         char Tbuf[50];
+ 213:Application/menu_task.c ****         float Vref = (1.2 / ((float)rc->Vref / 4095));
+ 214:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 215:Application/menu_task.c ****         int intValue = (int)Vref;
+ 216:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
+ 217:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 218:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
+ 219:Application/menu_task.c ****         intValue = (int)temperature;
+ 220:Application/menu_task.c ****         decimalValue = temperature - (float)intValue;
+ 221:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 222:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
+ 223:Application/menu_task.c ****         OLED_NewFrame();
+ 224:Application/menu_task.c ****         OLED_PrintASCIIString(5, 4, Vbuf, &afont16x8, 0);
+ 225:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
+ 226:Application/menu_task.c ****         if (rc->online)
+ 227:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
+ 1398              		.loc 1 227 13 view .LVU318
+ 1399 0006 0095     		str	r5, [sp]
+ 1400 0008 2346     		mov	r3, r4
+ 1401 000a 4F4A     		ldr	r2, .L93+16
+ 1402 000c 2C21     		movs	r1, #44
+ 1403 000e 0520     		movs	r0, #5
+ 1404 0010 FFF7FEFF 		bl	OLED_PrintASCIIString
+ 1405              	.LVL122:
+ 1406              	.L88:
+ 228:Application/menu_task.c ****         else
+ 229:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "OFFLINE", &afont16x8, 0);
+ 230:Application/menu_task.c ****         OLED_PrintASCIIString(72, 48, "By CAYON", &afont12x6, 0);
+ 1407              		.loc 1 230 9 view .LVU319
+ 1408 0014 0023     		movs	r3, #0
+ 1409 0016 0093     		str	r3, [sp]
+ 1410 0018 4C4B     		ldr	r3, .L93+20
+ 1411 001a 4D4A     		ldr	r2, .L93+24
+ 1412 001c 3021     		movs	r1, #48
+ 1413 001e 4820     		movs	r0, #72
+ 1414 0020 FFF7FEFF 		bl	OLED_PrintASCIIString
+ 1415              	.LVL123:
+ 231:Application/menu_task.c ****         OLED_ShowFrame();
+ 1416              		.loc 1 231 9 view .LVU320
+ 1417 0024 FFF7FEFF 		bl	OLED_ShowFrame
+ 1418              	.LVL124:
+ 232:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
+ 1419              		.loc 1 232 9 view .LVU321
+ 1420              		.loc 1 232 13 is_stmt 0 view .LVU322
+ 1421 0028 0620     		movs	r0, #6
+ 1422 002a FFF7FEFF 		bl	menu_command_callback
+ 1423              	.LVL125:
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 34
 
 
- 190:Application/menu_task.c ****             OLED_DrawImage(30, 0, &ACEImg, 0);
- 1130              		.loc 1 190 17 is_stmt 0 view .LVU284
- 1131 007a 032B     		cmp	r3, #3
- 1132 007c 1FDC     		bgt	.L82
- 192:Application/menu_task.c ****             OLED_DrawImage(17, 0, &ROBOMASTERImg, 0);
- 1133              		.loc 1 192 14 is_stmt 1 view .LVU285
- 192:Application/menu_task.c ****             OLED_DrawImage(17, 0, &ROBOMASTERImg, 0);
- 1134              		.loc 1 192 17 is_stmt 0 view .LVU286
- 1135 007e 022B     		cmp	r3, #2
- 1136 0080 24DC     		bgt	.L83
- 194:Application/menu_task.c ****             OLED_DrawImage(17, 0, &CSGOImg, 0);
- 1137              		.loc 1 194 14 is_stmt 1 view .LVU287
- 194:Application/menu_task.c ****             OLED_DrawImage(17, 0, &CSGOImg, 0);
- 1138              		.loc 1 194 17 is_stmt 0 view .LVU288
- 1139 0082 012B     		cmp	r3, #1
- 1140 0084 29DD     		ble	.L73
- 195:Application/menu_task.c ****         else // 1
- 1141              		.loc 1 195 13 is_stmt 1 view .LVU289
- 1142 0086 0023     		movs	r3, #0
- 1143 0088 1A4A     		ldr	r2, .L84+8
- 1144 008a 1946     		mov	r1, r3
- 1145 008c 1120     		movs	r0, #17
- 1146 008e FFF7FEFF 		bl	OLED_DrawImage
- 1147              	.LVL90:
- 1148 0092 C5E7     		b	.L67
- 1149              	.L79:
- 185:Application/menu_task.c ****         else if (rank_img > 5)
- 1150              		.loc 1 185 13 view .LVU290
- 1151 0094 0023     		movs	r3, #0
- 1152 0096 184A     		ldr	r2, .L84+12
- 1153 0098 1946     		mov	r1, r3
- 1154 009a 1020     		movs	r0, #16
- 1155 009c FFF7FEFF 		bl	OLED_DrawImage
- 1156              	.LVL91:
- 1157 00a0 BEE7     		b	.L67
- 1158              	.L80:
- 187:Application/menu_task.c ****         else if (rank_img > 4) // 5
- 1159              		.loc 1 187 13 view .LVU291
- 1160 00a2 0023     		movs	r3, #0
- 1161 00a4 154A     		ldr	r2, .L84+16
- 1162 00a6 1946     		mov	r1, r3
- 1163 00a8 1020     		movs	r0, #16
- 1164 00aa FFF7FEFF 		bl	OLED_DrawImage
- 1165              	.LVL92:
- 1166 00ae B7E7     		b	.L67
- 1167              	.L81:
- 189:Application/menu_task.c ****         else if (rank_img > 3) // 4
- 1168              		.loc 1 189 13 view .LVU292
- 1169 00b0 0023     		movs	r3, #0
- 1170 00b2 134A     		ldr	r2, .L84+20
- 1171 00b4 1946     		mov	r1, r3
- 1172 00b6 2120     		movs	r0, #33
- 1173 00b8 FFF7FEFF 		bl	OLED_DrawImage
- 1174              	.LVL93:
- 1175 00bc B0E7     		b	.L67
- 1176              	.L82:
- 191:Application/menu_task.c ****         else if (rank_img > 2) // 3
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 29
-
-
- 1177              		.loc 1 191 13 view .LVU293
- 1178 00be 0023     		movs	r3, #0
- 1179 00c0 104A     		ldr	r2, .L84+24
- 1180 00c2 1946     		mov	r1, r3
- 1181 00c4 1E20     		movs	r0, #30
- 1182 00c6 FFF7FEFF 		bl	OLED_DrawImage
- 1183              	.LVL94:
- 1184 00ca A9E7     		b	.L67
- 1185              	.L83:
- 193:Application/menu_task.c ****         else if (rank_img > 1) // 2
- 1186              		.loc 1 193 13 view .LVU294
- 1187 00cc 0023     		movs	r3, #0
- 1188 00ce 0E4A     		ldr	r2, .L84+28
- 1189 00d0 1946     		mov	r1, r3
- 1190 00d2 1120     		movs	r0, #17
- 1191 00d4 FFF7FEFF 		bl	OLED_DrawImage
- 1192              	.LVL95:
- 1193 00d8 A2E7     		b	.L67
- 1194              	.L73:
- 197:Application/menu_task.c ****         OLED_ShowFrame();
- 1195              		.loc 1 197 13 view .LVU295
- 1196 00da 0023     		movs	r3, #0
- 1197 00dc 0B4A     		ldr	r2, .L84+32
- 1198 00de 1946     		mov	r1, r3
- 1199 00e0 1820     		movs	r0, #24
- 1200 00e2 FFF7FEFF 		bl	OLED_DrawImage
- 1201              	.LVL96:
- 1202 00e6 9BE7     		b	.L67
- 1203              	.L61:
- 1204              	.LBE18:
- 203:Application/menu_task.c ****     }
- 204:Application/menu_task.c **** }
- 1205              		.loc 1 204 1 is_stmt 0 view .LVU296
- 1206 00e8 08BD     		pop	{r3, pc}
- 1207              	.L85:
- 1208 00ea 00BF     		.align	2
- 1209              	.L84:
- 1210 00ec 00000000 		.word	.LANCHOR4
- 1211 00f0 00000000 		.word	infantry34Img
- 1212 00f4 00000000 		.word	CSGOImg
- 1213 00f8 00000000 		.word	inf4Img
- 1214 00fc 00000000 		.word	heroainfImg
- 1215 0100 00000000 		.word	APEXImg
- 1216 0104 00000000 		.word	ACEImg
- 1217 0108 00000000 		.word	ROBOMASTERImg
- 1218 010c 00000000 		.word	dafuImg
- 1219              		.cfi_endproc
- 1220              	.LFE78:
- 1222              		.global	__aeabi_f2d
- 1223              		.global	__aeabi_ddiv
- 1224              		.global	__aeabi_d2f
- 1225              		.global	__aeabi_dsub
- 1226              		.global	__aeabi_dadd
- 1227              		.global	__aeabi_f2iz
- 1228              		.global	__aeabi_i2f
- 1229              		.global	__aeabi_fsub
- 1230              		.section	.rodata.MENU_ShowInfomation.str1.4,"aMS",%progbits,1
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 30
-
-
- 1231              		.align	2
- 1232              	.LC7:
- 1233 0000 56726566 		.ascii	"Vref=%d.%dV\000"
- 1233      3D25642E 
- 1233      25645600 
- 1234              		.align	2
- 1235              	.LC8:
- 1236 000c 54656D70 		.ascii	"Temp=%d.%dC\000"
- 1236      3D25642E 
- 1236      25644300 
- 1237              		.align	2
- 1238              	.LC9:
- 1239 0018 4F4E4C49 		.ascii	"ONLINE\000"
- 1239      4E4500
- 1240 001f 00       		.align	2
- 1241              	.LC10:
- 1242 0020 4F46464C 		.ascii	"OFFLINE\000"
- 1242      494E4500 
- 1243              		.align	2
- 1244              	.LC11:
- 1245 0028 42792043 		.ascii	"By CAYON\000"
- 1245      41594F4E 
- 1245      00
- 1246              		.section	.text.MENU_ShowInfomation,"ax",%progbits
- 1247              		.align	1
- 1248              		.global	MENU_ShowInfomation
- 1249              		.syntax unified
- 1250              		.thumb
- 1251              		.thumb_func
- 1253              	MENU_ShowInfomation:
- 1254              	.LFB79:
- 205:Application/menu_task.c **** 
- 206:Application/menu_task.c **** void MENU_ShowInfomation(void)
- 207:Application/menu_task.c **** {
- 1255              		.loc 1 207 1 is_stmt 1 view -0
- 1256              		.cfi_startproc
- 1257              		@ args = 0, pretend = 0, frame = 104
- 1258              		@ frame_needed = 0, uses_anonymous_args = 0
- 1259 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 1260              	.LCFI14:
- 1261              		.cfi_def_cfa_offset 20
- 1262              		.cfi_offset 4, -20
- 1263              		.cfi_offset 5, -16
- 1264              		.cfi_offset 6, -12
- 1265              		.cfi_offset 7, -8
- 1266              		.cfi_offset 14, -4
- 1267 0002 9DB0     		sub	sp, sp, #116
- 1268              	.LCFI15:
- 1269              		.cfi_def_cfa_offset 136
- 1270 0004 18E0     		b	.L90
- 1271              	.LVL97:
- 1272              	.L92:
- 1273              	.LBB19:
- 208:Application/menu_task.c ****     while (1)
+ 1424              		.loc 1 232 12 view .LVU323
+ 1425 002e 0028     		cmp	r0, #0
+ 1426 0030 7FD1     		bne	.L86
+ 233:Application/menu_task.c ****             break;
+ 234:Application/menu_task.c ****         osDelay(5);
+ 1427              		.loc 1 234 9 is_stmt 1 view .LVU324
+ 1428 0032 0520     		movs	r0, #5
+ 1429 0034 FFF7FEFF 		bl	osDelay
+ 1430              	.LVL126:
+ 1431              	.LBE19:
  209:Application/menu_task.c ****     {
- 210:Application/menu_task.c ****         char Vbuf[50];
+ 1432              		.loc 1 209 11 view .LVU325
+ 1433              	.L90:
+ 209:Application/menu_task.c ****     {
+ 1434              		.loc 1 209 5 view .LVU326
+ 1435              	.LBB20:
  211:Application/menu_task.c ****         char Tbuf[50];
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 31
-
-
+ 1436              		.loc 1 211 9 view .LVU327
  212:Application/menu_task.c ****         float Vref = (1.2 / ((float)rc->Vref / 4095));
+ 1437              		.loc 1 212 9 view .LVU328
  213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1438              		.loc 1 213 9 view .LVU329
+ 213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1439              		.loc 1 213 39 is_stmt 0 view .LVU330
+ 1440 0038 464F     		ldr	r7, .L93+28
+ 1441 003a 3D68     		ldr	r5, [r7]
+ 213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1442              		.loc 1 213 30 view .LVU331
+ 1443 003c A888     		ldrh	r0, [r5, #4]
+ 1444 003e FFF7FEFF 		bl	__aeabi_ui2f
+ 1445              	.LVL127:
+ 213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1446              		.loc 1 213 46 view .LVU332
+ 1447 0042 4549     		ldr	r1, .L93+32
+ 1448 0044 FFF7FEFF 		bl	__aeabi_fdiv
+ 1449              	.LVL128:
+ 1450 0048 FFF7FEFF 		bl	__aeabi_f2d
+ 1451              	.LVL129:
+ 1452 004c 0246     		mov	r2, r0
+ 1453 004e 0B46     		mov	r3, r1
+ 213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1454              		.loc 1 213 27 view .LVU333
+ 1455 0050 4FF03330 		mov	r0, #858993459
+ 1456 0054 4149     		ldr	r1, .L93+36
+ 1457 0056 FFF7FEFF 		bl	__aeabi_ddiv
+ 1458              	.LVL130:
+ 213:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
+ 1459              		.loc 1 213 15 view .LVU334
+ 1460 005a FFF7FEFF 		bl	__aeabi_d2f
+ 1461              	.LVL131:
+ 1462 005e 0446     		mov	r4, r0
+ 1463              	.LVL132:
  214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1464              		.loc 1 214 9 is_stmt 1 view .LVU335
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1465              		.loc 1 214 39 is_stmt 0 view .LVU336
+ 1466 0060 E888     		ldrh	r0, [r5, #6]
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 35
+
+
+ 1467              	.LVL133:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1468              		.loc 1 214 39 view .LVU337
+ 1469 0062 FFF7FEFF 		bl	__aeabi_ui2f
+ 1470              	.LVL134:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1471              		.loc 1 214 63 view .LVU338
+ 1472 0066 2146     		mov	r1, r4
+ 1473 0068 FFF7FEFF 		bl	__aeabi_fmul
+ 1474              	.LVL135:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1475              		.loc 1 214 70 view .LVU339
+ 1476 006c 4FF06651 		mov	r1, #964689920
+ 1477 0070 FFF7FEFF 		bl	__aeabi_fmul
+ 1478              	.LVL136:
+ 1479 0074 FFF7FEFF 		bl	__aeabi_f2d
+ 1480              	.LVL137:
+ 1481 0078 0246     		mov	r2, r0
+ 1482 007a 0B46     		mov	r3, r1
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1483              		.loc 1 214 36 view .LVU340
+ 1484 007c 2EA1     		adr	r1, .L93
+ 1485 007e D1E90001 		ldrd	r0, [r1]
+ 1486 0082 FFF7FEFF 		bl	__aeabi_dsub
+ 1487              	.LVL138:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1488              		.loc 1 214 78 view .LVU341
+ 1489 0086 2EA3     		adr	r3, .L93+8
+ 1490 0088 D3E90023 		ldrd	r2, [r3]
+ 1491 008c FFF7FEFF 		bl	__aeabi_ddiv
+ 1492              	.LVL139:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1493              		.loc 1 214 85 view .LVU342
+ 1494 0090 0022     		movs	r2, #0
+ 1495 0092 334B     		ldr	r3, .L93+40
+ 1496 0094 FFF7FEFF 		bl	__aeabi_dadd
+ 1497              	.LVL140:
+ 214:Application/menu_task.c ****         int intValue = (int)Vref;
+ 1498              		.loc 1 214 15 view .LVU343
+ 1499 0098 FFF7FEFF 		bl	__aeabi_d2f
+ 1500              	.LVL141:
+ 1501 009c 0546     		mov	r5, r0
+ 1502              	.LVL142:
  215:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
+ 1503              		.loc 1 215 9 is_stmt 1 view .LVU344
+ 215:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
+ 1504              		.loc 1 215 13 is_stmt 0 view .LVU345
+ 1505 009e 2046     		mov	r0, r4
+ 1506              	.LVL143:
+ 215:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
+ 1507              		.loc 1 215 13 view .LVU346
+ 1508 00a0 FFF7FEFF 		bl	__aeabi_f2iz
+ 1509              	.LVL144:
+ 1510 00a4 0646     		mov	r6, r0
+ 1511              	.LVL145:
  216:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1512              		.loc 1 216 9 is_stmt 1 view .LVU347
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 36
+
+
+ 216:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1513              		.loc 1 216 37 is_stmt 0 view .LVU348
+ 1514 00a6 FFF7FEFF 		bl	__aeabi_i2f
+ 1515              	.LVL146:
+ 216:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1516              		.loc 1 216 37 view .LVU349
+ 1517 00aa 0146     		mov	r1, r0
+ 216:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1518              		.loc 1 216 15 view .LVU350
+ 1519 00ac 2046     		mov	r0, r4
+ 1520 00ae FFF7FEFF 		bl	__aeabi_fsub
+ 1521              	.LVL147:
  217:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
+ 1522              		.loc 1 217 9 is_stmt 1 view .LVU351
+ 217:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
+ 1523              		.loc 1 217 50 is_stmt 0 view .LVU352
+ 1524 00b2 2C49     		ldr	r1, .L93+44
+ 1525 00b4 FFF7FEFF 		bl	__aeabi_fmul
+ 1526              	.LVL148:
+ 217:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
+ 1527              		.loc 1 217 13 view .LVU353
+ 1528 00b8 FFF7FEFF 		bl	__aeabi_f2iz
+ 1529              	.LVL149:
+ 1530 00bc 0346     		mov	r3, r0
+ 1531              	.LVL150:
  218:Application/menu_task.c ****         intValue = (int)temperature;
+ 1532              		.loc 1 218 9 is_stmt 1 view .LVU354
+ 1533 00be 3246     		mov	r2, r6
+ 1534 00c0 2949     		ldr	r1, .L93+48
+ 1535 00c2 02A8     		add	r0, sp, #8
+ 1536              	.LVL151:
+ 218:Application/menu_task.c ****         intValue = (int)temperature;
+ 1537              		.loc 1 218 9 is_stmt 0 view .LVU355
+ 1538 00c4 FFF7FEFF 		bl	sprintf
+ 1539              	.LVL152:
  219:Application/menu_task.c ****         decimalValue = temperature - (float)intValue;
+ 1540              		.loc 1 219 9 is_stmt 1 view .LVU356
+ 219:Application/menu_task.c ****         decimalValue = temperature - (float)intValue;
+ 1541              		.loc 1 219 18 is_stmt 0 view .LVU357
+ 1542 00c8 2846     		mov	r0, r5
+ 1543 00ca FFF7FEFF 		bl	__aeabi_f2iz
+ 1544              	.LVL153:
+ 1545 00ce 0446     		mov	r4, r0
+ 1546              	.LVL154:
  220:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1547              		.loc 1 220 9 is_stmt 1 view .LVU358
+ 220:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1548              		.loc 1 220 38 is_stmt 0 view .LVU359
+ 1549 00d0 FFF7FEFF 		bl	__aeabi_i2f
+ 1550              	.LVL155:
+ 220:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1551              		.loc 1 220 38 view .LVU360
+ 1552 00d4 0146     		mov	r1, r0
+ 220:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
+ 1553              		.loc 1 220 22 view .LVU361
+ 1554 00d6 2846     		mov	r0, r5
+ 1555 00d8 FFF7FEFF 		bl	__aeabi_fsub
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 37
+
+
+ 1556              	.LVL156:
  221:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
+ 1557              		.loc 1 221 9 is_stmt 1 view .LVU362
+ 221:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
+ 1558              		.loc 1 221 46 is_stmt 0 view .LVU363
+ 1559 00dc 2149     		ldr	r1, .L93+44
+ 1560 00de FFF7FEFF 		bl	__aeabi_fmul
+ 1561              	.LVL157:
+ 221:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
+ 1562              		.loc 1 221 25 view .LVU364
+ 1563 00e2 FFF7FEFF 		bl	__aeabi_f2iz
+ 1564              	.LVL158:
+ 1565 00e6 0346     		mov	r3, r0
+ 1566              	.LVL159:
  222:Application/menu_task.c ****         OLED_NewFrame();
+ 1567              		.loc 1 222 9 is_stmt 1 view .LVU365
+ 1568 00e8 2246     		mov	r2, r4
+ 1569 00ea 2049     		ldr	r1, .L93+52
+ 1570 00ec 0FA8     		add	r0, sp, #60
+ 1571              	.LVL160:
+ 222:Application/menu_task.c ****         OLED_NewFrame();
+ 1572              		.loc 1 222 9 is_stmt 0 view .LVU366
+ 1573 00ee FFF7FEFF 		bl	sprintf
+ 1574              	.LVL161:
  223:Application/menu_task.c ****         OLED_PrintASCIIString(5, 4, Vbuf, &afont16x8, 0);
+ 1575              		.loc 1 223 9 is_stmt 1 view .LVU367
+ 1576 00f2 FFF7FEFF 		bl	OLED_NewFrame
+ 1577              	.LVL162:
  224:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
+ 1578              		.loc 1 224 9 view .LVU368
+ 1579 00f6 1E4C     		ldr	r4, .L93+56
+ 1580              	.LVL163:
+ 224:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
+ 1581              		.loc 1 224 9 is_stmt 0 view .LVU369
+ 1582 00f8 0025     		movs	r5, #0
+ 1583              	.LVL164:
+ 224:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
+ 1584              		.loc 1 224 9 view .LVU370
+ 1585 00fa 0095     		str	r5, [sp]
+ 1586 00fc 2346     		mov	r3, r4
+ 1587 00fe 02AA     		add	r2, sp, #8
+ 1588 0100 0421     		movs	r1, #4
+ 1589 0102 0520     		movs	r0, #5
+ 1590 0104 FFF7FEFF 		bl	OLED_PrintASCIIString
+ 1591              	.LVL165:
  225:Application/menu_task.c ****         if (rc->online)
+ 1592              		.loc 1 225 9 is_stmt 1 view .LVU371
+ 1593 0108 0095     		str	r5, [sp]
+ 1594 010a 2346     		mov	r3, r4
+ 1595 010c 0FAA     		add	r2, sp, #60
+ 1596 010e 1821     		movs	r1, #24
+ 1597 0110 0520     		movs	r0, #5
+ 1598 0112 FFF7FEFF 		bl	OLED_PrintASCIIString
+ 1599              	.LVL166:
  226:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
- 1274              		.loc 1 226 13 view .LVU298
- 1275 0006 0095     		str	r5, [sp]
- 1276 0008 2346     		mov	r3, r4
- 1277 000a 4F4A     		ldr	r2, .L93+16
- 1278 000c 2C21     		movs	r1, #44
- 1279 000e 0520     		movs	r0, #5
- 1280 0010 FFF7FEFF 		bl	OLED_PrintASCIIString
- 1281              	.LVL98:
- 1282              	.L88:
- 227:Application/menu_task.c ****         else
- 228:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "OFFLINE", &afont16x8, 0);
+ 1600              		.loc 1 226 9 view .LVU372
+ 226:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 38
+
+
+ 1601              		.loc 1 226 15 is_stmt 0 view .LVU373
+ 1602 0116 3B68     		ldr	r3, [r7]
+ 1603 0118 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 226:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
+ 1604              		.loc 1 226 12 view .LVU374
+ 1605 011a 002B     		cmp	r3, #0
+ 1606 011c 7FF473AF 		bne	.L92
  229:Application/menu_task.c ****         OLED_PrintASCIIString(72, 48, "By CAYON", &afont12x6, 0);
- 1283              		.loc 1 229 9 view .LVU299
- 1284 0014 0023     		movs	r3, #0
- 1285 0016 0093     		str	r3, [sp]
- 1286 0018 4C4B     		ldr	r3, .L93+20
- 1287 001a 4D4A     		ldr	r2, .L93+24
- 1288 001c 3021     		movs	r1, #48
- 1289 001e 4820     		movs	r0, #72
- 1290 0020 FFF7FEFF 		bl	OLED_PrintASCIIString
- 1291              	.LVL99:
- 230:Application/menu_task.c ****         OLED_ShowFrame();
- 1292              		.loc 1 230 9 view .LVU300
- 1293 0024 FFF7FEFF 		bl	OLED_ShowFrame
- 1294              	.LVL100:
- 231:Application/menu_task.c ****         if (menu_command_callback(GET_EVENT_BACK))
- 1295              		.loc 1 231 9 view .LVU301
- 1296              		.loc 1 231 13 is_stmt 0 view .LVU302
- 1297 0028 0620     		movs	r0, #6
- 1298 002a FFF7FEFF 		bl	menu_command_callback
- 1299              	.LVL101:
- 1300              		.loc 1 231 12 view .LVU303
- 1301 002e 0028     		cmp	r0, #0
- 1302 0030 7FD1     		bne	.L86
- 232:Application/menu_task.c ****             break;
- 233:Application/menu_task.c ****         osDelay(5);
- 1303              		.loc 1 233 9 is_stmt 1 view .LVU304
- 1304 0032 0520     		movs	r0, #5
- 1305 0034 FFF7FEFF 		bl	osDelay
- 1306              	.LVL102:
- 1307              	.LBE19:
- 208:Application/menu_task.c ****     {
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 32
+ 1607              		.loc 1 229 13 is_stmt 1 view .LVU375
+ 1608 0120 0023     		movs	r3, #0
+ 1609 0122 0093     		str	r3, [sp]
+ 1610 0124 124B     		ldr	r3, .L93+56
+ 1611 0126 134A     		ldr	r2, .L93+60
+ 1612 0128 2C21     		movs	r1, #44
+ 1613 012a 0520     		movs	r0, #5
+ 1614 012c FFF7FEFF 		bl	OLED_PrintASCIIString
+ 1615              	.LVL167:
+ 1616 0130 70E7     		b	.L88
+ 1617              	.L86:
+ 1618              	.LBE20:
+ 235:Application/menu_task.c ****     }
+ 236:Application/menu_task.c **** }...
+ 1619              		.loc 1 236 1 is_stmt 0 view .LVU376
+ 1620 0132 1DB0     		add	sp, sp, #116
+ 1621              	.LCFI16:
+ 1622              		.cfi_def_cfa_offset 20
+ 1623              		@ sp needed
+ 1624 0134 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1625              	.L94:
+ 1626 0136 00BF     		.align	3
+ 1627              	.L93:
+ 1628 0138 713D0AD7 		.word	-687194767
+ 1629 013c A370F53F 		.word	1073049763
+ 1630 0140 33333333 		.word	858993459
+ 1631 0144 33331140 		.word	1074869043
+ 1632 0148 18000000 		.word	.LC9
+ 1633 014c 00000000 		.word	afont12x6
+ 1634 0150 28000000 		.word	.LC11
+ 1635 0154 00000000 		.word	.LANCHOR0
+ 1636 0158 00F07F45 		.word	1166012416
+ 1637 015c 3333F33F 		.word	1072902963
+ 1638 0160 00003940 		.word	1077477376
+ 1639 0164 00007A44 		.word	1148846080
+ 1640 0168 00000000 		.word	.LC7
+ 1641 016c 0C000000 		.word	.LC8
+ 1642 0170 00000000 		.word	afont16x8
+ 1643 0174 20000000 		.word	.LC10
+ 1644              		.cfi_endproc
+ 1645              	.LFE79:
+ 1647              		.global	rc
+ 1648              		.section	.bss.adc_cnt.2,"aw",%nobits
+ 1649              		.align	1
+ 1650              		.set	.LANCHOR2,. + 0
+ 1653              	adc_cnt.2:
+ 1654 0000 0000     		.space	2
+ 1655              		.section	.bss.adc_sum.1,"aw",%nobits
+ 1656              		.align	2
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 39
 
 
- 1308              		.loc 1 208 11 view .LVU305
- 1309              	.L90:
- 208:Application/menu_task.c ****     {
- 1310              		.loc 1 208 5 view .LVU306
- 1311              	.LBB20:
- 210:Application/menu_task.c ****         char Tbuf[50];
- 1312              		.loc 1 210 9 view .LVU307
- 211:Application/menu_task.c ****         float Vref = (1.2 / ((float)rc->Vref / 4095));
- 1313              		.loc 1 211 9 view .LVU308
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1314              		.loc 1 212 9 view .LVU309
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1315              		.loc 1 212 39 is_stmt 0 view .LVU310
- 1316 0038 464F     		ldr	r7, .L93+28
- 1317 003a 3D68     		ldr	r5, [r7]
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1318              		.loc 1 212 30 view .LVU311
- 1319 003c A888     		ldrh	r0, [r5, #4]
- 1320 003e FFF7FEFF 		bl	__aeabi_ui2f
- 1321              	.LVL103:
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1322              		.loc 1 212 46 view .LVU312
- 1323 0042 4549     		ldr	r1, .L93+32
- 1324 0044 FFF7FEFF 		bl	__aeabi_fdiv
- 1325              	.LVL104:
- 1326 0048 FFF7FEFF 		bl	__aeabi_f2d
- 1327              	.LVL105:
- 1328 004c 0246     		mov	r2, r0
- 1329 004e 0B46     		mov	r3, r1
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1330              		.loc 1 212 27 view .LVU313
- 1331 0050 4FF03330 		mov	r0, #858993459
- 1332 0054 4149     		ldr	r1, .L93+36
- 1333 0056 FFF7FEFF 		bl	__aeabi_ddiv
- 1334              	.LVL106:
- 212:Application/menu_task.c ****         float temperature = ((1.34 - ((float)rc->temperature) * Vref / 4096) / 4.3) + 25.0;
- 1335              		.loc 1 212 15 view .LVU314
- 1336 005a FFF7FEFF 		bl	__aeabi_d2f
- 1337              	.LVL107:
- 1338 005e 0446     		mov	r4, r0
- 1339              	.LVL108:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1340              		.loc 1 213 9 is_stmt 1 view .LVU315
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1341              		.loc 1 213 39 is_stmt 0 view .LVU316
- 1342 0060 E888     		ldrh	r0, [r5, #6]
- 1343              	.LVL109:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1344              		.loc 1 213 39 view .LVU317
- 1345 0062 FFF7FEFF 		bl	__aeabi_ui2f
- 1346              	.LVL110:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1347              		.loc 1 213 63 view .LVU318
- 1348 0066 2146     		mov	r1, r4
- 1349 0068 FFF7FEFF 		bl	__aeabi_fmul
- 1350              	.LVL111:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 33
-
-
- 1351              		.loc 1 213 70 view .LVU319
- 1352 006c 4FF06651 		mov	r1, #964689920
- 1353 0070 FFF7FEFF 		bl	__aeabi_fmul
- 1354              	.LVL112:
- 1355 0074 FFF7FEFF 		bl	__aeabi_f2d
- 1356              	.LVL113:
- 1357 0078 0246     		mov	r2, r0
- 1358 007a 0B46     		mov	r3, r1
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1359              		.loc 1 213 36 view .LVU320
- 1360 007c 2EA1     		adr	r1, .L93
- 1361 007e D1E90001 		ldrd	r0, [r1]
- 1362 0082 FFF7FEFF 		bl	__aeabi_dsub
- 1363              	.LVL114:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1364              		.loc 1 213 78 view .LVU321
- 1365 0086 2EA3     		adr	r3, .L93+8
- 1366 0088 D3E90023 		ldrd	r2, [r3]
- 1367 008c FFF7FEFF 		bl	__aeabi_ddiv
- 1368              	.LVL115:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1369              		.loc 1 213 85 view .LVU322
- 1370 0090 0022     		movs	r2, #0
- 1371 0092 334B     		ldr	r3, .L93+40
- 1372 0094 FFF7FEFF 		bl	__aeabi_dadd
- 1373              	.LVL116:
- 213:Application/menu_task.c ****         int intValue = (int)Vref;
- 1374              		.loc 1 213 15 view .LVU323
- 1375 0098 FFF7FEFF 		bl	__aeabi_d2f
- 1376              	.LVL117:
- 1377 009c 0546     		mov	r5, r0
- 1378              	.LVL118:
- 214:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
- 1379              		.loc 1 214 9 is_stmt 1 view .LVU324
- 214:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
- 1380              		.loc 1 214 13 is_stmt 0 view .LVU325
- 1381 009e 2046     		mov	r0, r4
- 1382              	.LVL119:
- 214:Application/menu_task.c ****         float decimalValue = Vref - (float)intValue;
- 1383              		.loc 1 214 13 view .LVU326
- 1384 00a0 FFF7FEFF 		bl	__aeabi_f2iz
- 1385              	.LVL120:
- 1386 00a4 0646     		mov	r6, r0
- 1387              	.LVL121:
- 215:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1388              		.loc 1 215 9 is_stmt 1 view .LVU327
- 215:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1389              		.loc 1 215 37 is_stmt 0 view .LVU328
- 1390 00a6 FFF7FEFF 		bl	__aeabi_i2f
- 1391              	.LVL122:
- 215:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1392              		.loc 1 215 37 view .LVU329
- 1393 00aa 0146     		mov	r1, r0
- 215:Application/menu_task.c ****         int decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1394              		.loc 1 215 15 view .LVU330
- 1395 00ac 2046     		mov	r0, r4
- 1396 00ae FFF7FEFF 		bl	__aeabi_fsub
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 34
-
-
- 1397              	.LVL123:
- 216:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
- 1398              		.loc 1 216 9 is_stmt 1 view .LVU331
- 216:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
- 1399              		.loc 1 216 50 is_stmt 0 view .LVU332
- 1400 00b2 2C49     		ldr	r1, .L93+44
- 1401 00b4 FFF7FEFF 		bl	__aeabi_fmul
- 1402              	.LVL124:
- 216:Application/menu_task.c ****         sprintf(Vbuf, "Vref=%d.%dV", intValue, decimalIntValue);
- 1403              		.loc 1 216 13 view .LVU333
- 1404 00b8 FFF7FEFF 		bl	__aeabi_f2iz
- 1405              	.LVL125:
- 1406 00bc 0346     		mov	r3, r0
- 1407              	.LVL126:
- 217:Application/menu_task.c ****         intValue = (int)temperature;
- 1408              		.loc 1 217 9 is_stmt 1 view .LVU334
- 1409 00be 3246     		mov	r2, r6
- 1410 00c0 2949     		ldr	r1, .L93+48
- 1411 00c2 02A8     		add	r0, sp, #8
- 1412              	.LVL127:
- 217:Application/menu_task.c ****         intValue = (int)temperature;
- 1413              		.loc 1 217 9 is_stmt 0 view .LVU335
- 1414 00c4 FFF7FEFF 		bl	sprintf
- 1415              	.LVL128:
- 218:Application/menu_task.c ****         decimalValue = temperature - (float)intValue;
- 1416              		.loc 1 218 9 is_stmt 1 view .LVU336
- 218:Application/menu_task.c ****         decimalValue = temperature - (float)intValue;
- 1417              		.loc 1 218 18 is_stmt 0 view .LVU337
- 1418 00c8 2846     		mov	r0, r5
- 1419 00ca FFF7FEFF 		bl	__aeabi_f2iz
- 1420              	.LVL129:
- 1421 00ce 0446     		mov	r4, r0
- 1422              	.LVL130:
- 219:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1423              		.loc 1 219 9 is_stmt 1 view .LVU338
- 219:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1424              		.loc 1 219 38 is_stmt 0 view .LVU339
- 1425 00d0 FFF7FEFF 		bl	__aeabi_i2f
- 1426              	.LVL131:
- 219:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1427              		.loc 1 219 38 view .LVU340
- 1428 00d4 0146     		mov	r1, r0
- 219:Application/menu_task.c ****         decimalIntValue = (int)(decimalValue * 1000); // 保留两位小数
- 1429              		.loc 1 219 22 view .LVU341
- 1430 00d6 2846     		mov	r0, r5
- 1431 00d8 FFF7FEFF 		bl	__aeabi_fsub
- 1432              	.LVL132:
- 220:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
- 1433              		.loc 1 220 9 is_stmt 1 view .LVU342
- 220:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
- 1434              		.loc 1 220 46 is_stmt 0 view .LVU343
- 1435 00dc 2149     		ldr	r1, .L93+44
- 1436 00de FFF7FEFF 		bl	__aeabi_fmul
- 1437              	.LVL133:
- 220:Application/menu_task.c ****         sprintf(Tbuf, "Temp=%d.%dC", intValue, decimalIntValue);
- 1438              		.loc 1 220 25 view .LVU344
- 1439 00e2 FFF7FEFF 		bl	__aeabi_f2iz
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 35
-
-
- 1440              	.LVL134:
- 1441 00e6 0346     		mov	r3, r0
- 1442              	.LVL135:
- 221:Application/menu_task.c ****         OLED_NewFrame();
- 1443              		.loc 1 221 9 is_stmt 1 view .LVU345
- 1444 00e8 2246     		mov	r2, r4
- 1445 00ea 2049     		ldr	r1, .L93+52
- 1446 00ec 0FA8     		add	r0, sp, #60
- 1447              	.LVL136:
- 221:Application/menu_task.c ****         OLED_NewFrame();
- 1448              		.loc 1 221 9 is_stmt 0 view .LVU346
- 1449 00ee FFF7FEFF 		bl	sprintf
- 1450              	.LVL137:
- 222:Application/menu_task.c ****         OLED_PrintASCIIString(5, 4, Vbuf, &afont16x8, 0);
- 1451              		.loc 1 222 9 is_stmt 1 view .LVU347
- 1452 00f2 FFF7FEFF 		bl	OLED_NewFrame
- 1453              	.LVL138:
- 223:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
- 1454              		.loc 1 223 9 view .LVU348
- 1455 00f6 1E4C     		ldr	r4, .L93+56
- 1456              	.LVL139:
- 223:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
- 1457              		.loc 1 223 9 is_stmt 0 view .LVU349
- 1458 00f8 0025     		movs	r5, #0
- 1459              	.LVL140:
- 223:Application/menu_task.c ****         OLED_PrintASCIIString(5, 24, Tbuf, &afont16x8, 0);
- 1460              		.loc 1 223 9 view .LVU350
- 1461 00fa 0095     		str	r5, [sp]
- 1462 00fc 2346     		mov	r3, r4
- 1463 00fe 02AA     		add	r2, sp, #8
- 1464 0100 0421     		movs	r1, #4
- 1465 0102 0520     		movs	r0, #5
- 1466 0104 FFF7FEFF 		bl	OLED_PrintASCIIString
- 1467              	.LVL141:
- 224:Application/menu_task.c ****         if (rc->online)
- 1468              		.loc 1 224 9 is_stmt 1 view .LVU351
- 1469 0108 0095     		str	r5, [sp]
- 1470 010a 2346     		mov	r3, r4
- 1471 010c 0FAA     		add	r2, sp, #60
- 1472 010e 1821     		movs	r1, #24
- 1473 0110 0520     		movs	r0, #5
- 1474 0112 FFF7FEFF 		bl	OLED_PrintASCIIString
- 1475              	.LVL142:
- 225:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
- 1476              		.loc 1 225 9 view .LVU352
- 225:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
- 1477              		.loc 1 225 15 is_stmt 0 view .LVU353
- 1478 0116 3B68     		ldr	r3, [r7]
- 1479 0118 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
- 225:Application/menu_task.c ****             OLED_PrintASCIIString(5, 44, "ONLINE", &afont16x8, 0);
- 1480              		.loc 1 225 12 view .LVU354
- 1481 011a 002B     		cmp	r3, #0
- 1482 011c 7FF473AF 		bne	.L92
- 228:Application/menu_task.c ****         OLED_PrintASCIIString(72, 48, "By CAYON", &afont12x6, 0);
- 1483              		.loc 1 228 13 is_stmt 1 view .LVU355
- 1484 0120 0023     		movs	r3, #0
- 1485 0122 0093     		str	r3, [sp]
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 36
-
-
- 1486 0124 124B     		ldr	r3, .L93+56
- 1487 0126 134A     		ldr	r2, .L93+60
- 1488 0128 2C21     		movs	r1, #44
- 1489 012a 0520     		movs	r0, #5
- 1490 012c FFF7FEFF 		bl	OLED_PrintASCIIString
- 1491              	.LVL143:
- 1492 0130 70E7     		b	.L88
- 1493              	.L86:
- 1494              	.LBE20:
- 234:Application/menu_task.c ****     }
- 235:Application/menu_task.c **** }...
- 1495              		.loc 1 235 1 is_stmt 0 view .LVU356
- 1496 0132 1DB0     		add	sp, sp, #116
- 1497              	.LCFI16:
- 1498              		.cfi_def_cfa_offset 20
- 1499              		@ sp needed
- 1500 0134 F0BD     		pop	{r4, r5, r6, r7, pc}
- 1501              	.L94:
- 1502 0136 00BF     		.align	3
- 1503              	.L93:
- 1504 0138 713D0AD7 		.word	-687194767
- 1505 013c A370F53F 		.word	1073049763
- 1506 0140 33333333 		.word	858993459
- 1507 0144 33331140 		.word	1074869043
- 1508 0148 18000000 		.word	.LC9
- 1509 014c 00000000 		.word	afont12x6
- 1510 0150 28000000 		.word	.LC11
- 1511 0154 00000000 		.word	.LANCHOR0
- 1512 0158 00F07F45 		.word	1166012416
- 1513 015c 3333F33F 		.word	1072902963
- 1514 0160 00003940 		.word	1077477376
- 1515 0164 00007A44 		.word	1148846080
- 1516 0168 00000000 		.word	.LC7
- 1517 016c 0C000000 		.word	.LC8
- 1518 0170 00000000 		.word	afont16x8
- 1519 0174 20000000 		.word	.LC10
- 1520              		.cfi_endproc
- 1521              	.LFE79:
- 1523              		.global	rc
- 1524              		.section	.bss.adc_cnt.2,"aw",%nobits
- 1525              		.align	1
- 1526              		.set	.LANCHOR2,. + 0
- 1529              	adc_cnt.2:
- 1530 0000 0000     		.space	2
- 1531              		.section	.bss.adc_sum.1,"aw",%nobits
- 1532              		.align	2
- 1533              		.set	.LANCHOR3,. + 0
- 1536              	adc_sum.1:
- 1537 0000 00000000 		.space	24
- 1537      00000000 
- 1537      00000000 
- 1537      00000000 
- 1537      00000000 
- 1538              		.section	.bss.rc,"aw",%nobits
- 1539              		.align	2
- 1540              		.set	.LANCHOR0,. + 0
- 1543              	rc:
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 37
-
-
- 1544 0000 00000000 		.space	4
- 1545              		.section	.bss.state.3,"aw",%nobits
- 1546              		.set	.LANCHOR1,. + 0
- 1549              	state.3:
- 1550 0000 00       		.space	1
- 1551              		.section	.data.rank_img.0,"aw"
- 1552              		.set	.LANCHOR4,. + 0
- 1555              	rank_img.0:
- 1556 0000 05       		.byte	5
- 1557              		.text
- 1558              	.Letext0:
- 1559              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
- 1560              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
- 1561              		.file 4 "Modules/font.h"
- 1562              		.file 5 "Application/remote.h"
- 1563              		.file 6 "Modules/oled.h"
- 1564              		.file 7 "Application/MENU.h"
- 1565              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
- 1566              		.file 9 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
- 1567              		.file 10 "Modules/flash.h"
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 38
+ 1657              		.set	.LANCHOR3,. + 0
+ 1660              	adc_sum.1:
+ 1661 0000 00000000 		.space	24
+ 1661      00000000 
+ 1661      00000000 
+ 1661      00000000 
+ 1661      00000000 
+ 1662              		.section	.bss.rc,"aw",%nobits
+ 1663              		.align	2
+ 1664              		.set	.LANCHOR0,. + 0
+ 1667              	rc:
+ 1668 0000 00000000 		.space	4
+ 1669              		.section	.bss.state.3,"aw",%nobits
+ 1670              		.set	.LANCHOR1,. + 0
+ 1673              	state.3:
+ 1674 0000 00       		.space	1
+ 1675              		.section	.data.rank_img.0,"aw"
+ 1676              		.set	.LANCHOR4,. + 0
+ 1679              	rank_img.0:
+ 1680 0000 05       		.byte	5
+ 1681              		.text
+ 1682              	.Letext0:
+ 1683              		.file 2 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 1684              		.file 3 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 1685              		.file 4 "Modules/font.h"
+ 1686              		.file 5 "Application/remote.h"
+ 1687              		.file 6 "Modules/oled.h"
+ 1688              		.file 7 "Application/MENU.h"
+ 1689              		.file 8 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
+ 1690              		.file 9 "e:\\ace2025\\enviroment\\gcc-arm-none-eabi-10.3-2021.10-win32\\arm-gnu-toolchian\\arm-non
+ 1691              		.file 10 "Modules/flash.h"
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 40
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 menu_task.c
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:18     .text.read_offset_rocker_from_flash:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:23     .text.read_offset_rocker_from_flash:00000000 read_offset_rocker_from_flash
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:95     .text.read_offset_rocker_from_flash:0000003c $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:100    .text.write_offset_rocker_to_flash:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:105    .text.write_offset_rocker_to_flash:00000000 write_offset_rocker_to_flash
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:173    .text.write_offset_rocker_to_flash:0000003c $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:178    .text.MENU_Init:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:184    .text.MENU_Init:00000000 MENU_Init
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:211    .text.MENU_Init:00000014 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:220    .text.MENU_RockerInfo:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:226    .text.MENU_RockerInfo:00000000 MENU_RockerInfo
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:521    .text.MENU_RockerInfo:00000188 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:528    .rodata.MENU_Calibration.str1.4:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:556    .text.MENU_Calibration:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:562    .text.MENU_Calibration:00000000 MENU_Calibration
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:979    .text.MENU_Calibration:000001e8 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:998    .text.MENU_ShowImage:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1004   .text.MENU_ShowImage:00000000 MENU_ShowImage
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1210   .text.MENU_ShowImage:000000ec $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1231   .rodata.MENU_ShowInfomation.str1.4:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1247   .text.MENU_ShowInfomation:00000000 $t
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1253   .text.MENU_ShowInfomation:00000000 MENU_ShowInfomation
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1504   .text.MENU_ShowInfomation:00000138 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1543   .bss.rc:00000000 rc
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1525   .bss.adc_cnt.2:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1529   .bss.adc_cnt.2:00000000 adc_cnt.2
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1532   .bss.adc_sum.1:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1536   .bss.adc_sum.1:00000000 adc_sum.1
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1539   .bss.rc:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1549   .bss.state.3:00000000 state.3
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1550   .bss.state.3:00000000 $d
-C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s:1555   .data.rank_img.0:00000000 rank_img.0
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:18     .text.read_offset_rocker_from_flash:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:23     .text.read_offset_rocker_from_flash:00000000 read_offset_rocker_from_flash
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:95     .text.read_offset_rocker_from_flash:0000003c $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:100    .text.write_offset_rocker_to_flash:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:105    .text.write_offset_rocker_to_flash:00000000 write_offset_rocker_to_flash
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:173    .text.write_offset_rocker_to_flash:0000003c $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:178    .text.MENU_Init:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:184    .text.MENU_Init:00000000 MENU_Init
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:211    .text.MENU_Init:00000014 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:226    .text.MENU_RockerInfo:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:232    .text.MENU_RockerInfo:00000000 MENU_RockerInfo
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:640    .text.MENU_RockerInfo:00000260 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:656    .rodata.MENU_Calibration.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:684    .text.MENU_Calibration:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:690    .text.MENU_Calibration:00000000 MENU_Calibration
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1107   .text.MENU_Calibration:000001e8 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1126   .text.MENU_ShowImage:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1132   .text.MENU_ShowImage:00000000 MENU_ShowImage
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1338   .text.MENU_ShowImage:000000ec $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1355   .rodata.MENU_ShowInfomation.str1.4:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1371   .text.MENU_ShowInfomation:00000000 $t
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1377   .text.MENU_ShowInfomation:00000000 MENU_ShowInfomation
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1628   .text.MENU_ShowInfomation:00000138 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1667   .bss.rc:00000000 rc
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1649   .bss.adc_cnt.2:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1653   .bss.adc_cnt.2:00000000 adc_cnt.2
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1656   .bss.adc_sum.1:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1660   .bss.adc_sum.1:00000000 adc_sum.1
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1663   .bss.rc:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1673   .bss.state.3:00000000 state.3
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1674   .bss.state.3:00000000 $d
+C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s:1679   .data.rank_img.0:00000000 rank_img.0
 
 UNDEFINED SYMBOLS
 FlashReadBuff
@@ -2227,6 +2358,12 @@ __aeabi_ui2f
 __aeabi_fdiv
 __aeabi_fmul
 __aeabi_f2uiz
+__aeabi_i2f
+__aeabi_f2d
+__aeabi_dmul
+__aeabi_dadd
+__aeabi_dsub
+__aeabi_d2uiz
 OLED_DrawFilledRectangle
 OLED_DrawFilledCircle
 OLED_DrawRectangle
@@ -2235,15 +2372,15 @@ menu_command_callback
 osDelay
 OLED_NewFrame
 OLED_DrawCircle
+ARM GAS  C:\Users\20398\AppData\Local\Temp\ccvHbV6X.s 			page 41
+
+
 OLED_PrintString
 font16x16
 font14x14
 OLED_DrawImage
 Key_GetEvent_Up
 Key_GetEvent_Down
-ARM GAS  C:\Users\20398\AppData\Local\Temp\ccOU5ImO.s 			page 39
-
-
 infantry34Img
 CSGOImg
 inf4Img
@@ -2252,13 +2389,9 @@ APEXImg
 ACEImg
 ROBOMASTERImg
 dafuImg
-__aeabi_f2d
 __aeabi_ddiv
 __aeabi_d2f
-__aeabi_dsub
-__aeabi_dadd
 __aeabi_f2iz
-__aeabi_i2f
 __aeabi_fsub
 OLED_PrintASCIIString
 sprintf
